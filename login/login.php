@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Comprobar si se encontró el usuario
     if (mysqli_num_rows($resultado) > 0) {
         $fila = mysqli_fetch_assoc($resultado); // Obtener los datos del usuario
-        header ('location: ../profesor/index.html');
+        header ('location: ../profesor/index.php');
         
     } else {
         echo "El usuario no existe o la contraseña són incorrectos";

@@ -9,10 +9,6 @@ while ($fila = mysqli_fetch_assoc($res)) {
     $apellido = $fila['apellido'];
 }
 
-echo $nombre;
-echo $apellido;
-
-
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +23,7 @@ echo $apellido;
     <nav>
         <div class="nav-izquierda">
             <h2>Taskify</h2>
-            <h3></h3>
+            <h3><?php echo $nombre . ' ' . $apellido ?></h3>
         </div>
         <div class="derecha">
             <img src="../imagenes/logout.png" alt="" width="30px">
