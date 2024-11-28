@@ -1,34 +1,80 @@
 <?php
-// 1. Conexión básica a la base de datos
-$conexion = mysqli_connect("localhost", "root", "", "micro02");
 
-// Verificar si la conexión funciona
-if (!$conexion) {
-    die("Error al conectar con la base de datos: " . mysqli_connect_error());
-}
+include "../conexion.php";
 
-// 2. Verificar que se usó el formulario
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Recoger datos del formulario
-    $usuario = $_POST['username'];
-    $passw = $_POST['password'];
+session_start();
 
-        // Consulta para buscar el usuario en la base de datos
-    $consulta = "SELECT * FROM alumnos WHERE nombreUser = '$usuario' and pass = '$passw'";
-    $resultado = mysqli_query($conexion, $consulta);
-
-        // Comprobar si se encontró el usuario
-    if (mysqli_num_rows($resultado) > 0) {
-        $fila = mysqli_fetch_assoc($resultado); // Obtener los datos del usuario
-        header ('location: ../profesor/index.php');
-        
-    } else {
-        echo "El usuario no existe o la contraseña són incorrectos";
+if (isset($_POST["entrar"])) {
+     
+    if(!empty($_POST["username"])){
+        $nom = $_POST["username"];
+    }else{
+        $errorUser = "Error: rellena el campo de usuario";
     }
-} else {
-    echo "Por favor, usa el formulario para iniciar sesión.";
-}
 
-// Cerrar la conexión
-mysqli_close($conexion);
+    if(!empty($_POST["password"])){
+        $password = $_POST["password"];
+    }else{
+        $errorPass = "Error: rellena el campo de usuario";
+    }
+
+    if(!empty($nom) && !empty($password)){
+        $consulta = "SELECT * FROM alumnos WHERE nombreUser = '$nom' AND pass = '$password'";
+        $r = mysqli_query($conn, $consulta);
+
+        if(mysqli_num_rows($r) > 0){
+
+            $fila = mysqli_fetch_assoc($r);
+
+            var_dump($fila);
+
+            $_SESSION['nombreUser'] = $nom;
+            $_SESSION['nombre'] = $fila['nombre'];
+            $_SESSION['apellido'] = $fila['apellido'];
+
+            header('Location: ../profesor/index.php');
+            exit();
+        }else{
+            $errorGlobal = "Error: tu usuario no es valido";
+        }
+    }
+} 
+
+
+mysqli_close($conn);
 ?>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Taskify</h1>
+        <div class="form">
+            <h2>Iniciar Sesión</h2>
+            <form action="login.php" method="POST">
+                <!--Input de User--->
+                <input type="text" id="username" name="username" placeholder="Usuario" required>
+                <?php echo "<p style='color:red;'>$errorUser</p>";
+                    
+                ?>
+                <!--Input de password--->
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                <?php 
+                        echo "<p style='color: red;'>$errorPass</p>";
+                    
+                ?>
+
+                <input type="submit" id="bottonEntrar" name="entrar" value="entrar"></input>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

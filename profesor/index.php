@@ -1,12 +1,16 @@
 <?php
 
-$conexion = mysqli_connect("localhost", "root", "", "micro02");
+include "../conexion.php";
 
-$sql = "SELECT nombre, apellido FROM alumnos";
-$res = mysqli_query($conexion, $sql);
-while ($fila = mysqli_fetch_assoc($res)) {
-    $nombre = $fila['nombre'];
-    $apellido = $fila['apellido'];
+session_start();
+
+if(isset($_SESSION['nombreUser'])){
+    $usuarioLog = $_SESSION['nombreUser'];
+    $nom = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+}else{
+    header('Location: ../login/login.php');
+    exit();
 }
 
 ?>
@@ -23,7 +27,7 @@ while ($fila = mysqli_fetch_assoc($res)) {
     <nav>
         <div class="nav-izquierda">
             <h2>Taskify</h2>
-            <h3><?php echo $nombre . ' ' . $apellido ?></h3>
+            <h3><?php echo $nom . ' ' . $apellido ?></h3>
         </div>
         <div class="derecha">
             <img src="../imagenes/logout.png" alt="" width="30px">
