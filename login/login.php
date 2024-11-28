@@ -14,22 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $passw = $_POST['password'];
 
         // Consulta para buscar el usuario en la base de datos
-    $consulta = "SELECT * FROM alumnos WHERE nombreUser = '$usuario'";
+    $consulta = "SELECT * FROM alumnos WHERE nombreUser = '$usuario' and pass = '$passw'";
     $resultado = mysqli_query($conexion, $consulta);
 
         // Comprobar si se encontró el usuario
     if (mysqli_num_rows($resultado) > 0) {
         $fila = mysqli_fetch_assoc($resultado); // Obtener los datos del usuario
-
-            // Comprobar si la contraseña coincide
-        if (password_verify($passw, $fila['password'])) {
-            echo "¡Inicio de sesión exitoso!";
-        } else {
-            echo "Contraseña incorrecta.";
-        }
-            
+        header ('location: ../profesor/index.html');
+        
     } else {
-        echo "El usuario no existe.";
+        echo "El usuario no existe o la contraseña són incorrectos";
     }
 } else {
     echo "Por favor, usa el formulario para iniciar sesión.";
