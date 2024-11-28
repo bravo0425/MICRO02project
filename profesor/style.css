@@ -8,6 +8,7 @@
 
 body {
     font-family: 'Poppins';
+
 }
 
 nav {
@@ -21,4 +22,10 @@ nav .nav-izquierda {
     flex-direction: row;
     align-items: center;
     gap: 30px;
+}
+
+.l{
+    width: 1250px !important;
+    margin: auto;
+    background-color: red;
 }

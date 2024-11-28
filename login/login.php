@@ -15,7 +15,7 @@ if (isset($_POST["entrar"])) {
     if(!empty($_POST["password"])){
         $password = $_POST["password"];
     }else{
-        $errorPass = "Error: rellena el campo de usuario";
+        $errorPass = "Error: rellena el campo de password";
     }
 
     if(!empty($nom) && !empty($password)){
@@ -25,8 +25,6 @@ if (isset($_POST["entrar"])) {
         if(mysqli_num_rows($r) > 0){
 
             $fila = mysqli_fetch_assoc($r);
-
-            var_dump($fila);
 
             $_SESSION['nombreUser'] = $nom;
             $_SESSION['nombre'] = $fila['nombre'];
@@ -61,15 +59,18 @@ mysqli_close($conn);
             <h2>Iniciar Sesión</h2>
             <form action="login.php" method="POST">
                 <!--Input de User--->
-                <input type="text" id="username" name="username" placeholder="Usuario" required>
-                <?php echo "<p style='color:red;'>$errorUser</p>";
-                    
+                <input type="text" id="username" name="username" placeholder="Usuario">
+                <?php 
+                    if(!empty($errorUser)){ 
+                        echo "<p style='color:red;'>$errorUser</p>";
+                    }
                 ?>
                 <!--Input de password--->
-                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                <input type="password" id="password" name="password" placeholder="Contraseña">
                 <?php 
+                    if(!empty($errorUser)){ 
                         echo "<p style='color: red;'>$errorPass</p>";
-                    
+                    }
                 ?>
 
                 <input type="submit" id="bottonEntrar" name="entrar" value="entrar"></input>
