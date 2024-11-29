@@ -8,7 +8,7 @@
 
 body {
     font-family: 'Poppins';
-
+    background-color: #2d2d2d;
 }
 
 nav {
@@ -24,8 +24,8 @@ nav .nav-izquierda {
     gap: 30px;
 }
 
-.l{
+.container{
     width: 1250px !important;
     margin: auto;
-    background-color: red;
+    background-color: #868686;
 }

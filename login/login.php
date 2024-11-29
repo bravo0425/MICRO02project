@@ -30,7 +30,7 @@ if (isset($_POST["entrar"])) {
             $_SESSION['nombre'] = $fila['nombre'];
             $_SESSION['apellido'] = $fila['apellido'];
 
-            header('Location: ../profesor/index.php');
+            header('Location: ../profesor/profesor.php');
             exit();
         }else{
             $errorGlobal = "Error: tu usuario no es valido";
@@ -49,7 +49,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 
 <body>
