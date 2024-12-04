@@ -16,8 +16,8 @@ while ($fila = mysqli_fetch_assoc($res)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_D.css">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="contenedor">
@@ -30,15 +30,6 @@ while ($fila = mysqli_fetch_assoc($res)) {
                 <a href="../login/login.html"><img src="../imagenes/logout.png" alt="" width="30px"></a>
             </div>
         </nav>
-        <div class="container">
-            <h3>Materias DAW:</h3>
-            <form method="POST" class="materias">
-                <a href="diseno.php"><button type="button" name="diseño">Diseño</button></a>
-                <button type="button">Programación</button>
-                <button type="button">Proyecto</button>
-                <button type="button">Proyecto</button>
-            </form>
-        </div>
     </div>
 </body>
 </html>
