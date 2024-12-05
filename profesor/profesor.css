@@ -116,12 +116,20 @@ hr {
     justify-content: center;
 }
 
+.crearAlumnos form h2 {
+    margin-bottom: 20px;
+}
+
 .crearAlumnos form input{
     margin-bottom: 20px;
-    height: 30px;
+    height: 25px;
+    border-radius: 5px;
+    margin-top: 5px;
 }
 
 .crearAlumnos form button {
     width: 200px;
+    padding: 5px;
+    border-radius: 10px;
 }
 

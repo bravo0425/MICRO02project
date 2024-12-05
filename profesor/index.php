@@ -101,16 +101,17 @@
             </form>
         </div>
         <div class="crearAlumnos" style="display: none;">
-            <form action="" method="POST">
-                <label for="username">Nombre Usuario Alumno</label>
+            <form action="crear_alumno.php" method="POST">
+                <h2>Añadir nuevo alumno</h2>
+                <label for="username">Nombre Usuario Alumno:</label>
                 <input type="text" name="username" id="username">
-                <label for="nombre">Nombre Alumno</label>
+                <label for="nombre">Nombre Alumno:</label>
                 <input type="text" name="nombre" id="nombre">
-                <label for="apellido">Apellido Alumno</label>
+                <label for="apellido">Apellido Alumno:</label>
                 <input type="text" name="apellido" id="apellido">
-                <label for="nombre">Contraseña Alumno</label>
+                <label for="nombre">Contraseña Alumno:</label>
                 <input type="text" name="contrasenya" id="contrasenya">
-                <button type="submit">Enviar</button>
+                <button type="submit" name="BCrearAlumno">Enviar</button>
             </form>
         </div>
     </div>
