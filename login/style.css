@@ -55,9 +55,10 @@ form input {
     padding: 10px;
     border-radius: 5px;
     border: 0;
+    margin-bottom: 20px;
 }
 
-form button {
+form #bottonEntrar {
     width: 100px;
     height: 40px;
     background-color: rgb(127, 20, 226);
@@ -65,4 +66,5 @@ form button {
     border: 0;
     border-radius: 15px;
     font-family: 'Poppins';
+    padding-bottom: 10px;
 }
