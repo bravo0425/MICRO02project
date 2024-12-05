@@ -15,6 +15,9 @@ nav {
     display: flex;
     justify-content: space-between;
     margin: 10px;
+    background-color: #D9D9D9;
+    padding: 5px 0;
+    border-radius: 10px;
 }
 
 nav .nav-izquierda {
@@ -22,10 +25,103 @@ nav .nav-izquierda {
     flex-direction: row;
     align-items: center;
     gap: 30px;
+    padding-left: 10px;
+}
+
+nav .nav-derecha {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
 }
 
 .container{
     width: 1250px !important;
     margin: auto;
-    background-color: #868686;
 }
+
+.contenedor h3 {
+    background-color: #7F7F7F;
+    padding: 10px;
+    margin: 10px;
+    margin-top: 50px;
+}
+
+.materias {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+}
+
+.materias button {
+    width: 100%;
+    height: 100px;
+    border-radius: 15px;
+    font-family: 'Poppins';
+}
+
+.alumnos {
+    padding: 10px;
+}
+
+.alumnos button {
+    width: 376px;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: 'Poppins';
+}
+
+hr {
+    border: 2px solid #D9D9D9;
+}
+
+#listaAlumnos {
+    display: grid;
+    justify-content: center;
+}
+
+#listaAlumnos table {
+    margin-top: 50px;
+    background-color: #535353;
+    color: #fafafa;
+}
+
+#listaAlumnos th, td {
+    padding: 5px;
+}
+
+.contenedor-alumnos button{
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: 'Poppins';
+}
+
+.crearAlumnos {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.crearAlumnos form{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    color: #fafafa;
+    background-color: #535353;
+    padding: 30px;
+    border-radius: 15px;
+    justify-content: center;
+}
+
+.crearAlumnos form input{
+    margin-bottom: 20px;
+    height: 30px;
+}
+
+.crearAlumnos form button {
+    width: 200px;
+}
+

@@ -8,18 +8,14 @@ if (isset($_POST["entrar"])) {
      
     if(!empty($_POST["username"])){
         $nom = $_POST["username"];
-    }else{
-        $errorUser = "Error: rellena el campo de usuario";
     }
 
     if(!empty($_POST["password"])){
         $password = $_POST["password"];
-    }else{
-        $errorPass = "Error: rellena el campo de password";
     }
 
     if(!empty($nom) && !empty($password)){
-        $consulta = "SELECT * FROM alumnos WHERE nombreUser = '$nom' AND pass = '$password'";
+        $consulta = "SELECT * FROM alumnos WHERE username = '$nom' AND pass = '$password'";
         $r = mysqli_query($conn, $consulta);
 
         if(mysqli_num_rows($r) > 0){
@@ -27,19 +23,30 @@ if (isset($_POST["entrar"])) {
             $fila = mysqli_fetch_assoc($r);
 
             $_SESSION['nombreUser'] = $nom;
-            $_SESSION['nombre'] = $fila['nombre'];
-            $_SESSION['apellido'] = $fila['apellido'];
+            $_SESSION['nombre'] = $fila['name'];
+            $_SESSION['apellido'] = $fila['last_name'];
 
-            header('Location: ../profesor/profesor.php');
+            header('location: ../alumnos/alumnos.php');
             exit();
         }else{
-            $errorGlobal = "Error: tu usuario no es valido";
+            $consultaP = "SELECT * FROM profesores WHERE username = '$nom' AND pass = '$password'";
+            $resultado = mysqli_query($conn, $consultaP);
+
+            if (mysqli_num_rows($resultado) > 0) {
+                $filaP = mysqli_fetch_assoc($resultado);
+                $_SESSION['nombreUser'] = $nom;
+                $_SESSION['nombre'] = $filaP['name'];
+                $_SESSION['apellido'] = $filaP['last_name'];
+
+                header('location: ../profesor/profesor.php');
+                exit();
+            }
         }
     }
 } 
 
-
 mysqli_close($conn);
+
 ?>
 
 
@@ -49,7 +56,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -58,20 +65,8 @@ mysqli_close($conn);
         <div class="form">
             <h2>Iniciar Sesión</h2>
             <form action="login.php" method="POST">
-                <!--Input de User--->
-                <input type="text" id="username" name="username" placeholder="Usuario">
-                <?php 
-                    if(!empty($errorUser)){ 
-                        echo "<p style='color:red;'>$errorUser</p>";
-                    }
-                ?>
-                <!--Input de password--->
-                <input type="password" id="password" name="password" placeholder="Contraseña">
-                <?php 
-                    if(!empty($errorUser)){ 
-                        echo "<p style='color: red;'>$errorPass</p>";
-                    }
-                ?>
+                <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required>
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
 
                 <input type="submit" id="bottonEntrar" name="entrar" value="entrar"></input>
             </form>
