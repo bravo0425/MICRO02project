@@ -38,7 +38,7 @@ if (isset($_POST["entrar"])) {
                 $_SESSION['nombre'] = $filaP['name'];
                 $_SESSION['apellido'] = $filaP['last_name'];
 
-                header('location: ../profesor/profesor.php');
+                header('location: ../profesor/main/index.php');
                 exit();
             }
         }
@@ -64,7 +64,7 @@ mysqli_close($conn);
         <h1>Taskify</h1>
         <div class="form">
             <h2>Iniciar Sesión</h2>
-            <form action="login.php" method="POST">
+            <form action="" method="POST">
                 <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required>
                 <input type="password" id="password" name="password" placeholder="Contraseña" required>
 
