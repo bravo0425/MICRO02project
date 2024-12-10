@@ -23,19 +23,229 @@ body {
 }
 
 .contenedor-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav {
     background-color: #FFFFFF20;
     width: 300px;
     height: 560px;
     border-radius: 15px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
-.nav {
+.titulo {
+    padding: 0 20px;
+}
+
+.nav .usuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    border-radius: 15px;
+    background-color: #4D4D4D;
+}
+
+.navbar {
+    margin-top: 50px;
+    padding: 0 30px;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.menu:hover {
+    background-color: #333;
+    border-radius: 15px;
+}
+
+.menu.active {
+    background-color: #4D4D4D;
+    border-radius: 15px;
+}
+
+.update {
+    width: 300px;
+    height: 180px;
+    background-color: #FFFFFF20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.update h4 {
+    font-size: 1.5rem;
     color: #FFFFFF;
 }
 
-.contenido{
-    width: 800px;
-    height: 560px;
-    background-color: #FFFFFF20;
+.update p {
+    color: #C1C1C1;
+    font-weight: 100;
+    padding: 10px;
 }
 
+.botones-update #update {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #E2FF32;
+}
+
+.botones-update #more {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #D9D9D9;
+}
+
+.log-out {
+    width: 300px;
+    height: 70px;
+    background-color: #FFFFFF20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #C2C2C2;
+    border-radius: 15px;
+}
+
+.log-out h2 {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+.contenido {
+    width: 960px;
+    height: 850px;
+}
+
+.div-arriba-derecha {
+    display: flex;
+    gap: 20px;
+}
+
+.div-arriba-derecha .students {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 340px;
+    height: 170px;
+    background-color: #E2FF32;
+    border-radius: 15px;
+    gap: 10px;
+}
+
+.div-arriba-derecha .importar-estudiantes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 170px;
+    background-color: #FFFFFF20;
+    border-radius: 15px;
+}
+
+.tabla {
+    margin-top: 20px;
+    display: flex;
+    width: 960px;
+    height: 660px;
+    background-color: #FFFFFF20;
+    border-radius: 15px;
+    padding: 30px;
+    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#listaAlumnos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    color: #FFFFFF;
+    font-size: 1rem;
+}
+
+#listaAlumnos thead {
+    background-color: #FCFCFC10;
+}
+
+#listaAlumnos th {
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+/* Filas de la tabla */
+#listaAlumnos tbody tr {
+    transition: background-color 0.3s;
+}
+
+#listaAlumnos tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#listaAlumnos td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+#listaAlumnos input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+}
+
+.botones-alumnos {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.botones-alumnos button {
+    width: 250px;
+    height: 80px;
+    border-radius: 15px;
+    border: 0;
+    font-size: 1rem;
+}
+
+.botones-alumnos #eliminarAlumnos {
+    background-color: #A600FF;
+    color: #FFFFFF;
+}
+
+.botones-alumnos #crearAlumnos {
+    background-color: #E2FF32;
+}
+
+.botones-alumnos #modificarA {
+    background-color: #FFFFFF20;
+    color: #FFFFFF;
+}
