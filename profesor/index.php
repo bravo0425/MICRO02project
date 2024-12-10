@@ -1,5 +1,6 @@
 <?php
     include "../conexion.php";
+    include "funciones.php";
 
     session_start();
 
@@ -12,18 +13,14 @@
         exit();
     }
 
-    // Función para eliminar un alumno por ID
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["alumno_id"])) {
-        $alumno_id = intval($_POST["alumno_id"]); // Validar ID recibido
-        $delete_query = "DELETE FROM alumnos WHERE id = $alumno_id";
-
-        $r = mysqli_query($conn, $delete_query);
-        
-        if ($r) {
-            echo "<script>alert('Alumno eliminado correctamente.');</script>";
-        } else {
-            echo "<script>alert('Error al eliminar alumno: " . $conn->error . "');</script>";
-        }
+    if(!empty($_POST['BCrearAlumno'])) {
+        crearAlumno($conn);
+    }
+    if(!empty($_POST['eliminarAlumnos'])) {
+        eliminarAlumno($conn);
+    }
+    if(!empty($_POST['BModificarAlumno'])) {
+        updateAlumno($conn);
     }
 
     $query = "SELECT * FROM alumnos";
@@ -96,12 +93,15 @@
                         ?>
                     </tbody>
                 </table><br>
-                <button type="submit">Eliminar Alumno</button>
-                <button type="button" onclick="mostrarFormularioA()">Crear Alumno</button>
+                <div class="botones">
+                    <button type="submit" value="eliminarAlumnos" name="eliminarAlumnos">Eliminar Alumno</button>
+                    <button type="submit" value="crearAlumnos"  onclick="mostrarFormularioA()" name="crearAlumnos">Crear Alumno</button>
+                    <button type="submit" value="modificarA" name="modificarA" onclick="modificarAlumno()">Modificar Alumno</button>
+                </div>
             </form>
         </div>
         <div class="crearAlumnos" style="display: none;">
-            <form action="crear_alumno.php" method="POST">
+            <form action="" method="POST">
                 <h2>Añadir nuevo alumno</h2>
                 <label for="username">Nombre Usuario Alumno:</label>
                 <input type="text" name="username" id="username">
@@ -111,7 +111,8 @@
                 <input type="text" name="apellido" id="apellido">
                 <label for="nombre">Contraseña Alumno:</label>
                 <input type="text" name="contrasenya" id="contrasenya">
-                <button type="submit" name="BCrearAlumno">Enviar</button>
+                <button type="submit" name="BCrearAlumno" value="BCrearAlumno">Enviar</button>
+                <button type="submit" id="BModificarAlumno" name="BModificarAlumno" value="BModificarAlumno" style="display: none;">Enviar</button>
             </form>
         </div>
     </div>
@@ -125,6 +126,16 @@
         function mostrarFormularioA() {
             document.querySelector(".contenedor-alumnos").style = "display: none;";
             document.querySelector(".crearAlumnos").style = "display: flex;";
+        }
+
+        function modificarAlumno() {
+            document.querySelector(".crearAlumnos").style = "display: flex;";
+
+            document.querySelector(".crearAlumnos h2").innerHTML = "Modificar Alumno";
+
+            document.querySelector(".crearAlumnos #BCrearAlumno").style = "display: none;";
+
+            document.querySelector(".crearAlumnos #BModificarAlumno").style = "display: grid;";
         }
     </script>
 </body>

@@ -133,3 +133,7 @@ hr {
     border-radius: 10px;
 }
 
+.botones {
+    display: flex;
+    justify-content: center;
+}

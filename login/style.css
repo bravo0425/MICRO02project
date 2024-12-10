@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins';
 }
 
 body {
@@ -23,7 +24,7 @@ body {
 .container h1 {
     color: aliceblue;
     font-weight: 900;
-    font-size: 60px;
+    font-size: 40px;
 }
 
 .form {
@@ -32,14 +33,14 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: rgba(198, 198, 198, 0.744);
+    background-color: #ffffff20;
     border-radius: 15px;
 }
 
 .form h2 {
     padding-bottom: 30px;
     padding-left: 50px;
-    color: blueviolet;
+    color: #FFFFFF;
     padding-top: 10px;
 }
 
@@ -52,19 +53,27 @@ body {
 form input {
     width: 200px;
     height: 30px;
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
-    border: 0;
+    border: 1px solid #FFFFFF50;
     margin-bottom: 20px;
+    background-color: #ffffff30;
+    color: #FFFFFF;
+    font-family: 'Poppins';
+}
+
+form input::placeholder {
+    color: #FFFFFF;
+    font-family: 'Poppins';
 }
 
 form #bottonEntrar {
-    width: 100px;
+    width: 120px;
     height: 40px;
-    background-color: rgb(127, 20, 226);
-    color: aliceblue;
-    border: 0;
+    background-color: #E2FF32;
+    color: 000000;
+    font-size: 1.1rem;
+    font-weight: 600;
     border-radius: 15px;
     font-family: 'Poppins';
-    padding-bottom: 10px;
 }

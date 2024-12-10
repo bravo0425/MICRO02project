@@ -1,9 +1,9 @@
 <?php
     $servidor = "localhost";
     $usuario = "root";
-    $contraseña = "";
+    $contrasenya = "";
     $baseDatos = "micro02";
 
     // Crear conexión
-    $conn = mysqli_connect($servidor, $usuario, $contraseña, $baseDatos);
+    $conn = mysqli_connect($servidor, $usuario, $contrasenya, $baseDatos);
 ?>

@@ -65,14 +65,14 @@ mysqli_close($conn);
 
 <body>
     <div class="container">
-        <h1>Taskify</h1>
+        <h1>TASKIFY®</h1>
         <div class="form">
-            <h2>Iniciar Sesión</h2>
+            <h2>Log In</h2>
             <form action="login.php" method="POST">
-                <input type="text" id="username" name="username" placeholder="Nombre de Usuario" required>
-                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
 
-                <input type="submit" id="bottonEntrar" name="entrar" value="entrar"></input>
+                <button type="submit" id="bottonEntrar" name="entrar" value="entrar">Join Now</button>
             </form>
         </div>
     </div>
