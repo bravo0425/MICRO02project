@@ -153,5 +153,57 @@ body {
 .contenido {
     width: 960px;
     height: 650px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
 }
 
+#left{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#right{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+.card{
+    background-color: #fafafa20;
+    border-radius: 15px;
+}
+
+#mobileApp{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E2FF32 !important;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px;
+
+}
+
+#lastProject{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px;
+    gap: 20px;
+    overflow: hidden;
+}
+
+#lastProject img{
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+}
