@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -33,7 +35,7 @@ body {
 .nav {
     background-color: #FFFFFF20;
     width: 300px;
-    height: 560px;
+    height: 410px;
     border-radius: 15px;
     color: #FFFFFF;
     display: flex;
@@ -44,6 +46,10 @@ body {
 
 .titulo {
     padding: 0 20px;
+}
+
+.titulo h1 {
+    margin-bottom: 20px;
 }
 
 .nav .usuario {
@@ -57,7 +63,7 @@ body {
 }
 
 .navbar {
-    margin-top: 50px;
+    margin-top: 20px;
     padding: 0 30px;
 }
 
@@ -68,6 +74,11 @@ body {
     padding: 10px 0;
     cursor: pointer;
     gap: 10px;
+}
+
+.menu h2 {
+    font-size: 1.1rem;
+    font-weight: 300 !important;
 }
 
 .menu:hover {
@@ -82,7 +93,7 @@ body {
 
 .update {
     width: 300px;
-    height: 180px;
+    height: 150px;
     background-color: #FFFFFF20;
     display: flex;
     flex-direction: column;
@@ -92,11 +103,12 @@ body {
 }
 
 .update h4 {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     color: #FFFFFF;
 }
 
 .update p {
+    font-size: 0.8rem;
     color: #C1C1C1;
     font-weight: 100;
     padding: 10px;
@@ -104,7 +116,7 @@ body {
 
 .botones-update #update {
     padding: 10px 20px;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     border-radius: 20px;
     border: 0;
     background-color: #E2FF32;
@@ -112,7 +124,7 @@ body {
 
 .botones-update #more {
     padding: 10px 20px;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     border-radius: 20px;
     border: 0;
     background-color: #D9D9D9;
@@ -120,7 +132,7 @@ body {
 
 .log-out {
     width: 300px;
-    height: 70px;
+    height: 50px;
     background-color: #FFFFFF20;
     display: flex;
     justify-content: center;
@@ -131,13 +143,13 @@ body {
 }
 
 .log-out h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
 }
 
 .contenido {
     width: 960px;
-    height: 850px;
+    height: 650px;
 }
 
 .div-arriba-derecha {
@@ -170,13 +182,13 @@ body {
     margin-top: 20px;
     display: flex;
     width: 960px;
-    height: 660px;
+    height: 460px;
     background-color: #FFFFFF20;
     border-radius: 15px;
     padding: 30px;
     overflow-y: auto;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
 }
 

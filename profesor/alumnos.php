@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="log-out">
-                <img src="../imagenes/cerrar-sesion.png" width="27px" style="color: #FFFFFF;">
+                <img src="../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
                 <h2>Log out</h2>
             </div>
         </div>
