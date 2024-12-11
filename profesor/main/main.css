@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+body {
+    font-family: 'Poppins';
+}
+
+.container {
+    background-image: url(../../imagenes/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.contenedor-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav {
+    background-color: #FFFFFF20;
+    width: 300px;
+    height: 410px;
+    border-radius: 15px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.titulo {
+    padding: 0 20px;
+}
+
+.titulo h1 {
+    margin-bottom: 20px;
+}
+
+.nav .usuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 25px;
+    border-radius: 15px;
+    background-color: #4D4D4D;
+}
+
+.navbar {
+    margin-top: 20px;
+    padding: 0 30px;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.menu h2 {
+    font-size: 1.1rem;
+    font-weight: 300 !important;
+}
+
+.menu:hover {
+    background-color: #333;
+    border-radius: 15px;
+}
+
+.menu.active {
+    background-color: #4D4D4D;
+    border-radius: 15px;
+}
+
+.update {
+    width: 300px;
+    height: 150px;
+    background-color: #FFFFFF20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.update h4 {
+    font-size: 1.1rem;
+    color: #FFFFFF;
+}
+
+.update p {
+    font-size: 0.8rem;
+    color: #C1C1C1;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.botones-update #update {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #E2FF32;
+    font-weight: 500;
+}
+
+.botones-update #more {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #D9D9D9;
+    font-weight: 500;
+}
+
+.log-out {
+    width: 300px;
+    height: 50px;
+    background-color: #FFFFFF20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #C2C2C2;
+    border-radius: 15px;
+    border: 0;
+}
+
+.log-out h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.contenido {
+    width: 960px;
+    height: 650px;
+}
+

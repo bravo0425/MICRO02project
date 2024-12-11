@@ -1,5 +1,5 @@
 <?php
-    include "../conexion.php";
+    include "../../conexion.php";
     include "funciones.php";
 
     session_start();
@@ -9,7 +9,7 @@
         $nom = $_SESSION['nombre'];
         $apellido = $_SESSION['apellido'];
     }else{
-        header('Location: ../login/login.php');
+        header('Location: ../../login/login.php');
         exit();
     }
 
@@ -42,29 +42,29 @@
                 <div class="titulo">
                     <h1>TASKIFY®</h1>
                     <div class="usuario">
-                        <img src="../imagenes/usuario.png" width="23px">
+                        <img src="../../imagenes/usuario.png" width="23px">
                         <h3><?php echo $nom . ' ' . $apellido ?></h3>
                     </div>
                 </div>
                 <div class="navbar">
                     <div class="menu">
-                        <img src="../imagenes/dashboard.png" width="27px">
+                        <img src="../../imagenes/dashboard.png" width="27px">
                         <h2>Dashboard</h2>
                     </div>
                     <div class="menu">
-                        <img src="../imagenes/cursos.png" width="27px">
+                        <img src="../../imagenes/cursos.png" width="27px">
                         <h2>Cursos</h2>
                     </div>
                     <div class="menu active">
-                        <img src="../imagenes/students.png" width="27px">
+                        <img src="../../imagenes/students.png" width="27px">
                         <h2>Students</h2>
                     </div>
                     <div class="menu">
-                        <img src="../imagenes/chat.png" width="27px">
+                        <img src="../../imagenes/chat.png" width="27px">
                         <h2>Chat</h2>
                     </div>
                     <div class="menu">
-                        <img src="../imagenes/settings.png" width="27px">
+                        <img src="../../imagenes/settings.png" width="27px">
                         <h2>Settings</h2>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <button class="log-out">
-                <img src="../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
+                <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
                 <h2>Log out</h2>
             </button>
         </div>
@@ -87,7 +87,7 @@
             <div class="div-arriba-derecha">
                 <div class="students">
                     <h2>Students</h2>
-                    <img src="../imagenes/students-negro.png" width="27px">
+                    <img src="../../imagenes/students-negro.png" width="27px">
                 </div>
                 <div class="importar-estudiantes">
                     <h2>+ Import Students CSV</h2>

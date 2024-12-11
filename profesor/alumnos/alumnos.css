@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-    background-image: url(../imagenes/fondo.jpg);
+    background-image: url(../../imagenes/fondo.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;

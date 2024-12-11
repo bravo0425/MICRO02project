@@ -42,7 +42,7 @@ if (isset($_POST["entrar"])) {
                 $_SESSION['nombre'] = $filaP['name'];
                 $_SESSION['apellido'] = $filaP['last_name'];
 
-                header('location: ../profesor/index.php');
+                header('location: ../profesor/main/main.php');
                 exit();
             }
         }
