@@ -13,7 +13,7 @@
         exit();
     }
 
-    if(!empty($_POST['BCrearAlumno'])) {
+    if(!empty($_POST['insertarAlumno'])) {
         crearAlumno($conn);
     }
     if(!empty($_POST['eliminarAlumnos'])) {
@@ -25,6 +25,7 @@
 
     $query = "SELECT * FROM alumnos";
     $resultado = mysqli_query($conn, $query);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,8 +36,7 @@
     <link rel="stylesheet" href="alumnos.css">
 </head>
 <body>
-    <div class="container">
-        
+    <div class="container">      
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
@@ -77,10 +77,10 @@
                     <button type="button" id="more">More</button>
                 </div>
             </div>
-            <div class="log-out">
+            <button class="log-out">
                 <img src="../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
                 <h2>Log out</h2>
-            </div>
+            </button>
         </div>
 
         <div class="contenido">
@@ -95,7 +95,7 @@
             </div>
             <div class="tabla">
                 <form method="POST" action="" id="listaAlumnos">
-                    <table border="0">
+                    <table border="0" id="tabla">
                         <thead>
                             <tr>
                                 <th></th>
@@ -104,7 +104,7 @@
                                 <th>Apellido</th>
                                 <th>Nombre de Usuario</th>
                                 <th>Fecha de Creación</th>
-                                <th>Fecha de Modificación</th>
+                                <th>Id Curso</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -112,13 +112,13 @@
                             if (mysqli_num_rows($resultado) > 0) {
                                 while ($fila = mysqli_fetch_assoc($resultado)) {
                                     echo "<tr>";
-                                    echo "<td><input type='radio' name='alumno_id' value='" . $fila["id"] . "' required></td>";
+                                    echo "<td><input type='radio' name='alumno_id' value='" . $fila["id"] . "'></td>";
                                     echo "<td>" . $fila["id"] . "</td>";
                                     echo "<td>" . $fila["name"] . "</td>";
                                     echo "<td>" . $fila["last_name"] . "</td>";
                                     echo "<td>" . $fila["username"] . "</td>";
                                     echo "<td>" . $fila["created_at"] . "</td>";
-                                    echo "<td>" . $fila["update_at"] . "</td>";
+                                    echo "<td>" . $fila["curso_id"] . "</td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -128,13 +128,63 @@
                         </tbody>
                     </table><br>
                     <div class="botones-alumnos">
-                        <button type="submit" value="crearAlumnos"  onclick="mostrarFormularioA()" name="crearAlumnos" id="crearAlumnos">+ Add new Student</button>
+                        <button type="button" value="crearAlumnos"  onclick="mostrarFormularioA()" name="crearAlumnos" id="crearAlumnos">+ Add new Student</button>
                         <button type="submit" value="modificarA" name="modificarA" onclick="modificarAlumno()" id="modificarA">Modify Student</button>
                         <button type="submit" value="eliminarAlumnos" name="eliminarAlumnos" id="eliminarAlumnos">Delete Student</button>
+                    </div>
+                </form>
+                <form action="" method="post" id="crearAlumno" hidden>
+                    <h2>Insert new student</h2>
+                    <div class="column">
+                        <label for="nombre">Name</label>
+                        <input type="text" name="nombre" id="nombre"><br>
+                    </div>
+                    <div class="column">
+                        <label for="apellido">Last Name</label>
+                        <input type="text" name="apellido" id="apellido"><br>
+                    </div>
+                    <div class="column">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username"><br>
+                    </div>
+                    <div class="column">
+                        <label for="contrasenya">Password</label>
+                        <input type="password" name="contrasenya" id="contrasenya"><br>
+                    </div>
+                    <div class="column">
+                        <label for="contrasenya2">Password</label>
+                        <input type="password" name="contrasenya2" id="contrasenya2"><br>
+                    </div>
+                    <div class="column">
+                        <label for="Curso">Id Curso</label>
+                        <select name="cursos" id="cursos">
+                            <?php
+                                $select = "SELECT * FROM cursos";
+                                $resCurso = mysqli_query($conn, $select);
+                                while ($fila = mysqli_fetch_assoc($resCurso)) {
+                                    echo "<option required value='" . $fila['id'] . "'>" . $fila['nombre'] . "</option>";
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="botones-crearA">
+                        <button type="submit" id="insert" name="insertarAlumno" value="insertarAlumno">Insert</button>
+                        <button type="button" onclick="mostrarTabla()" id="back">Back</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        function mostrarFormularioA() {
+            document.querySelector("#listaAlumnos").style = "display: none;";
+            document.querySelector("#crearAlumno").style = "display: flex;";
+        }
+
+        function mostrarTabla() {
+            document.querySelector("#listaAlumnos").style = "display: flex;";
+            document.querySelector("#crearAlumno").style = "display: none;";
+        }
+    </script>
 </body>
 </html>

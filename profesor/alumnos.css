@@ -110,7 +110,7 @@ body {
 .update p {
     font-size: 0.8rem;
     color: #C1C1C1;
-    font-weight: 100;
+    font-weight: 300;
     padding: 10px;
 }
 
@@ -120,6 +120,7 @@ body {
     border-radius: 20px;
     border: 0;
     background-color: #E2FF32;
+    font-weight: 500;
 }
 
 .botones-update #more {
@@ -128,6 +129,7 @@ body {
     border-radius: 20px;
     border: 0;
     background-color: #D9D9D9;
+    font-weight: 500;
 }
 
 .log-out {
@@ -140,6 +142,7 @@ body {
     gap: 10px;
     color: #C2C2C2;
     border-radius: 15px;
+    border: 0;
 }
 
 .log-out h2 {
@@ -162,10 +165,11 @@ body {
     align-items: center;
     justify-content: center;
     width: 340px;
-    height: 170px;
+    height: 140px;
     background-color: #E2FF32;
     border-radius: 15px;
     gap: 10px;
+    font-size: 1.2rem;
 }
 
 .div-arriba-derecha .importar-estudiantes {
@@ -173,16 +177,17 @@ body {
     justify-content: center;
     align-items: center;
     width: 600px;
-    height: 170px;
+    height: 140px;
     background-color: #FFFFFF20;
     border-radius: 15px;
+    color: #FFFFFF;
 }
 
 .tabla {
     margin-top: 20px;
     display: flex;
     width: 960px;
-    height: 460px;
+    height: 490px;
     background-color: #FFFFFF20;
     border-radius: 15px;
     padding: 30px;
@@ -246,6 +251,7 @@ body {
     border-radius: 15px;
     border: 0;
     font-size: 1rem;
+    font-weight: 600;
 }
 
 .botones-alumnos #eliminarAlumnos {
@@ -260,4 +266,67 @@ body {
 .botones-alumnos #modificarA {
     background-color: #FFFFFF20;
     color: #FFFFFF;
+}
+
+#crearAlumno {
+    flex-direction: column;
+}
+
+#crearAlumno input{
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+}
+
+#crearAlumno label {
+    font-size: 0.9rem;
+    margin: 10px;
+    color: #FFFFFF;
+}
+
+#crearAlumno h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+#crearAlumno .column {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.botones-crearA {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+.botones-crearA button {
+    padding: 10px 50px;
+    border-radius: 15px;
+    border: 0;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.botones-crearA #insert {
+    background-color: #E2FF32;
+}
+
+.botones-crearA #back {
+    background-color: #FFFFFF20;
+    color: #FFFFFF;
+}
+
+.column select {
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
 }

@@ -12,14 +12,22 @@
     }
 
     function crearAlumno($conn) {
-        $usernameA = $_POST["username"];
-        $nombreA = $_POST["nombre"];
-        $apellidoA = $_POST["apellido"];
-        $contrasenyaA = $_POST["contrasenya"];
-    
-        $insert = "INSERT INTO alumnos (username, pass, name, last_name) VALUES ('$usernameA', '$contrasenyaA', '$nombreA', '$apellidoA')";
+        $usernameA = trim(htmlspecialchars($_POST["username"]));
+        $nombreA = trim(htmlspecialchars($_POST["nombre"]));
+        $apellidoA = trim(htmlspecialchars($_POST["apellido"]));
+        $contrasenyaA = trim(htmlspecialchars($_POST["contrasenya"]));
+        $contrasenya2 = trim(htmlspecialchars($_POST["contrasenya2"]));
+        $curso = trim(htmlspecialchars($_POST["cursos"]));
 
-        mysqli_query($conn, $insert);
+        if ($contrasenyaA != $contrasenya2) {
+            echo "Las contraseñas no coinciden";
+            return;
+        } else {
+            $insert = "INSERT INTO alumnos (username, pass, name, last_name, curso_id) VALUES ('$usernameA', '$contrasenyaA', '$nombreA', '$apellidoA', '$curso')";
+    
+            mysqli_query($conn, $insert);
+        }
+    
     }
 
     function eliminarAlumno($conn) {
