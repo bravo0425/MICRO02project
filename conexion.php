@@ -1,7 +1,7 @@
 <?php
     $servidor = "localhost";
     $usuario = "root";
-    $contrasenya = "";
+    $contrasenya = "root";
     $baseDatos = "micro02";
 
     // Crear conexión

@@ -47,26 +47,26 @@
                     </div>
                 </div>
                 <div class="navbar">
-                    <div class="menu">
+                    <button class="menu">
                         <img src="../../imagenes/dashboard.png" width="27px">
                         <h2>Dashboard</h2>
-                    </div>
-                    <div class="menu">
+                    </button>
+                    <button class="menu">
                         <img src="../../imagenes/cursos.png" width="27px">
                         <h2>Cursos</h2>
-                    </div>
-                    <div class="menu active">
+                    </button>
+                    <button class="menu active">
                         <img src="../../imagenes/students.png" width="27px">
                         <h2>Students</h2>
-                    </div>
-                    <div class="menu">
+                    </button>
+                    <button class="menu">
                         <img src="../../imagenes/chat.png" width="27px">
                         <h2>Chat</h2>
-                    </div>
-                    <div class="menu">
+                    </button>
+                    <button class="menu">
                         <img src="../../imagenes/settings.png" width="27px">
                         <h2>Settings</h2>
-                    </div>
+                    </button>
                 </div>
             </div>
             <div class="update">
@@ -77,7 +77,7 @@
                     <button type="button" id="more">More</button>
                 </div>
             </div>
-            <button class="log-out">
+            <button class="log-out" >
                 <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
                 <h2>Log out</h2>
             </button>
@@ -95,38 +95,40 @@
             </div>
             <div class="tabla">
                 <form method="POST" action="" id="listaAlumnos">
-                    <table border="0" id="tabla">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Nombre de Usuario</th>
-                                <th>Fecha de Creación</th>
-                                <th>Id Curso</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if (mysqli_num_rows($resultado) > 0) {
-                                while ($fila = mysqli_fetch_assoc($resultado)) {
-                                    echo "<tr>";
-                                    echo "<td><input type='radio' name='alumno_id' value='" . $fila["id"] . "'></td>";
-                                    echo "<td>" . $fila["id"] . "</td>";
-                                    echo "<td>" . $fila["name"] . "</td>";
-                                    echo "<td>" . $fila["last_name"] . "</td>";
-                                    echo "<td>" . $fila["username"] . "</td>";
-                                    echo "<td>" . $fila["created_at"] . "</td>";
-                                    echo "<td>" . $fila["curso_id"] . "</td>";
-                                    echo "</tr>";
+                    <div class="tablaMostrarStudents">
+                        <table border="0" id="tableee">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Nombre de Usuario</th>
+                                    <th>Fecha de Creación</th>
+                                    <th>Id Curso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (mysqli_num_rows($resultado) > 0) {
+                                    while ($fila = mysqli_fetch_assoc($resultado)) {
+                                        echo "<tr>";
+                                        echo "<td><input type='radio' name='alumno_id' value='" . $fila["id"] . "'></td>";
+                                        echo "<td>" . $fila["id"] . "</td>";
+                                        echo "<td>" . $fila["name"] . "</td>";
+                                        echo "<td>" . $fila["last_name"] . "</td>";
+                                        echo "<td>" . $fila["username"] . "</td>";
+                                        echo "<td>" . $fila["created_at"] . "</td>";
+                                        echo "<td>" . $fila["curso_id"] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='7'>No hay alumnos registrados.</td></tr>";
                                 }
-                            } else {
-                                echo "<tr><td colspan='7'>No hay alumnos registrados.</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table><br>
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="botones-alumnos">
                         <button type="button" value="crearAlumnos"  onclick="mostrarFormularioA()" name="crearAlumnos" id="crearAlumnos">+ Add new Student</button>
                         <button type="submit" value="modificarA" name="modificarA" onclick="modificarAlumno()" id="modificarA">Modify Student</button>
