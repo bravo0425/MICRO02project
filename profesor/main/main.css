@@ -9,14 +9,21 @@
 
 body {
     font-family: 'Poppins';
-}
-
-.container {
     background-image: url(../../imagenes/fondo.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.container {
+    height: 690px;
+    width: 1250px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -190,9 +197,116 @@ body {
     width: 960px;
     height: 690px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
 }
+
+.card{
+    background-color: #fafafa20;
+    border-radius: 15px;
+}
+
+#arriba{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    height: 180px;
+    overflow: hidden;
+}
+
+
+#mobileApp{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E2FF32;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px !important;
+}
+
+#lastActivities{
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    padding: 10px;
+}
+
+#lastActivities h1{
+    font-size: 1.3rem;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+#cards-activities{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.lastActivity{
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #fafafa20;
+    color: #ffffff;
+    width: 200px;
+}
+
+
+
+#abajo{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    overflow: hidden;
+    height: 500px;
+
+}
+
+#lastProject{
+    width: 300px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    color: #ffffff;
+}
+
+#abajoRight{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#estadisticaAlumnos{
+    height: 270px;
+    padding: 10px 15px;
+    color: #ffffff;
+}
+
+#hardmode{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#hardmode button{
+    width: 150px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+/*
 
 #left{
     width: 400px;
@@ -222,11 +336,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #E2FF32 !important;
+    background-color: #E2FF32;
     align-items: flex-start;
-    /* padding: 10px 10px 10px 15px; */
-
+    padding: 10px 10px 10px 15px !important;
 }
+
+
 
 #lastProject{
     width: 100%;
@@ -248,31 +363,5 @@ body {
 
 
 
-#lastActivities{
 
-    display: flex;
-    flex-direction: column;
-    /* gap: 10px; */
-    /* padding: 10px; */
-    height: 50vh;
-}
-
-#lastActivities h1{
-    font-size: 1.3rem;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-#cards-activities{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.lastActivity{
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #fafafa20;
-    color: #ffffff;
-    width: 200px;
-}
+*/

@@ -84,7 +84,9 @@
 
         <!-- contenido -->
         <div class="contenido">
-            <div id="left">
+
+            <div id="arriba">
+
                 <div id="mobileApp" class="card">
                     <div class="titulosMobile">
                         <h2>User-friendly</h2>
@@ -93,21 +95,10 @@
                     <div class="redesSociales">
                         <a href="">Google</a>
                         <a href="">Apple</a>
-                        <a href="">flexa</a>
+                        <a href="">Flecha</a>
                     </div>
                 </div>
-                <div id="lastProject" class="card">
-                    <div id="titulo">
-                        <h1>Last project</h1>
-                        <h2>MICRO02-DAW</h2>
-                    </div>
-                    <img src="../../imagenes/project.jpg" alt="">
-                    <div>
-                        <input type="text" placeholder="Find whatever">
-                    </div>
-                </div>
-            </div>
-            <div id="right">
+
                 <div id="lastActivities" class="card">
                     <h1>Last Activities</h1>
                     <div id="cards-activities">
@@ -128,19 +119,42 @@
                         </div>
                     </div>
                 </div>
-                <div id="estadisticaAlumnos" class="card">
-                    <h1>Students Scores</h1>
-                    <div id="grafica">
-
-                    </div>
-                </div>
-                <div id="hardmode" class="card">
-                    <button>Estadisticas</button>
-                    <button>Ranking</button>
-                </div>
+                
             </div>
 
 
+            <div id="abajo">
+
+                <div id="abajoLeft">
+
+                    <div id="lastProject" class="card">
+                        <div id="titulo">
+                            <h1>Last project</h1>
+                            <h2>MICRO02-DAW</h2>
+                        </div>
+                        <img src="../../imagenes/project.jpg" alt="" style="width: 300px;">
+                        <div>
+                            <input type="text" placeholder="Find whatever">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="abajoRight">
+                    <div id="estadisticaAlumnos" class="card">
+                        <h1>Students Scores</h1>
+                        <div id="grafica">
+
+                        </div>
+                    </div>
+
+                    <div id="hardmode" class="card">
+                        <button>Estadisticas</button>
+                        <button>Ranking</button>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
     </div>
