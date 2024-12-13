@@ -24,6 +24,8 @@ body {
     gap: 30px;
 }
 
+/*MENU LATERAL*/
+
 .contenedor-nav {
     display: flex;
     flex-direction: column;
@@ -34,22 +36,29 @@ body {
 
 .nav {
     background-color: #FFFFFF20;
-    width: 300px;
-    height: 410px;
+    width: 280px;
+    height: 450px;
     border-radius: 15px;
+    padding: 5px;
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    gap: 20px;
 }
 
 .titulo {
-    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .titulo h1 {
-    margin-bottom: 20px;
+    font-size: 2.3rem;
+    font-weight: 400;
 }
 
 .nav .usuario {
@@ -57,23 +66,37 @@ body {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 15px 25px;
+    padding: 10px 0px;
     border-radius: 15px;
-    background-color: #4D4D4D;
+    background-color: #ffffff50;
+    width: 200px;
+}
+
+.usuario h3{
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 
 .navbar {
-    margin-top: 20px;
-    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu {
+    width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px 0;
+    border: 0px;
     cursor: pointer;
     gap: 10px;
+    background-color: #ffffff00;
+    color: #ffffff;
+    transition: all 0.3s;
 }
 
 .menu h2 {
@@ -82,17 +105,17 @@ body {
 }
 
 .menu:hover {
-    background-color: #333;
+    background-color: #ffffff19;
     border-radius: 15px;
 }
 
 .menu.active {
-    background-color: #4D4D4D;
+    background-color: #ffffff40;
     border-radius: 15px;
 }
 
 .update {
-    width: 300px;
+    width: 280px;
     height: 150px;
     background-color: #FFFFFF20;
     display: flex;
@@ -100,6 +123,8 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 15px;
+    gap: 10px;
+    padding: 5px;
 }
 
 .update h4 {
@@ -111,7 +136,6 @@ body {
     font-size: 0.8rem;
     color: #C1C1C1;
     font-weight: 300;
-    padding: 10px;
 }
 
 .botones-update #update {
@@ -133,7 +157,7 @@ body {
 }
 
 .log-out {
-    width: 300px;
+    width: 280px;
     height: 50px;
     background-color: #FFFFFF20;
     display: flex;
@@ -143,12 +167,24 @@ body {
     color: #C2C2C2;
     border-radius: 15px;
     border: 0;
+    transition: all 0.3s;
 }
 
 .log-out h2 {
     font-size: 1.2rem;
     font-weight: 400;
 }
+
+.log-out:hover {
+    background-color: #FFFFFF40;
+}
+
+
+/*Fin de menu lateral*/
+
+
+/*CONTENIDO*/
+
 
 .contenido {
     width: 960px;

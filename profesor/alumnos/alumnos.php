@@ -23,6 +23,15 @@
         updateAlumno($conn);
     }
 
+    if (!empty($_POST['logout'])) {
+        session_unset();
+        session_destroy();
+        header('Location: ../../login/login.php');
+        exit();
+    }
+
+    /*
+    */
     $query = "SELECT * FROM alumnos";
     $resultado = mysqli_query($conn, $query);
 
@@ -47,23 +56,23 @@
                     </div>
                 </div>
                 <div class="navbar">
-                    <button class="menu">
+                    <button onclick="goDasboard()" class="menu">
                         <img src="../../imagenes/dashboard.png" width="27px">
                         <h2>Dashboard</h2>
                     </button>
-                    <button class="menu">
+                    <button onclick="goCursos()" class="menu">
                         <img src="../../imagenes/cursos.png" width="27px">
                         <h2>Cursos</h2>
                     </button>
-                    <button class="menu active">
+                    <button onclick="goStudents()" class="menu active">
                         <img src="../../imagenes/students.png" width="27px">
                         <h2>Students</h2>
                     </button>
-                    <button class="menu">
+                    <button onclick="goChat()" class="menu">
                         <img src="../../imagenes/chat.png" width="27px">
                         <h2>Chat</h2>
                     </button>
-                    <button class="menu">
+                    <button onclick="goSettings()" class="menu">
                         <img src="../../imagenes/settings.png" width="27px">
                         <h2>Settings</h2>
                     </button>
@@ -77,10 +86,12 @@
                     <button type="button" id="more">More</button>
                 </div>
             </div>
-            <button class="log-out" >
-                <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
-                <h2>Log out</h2>
-            </button>
+            <form action="" method="POST">
+                <button type="submit" name="logout" value="tonto" class="log-out">
+                    <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
+                    <h2>Log out</h2>
+                </button>
+            </form>
         </div>
 
         <div class="contenido">
@@ -177,16 +188,7 @@
             </div>
         </div>
     </div>
-    <script>
-        function mostrarFormularioA() {
-            document.querySelector("#listaAlumnos").style = "display: none;";
-            document.querySelector("#crearAlumno").style = "display: flex;";
-        }
 
-        function mostrarTabla() {
-            document.querySelector("#listaAlumnos").style = "display: flex;";
-            document.querySelector("#crearAlumno").style = "display: none;";
-        }
-    </script>
+    <script src="alumnos.js?version=<?php echo time(); ?>"></script>
 </body>
 </html>

@@ -24,6 +24,9 @@ body {
     gap: 30px;
 }
 
+
+/*-------------MENU LATERAL---------------*/
+
 .contenedor-nav {
     display: flex;
     flex-direction: column;
@@ -176,6 +179,14 @@ body {
 .log-out:hover {
     background-color: #FFFFFF40;
 }
+
+/*Fin de menu lateral*/
+
+
+
+
+
+/*CONTENIDO*/
 
 .contenido {
     width: 960px;

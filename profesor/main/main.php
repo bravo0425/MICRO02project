@@ -13,6 +13,13 @@
         exit();
     }
 
+    if (!empty($_POST['logout'])) {
+        session_unset();
+        session_destroy();
+        header('Location: ../../login/login.php');
+        exit();
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +30,10 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <div class="container">      
+
+<!--Container general-->
+    <div class="container">     
+        <!-- menu izquierda--> 
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
@@ -34,26 +44,26 @@
                     </div>
                 </div>
                 <div class="navbar">
-                    <div class="menu">
+                    <button onclick="goDasboard()" class="menu active">
                         <img src="../../imagenes/dashboard.png" width="27px">
                         <h2>Dashboard</h2>
-                    </div>
-                    <div class="menu">
+                    </button>
+                    <button onclick="goCursos()" class="menu">
                         <img src="../../imagenes/cursos.png" width="27px">
                         <h2>Cursos</h2>
-                    </div>
-                    <div class="menu active">
+                    </button>
+                    <button onclick="goStudents()" class="menu">
                         <img src="../../imagenes/students.png" width="27px">
                         <h2>Students</h2>
-                    </div>
-                    <div class="menu">
+                    </button>
+                    <button onclick="goChat()" class="menu">
                         <img src="../../imagenes/chat.png" width="27px">
                         <h2>Chat</h2>
-                    </div>
-                    <div class="menu">
+                    </button>
+                    <button onclick="goSettings()" class="menu">
                         <img src="../../imagenes/settings.png" width="27px">
                         <h2>Settings</h2>
-                    </div>
+                    </button>
                 </div>
             </div>
             <div class="update">
@@ -64,12 +74,15 @@
                     <button type="button" id="more">More</button>
                 </div>
             </div>
-            <button class="log-out">
-                <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
-                <h2>Log out</h2>
-            </button>
+            <form action="" method="POST">
+                <button type="submit" name="logout" value="tonto" class="log-out">
+                    <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
+                    <h2>Log out</h2>
+                </button>
+            </form>
         </div>
 
+        <!-- contenido -->
         <div class="contenido">
             <div id="left">
                 <div id="mobileApp" class="card">
@@ -121,5 +134,6 @@
         </div>
     </div>
         
+    <script src="main.js"></script>
 </body>
 </html>
