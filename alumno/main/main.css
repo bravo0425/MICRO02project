@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+body {
+    font-family: 'Poppins';
+}
+
+.container {
+    background-image: url(../../imagenes/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+/*MENU LATERAL*/
+
+.contenedor-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav {
+    background-color: #FFFFFF20;
+    width: 280px;
+    height: 450px;
+    border-radius: 15px;
+    padding: 5px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.titulo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.titulo h1 {
+    font-size: 2.3rem;
+    font-weight: 400;
+}
+
+.nav .usuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0px;
+    border-radius: 15px;
+    background-color: #ffffff50;
+    width: 200px;
+}
+
+.usuario h3{
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    border: 0px;
+    cursor: pointer;
+    gap: 10px;
+    background-color: #ffffff00;
+    color: #ffffff;
+    transition: all 0.3s;
+}
+
+.menu h2 {
+    font-size: 1.1rem;
+    font-weight: 300 !important;
+}
+
+.menu:hover {
+    background-color: #ffffff19;
+    border-radius: 15px;
+}
+
+.menu.active {
+    background-color: #ffffff40;
+    border-radius: 15px;
+}
+
+.update {
+    width: 280px;
+    height: 150px;
+    background-color: #FFFFFF20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    gap: 10px;
+    padding: 5px;
+}
+
+.update h4 {
+    font-size: 1.1rem;
+    color: #FFFFFF;
+}
+
+.update p {
+    font-size: 0.8rem;
+    color: #C1C1C1;
+    font-weight: 300;
+}
+
+.botones-update #update {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #E2FF32;
+    font-weight: 500;
+}
+
+.botones-update #more {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #D9D9D9;
+    font-weight: 500;
+}
+
+.log-out {
+    width: 280px;
+    height: 50px;
+    background-color: #FFFFFF20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #C2C2C2;
+    border-radius: 15px;
+    border: 0;
+    transition: all 0.3s;
+}
+
+.log-out h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.log-out:hover {
+    background-color: #FFFFFF40;
+}
+
+
+/*Fin de menu lateral*/
+
+
+/*CONTENIDO*/
+
+
+.contenido {
+    width: 960px;
+    height: 650px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+#left{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#right{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+}
+
+.card{
+    background-color: #fafafa20;
+    border-radius: 15px;
+}
+
+#mobileApp{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E2FF32 !important;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px;
+
+}
+
+#lastProject{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px;
+    gap: 20px;
+    overflow: hidden;
+}
+
+#lastProject img{
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+}

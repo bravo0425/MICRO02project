@@ -110,22 +110,33 @@
             <div id="right">
                 <div id="lastActivities" class="card">
                     <h1>Last Activities</h1>
-                    <div class="lastActivity">
-                        <h2>Create DB</h2>
-                        <p>8-12-2024</p>
-                        <p>10:00</p>
-                    </div>
-                    <div class="lastActivity" class="card">
-                        <h2>Create DB</h2>
-                        <p>8-12-2024</p>
-                        <p>10:00</p>
+                    <div id="cards-activities">
+                        <div class="lastActivity">
+                            <h2>Create DB</h2>
+                            <p>8-12-2024</p>
+                            <p>10:00</p>
+                        </div>
+                        <div class="lastActivity">
+                            <h2>Create DB</h2>
+                            <p>8-12-2024</p>
+                            <p>10:00</p>
+                        </div>
+                        <div class="lastActivity">
+                            <h2>Create DB</h2>
+                            <p>8-12-2024</p>
+                            <p>10:00</p>
+                        </div>
                     </div>
                 </div>
                 <div id="estadisticaAlumnos" class="card">
                     <h1>Students Scores</h1>
+                    <div id="grafica">
+
+                    </div>
                 </div>
-                <div id="calendario" class="card">
-                    <h1>Calendar</h1>
+                <div id="hardmode" class="card">
+                    <button>Estadisticas</button>
+                    <button>Ranking</button>
                 </div>
             </div>
 
