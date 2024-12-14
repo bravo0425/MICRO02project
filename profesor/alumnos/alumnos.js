@@ -13,3 +13,7 @@ function mostrarTabla() {
 function goDasboard() {
     window.location.href = '../main/main.php';
 }
+
+function goCursos(){
+    window.location.href = '../cursos/cursos.php';
+}
