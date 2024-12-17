@@ -5,8 +5,11 @@
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];
+        $idProfe = $_SESSION['idProfe'];
         $nom = $_SESSION['nombre'];
         $apellido = $_SESSION['apellido'];
+        $idCurso = $_SESSION['idCurso'];
+        
     }else{
         header('Location: ../../login/login.php');
         exit();
@@ -18,6 +21,18 @@
         header('Location: ../../login/login.php');
         exit();
     }
+
+    $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
+    $r = mysqli_query($conn, $selectCurso);
+
+    if(mysqli_num_rows($r) > 0){
+        $fila = mysqli_fetch_assoc($r);
+
+        echo $fila['id'];
+        echo $fila['nombre'];
+    }
+
+    mysqli_close($conn);
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +54,7 @@
                     <h1>TASKIFY®</h1>
                     <div class="usuario">
                         <img src="../../imagenes/usuario.png" width="23px">
-                        <h3><?php echo $nom . ' ' . $apellido ?></h3>
+                        <h3><?php echo $nom . ' ' . $apellido?></h3>
                     </div>
                 </div>
                 <div class="navbar">
@@ -89,6 +104,7 @@
                 <div id="mobileApp" class="card">
                     <div class="titulosMobile">
                         <h2>Cursos</h2>
+                        
                     </div>
                 </div>
 

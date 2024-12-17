@@ -27,6 +27,7 @@ if (isset($_POST["entrar"])) {
             $fila = mysqli_fetch_assoc($r);
 
             $_SESSION['nombreUser'] = $nom;
+            $_SESSION['idAlumno'] = $fila['id'];
             $_SESSION['nombre'] = $fila['name'];
             $_SESSION['apellido'] = $fila['last_name'];
 
@@ -39,8 +40,10 @@ if (isset($_POST["entrar"])) {
             if (mysqli_num_rows($resultado) > 0) {
                 $filaP = mysqli_fetch_assoc($resultado);
                 $_SESSION['nombreUser'] = $nom;
+                $_SESSION['idProfe'] = $filaP['id'];
                 $_SESSION['nombre'] = $filaP['name'];
                 $_SESSION['apellido'] = $filaP['last_name'];
+                $_SESSION['idCurso'] = $filaP['curso_id'];
 
                 header('location: ../profesor/main/main.php');
                 exit();
