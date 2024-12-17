@@ -370,31 +370,8 @@ body {
 /*---------DIV de abajo del contenido-------------*/
 
 
-#abajoRight{
-    width: 100%;
-    height: 100%;
+#abajo{
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
-#estadisticaAlumnos{
-    height: 270px;
-    padding: 10px 15px;
-    color: #ffffff;
-}
-
-#hardmode{
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-#hardmode button{
-    width: 150px;
-    padding: 10px;
-    border-radius: 15px;
 }

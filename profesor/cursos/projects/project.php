@@ -93,66 +93,24 @@
                     <button onclick="goCursos()">Volver a cursos</button>
                 </div>
 
-                <div id="lastActivities" class="card">
-                    <h1>DAW</h1>
-                    <div id="cards-activities">
-                        <div class="lastActivity">
-                            <h2>Projects: 5</h2>
-                        </div>
-                        <div class="lastActivity">
-                            <h2>Students: 25</h2>
-                        </div>
+                <div id="description" class="card">
+                    <h1>Micro02</h1>
+                    <div id="text">
+                        <p>Desarrollar una página web estática con HTML5 y CSS para comprender las bases del desarrollo front-end.</p>
                     </div>
                 </div>
                 
             </div>
 
 
-            <div id="abajo">
-
-                <div id="abajoLeft">
-
-                    <div id="divProjects" class="card">
-                        <div id="titulo">
-                            <h1>Projects</h1>
-                            <div class="listadoProjects">
-                                <button>
-                                    <img src="../../../imagenes/cursos.png" alt="">
-                                    <p>Micro01</p>
-                                </button>
-                                <button>
-                                    <img src="../../../imagenes/cursos.png" alt="">
-                                    <p>Micro02</p>
-                                </button>
-                                <button>
-                                    <img src="../../../imagenes/cursos.png" alt="">
-                                    <p>Micro03</p>
-                                </button>
-                                <button>
-                                    <img src="../../../imagenes/cursos.png" alt="">
-                                    <p>Micro04</p>
-                                </button>
-                                <button>
-                                    <img src="../../../imagenes/cursos.png" alt="">
-                                    <p>Micro05</p>
-                                </button>
-                            </div>
-                        </div>
-                        <div id="botonesProjects">
-                            <button class="addProject">+Add</button>
-                            <button class="deleteProject">Delete</button>
-                        </div>
-                    </div>
-
+            <div id="abajo" class="card">
+                <div id="tabla">
+                    <table>
+                        
+                    </table>
                 </div>
+                <div id="buttonsTabla">
 
-                <div id="abajoRight">
-                    <div id="estadisticaAlumnos" class="card">
-                        <h1>Students Scores</h1>
-                        <div id="grafica">
-
-                        </div>
-                    </div>
                 </div>
 
             </div>

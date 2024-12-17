@@ -117,19 +117,19 @@
                                     <img src="../../imagenes/cursos.png" alt="">
                                     <p>Micro01</p>
                                 </button>
-                                <button>
+                                <button onclick="irProject()">
                                     <img src="../../imagenes/cursos.png" alt="">
                                     <p>Micro02</p>
                                 </button>
-                                <button>
+                                <button onclick="irProject()">
                                     <img src="../../imagenes/cursos.png" alt="">
                                     <p>Micro03</p>
                                 </button>
-                                <button>
+                                <button onclick="irProject()">
                                     <img src="../../imagenes/cursos.png" alt="">
                                     <p>Micro04</p>
                                 </button>
-                                <button>
+                                <button onclick="irProject()">
                                     <img src="../../imagenes/cursos.png" alt="">
                                     <p>Micro05</p>
                                 </button>
