@@ -225,152 +225,23 @@ body {
     padding: 10px 10px 10px 15px !important;
 }
 
-#lastActivities{
+
+/*---------DIV de descripcion-------------*/
+#description{
     width: 640px;
     display: flex;
-    flex-direction: column;
-    gap: 10px; 
+    color: white;
     padding: 10px;
-    background-color: #fafafa20;
-}
-
-#lastActivities h1{
-    font-size: 1.3rem;
-    color: #ffffff;
-    font-weight: 600;
-}
-
-#cards-activities{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     gap: 10px;
 }
 
-.lastActivity{
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #fafafa20;
-    color: #ffffff;
-    width: 200px;
-}
-
-
-
 #abajo{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+    width: 960px;
     height: 500px;
-
-}
-
-/*-------DIV para mostrar projectos------------*/
-
-#divProjects{
-    width: 300px;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    padding: 10px;
-    color: #ffffff;
-}
-
-#titulo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.listadoProjects{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.listadoProjects button{
-    display: flex;
-    flex-direction: row;
-    width: 200px;
-    padding: 7px;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff10;
-    border: 0px;
-    gap: 10px;
-    border-radius: 15px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    transition: all 0.3s ease;
-}
-
-.listadoProjects button img{
-    width: 30px;
-    color: #000;
-}
-
-.listadoProjects button p{
-    color: #ffffff;
-}
-
-.listadoProjects button:hover{
-    background-color: #ffffff20;
-}
-
-#botonesProjects{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-#botonesProjects button{
-    display: flex;
-    flex-direction: row;
-    width: 100px;
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-    border: 0px;
-    border-radius: 15px;
-    font-weight: 400;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.addProject{
-    background-color: #A600FF;
-    
-}
-
-.addProject:hover{
-    background-color: #ba42ff;
-}
-
-
-.deleteProject{
-    background-color: #FFFFFF30;
-    color: #fafafa;
-}
-
-.deleteProject:hover{
-    background-color: #FFFFFF40;
-    color: #fafafa;
-}
-
-
-/*---------DIV de abajo del contenido-------------*/
-
-
-#abajo{
     display: flex;
     flex-direction: column;
     gap: 20px;

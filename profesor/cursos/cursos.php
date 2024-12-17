@@ -22,18 +22,6 @@
         exit();
     }
 
-    $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
-    $r = mysqli_query($conn, $selectCurso);
-
-    if(mysqli_num_rows($r) > 0){
-        $fila = mysqli_fetch_assoc($r);
-
-        echo $fila['id'];
-        echo $fila['nombre'];
-    }
-
-    mysqli_close($conn);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,7 +35,8 @@
 
 <!--Container general-->
     <div class="container">     
-        <!-- menu izquierda--> 
+
+        <!-- menu--> 
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
@@ -99,28 +88,39 @@
         <!-- contenido -->
         <div class="contenido">
 
+            <!-- arriba -->
             <div id="arriba">
 
-                <div id="mobileApp" class="card">
+                <div id="infoApp" class="card">
                     <div class="titulosMobile">
                         <h2>Cursos</h2>
-                        
                     </div>
                 </div>
 
-                <div id="lastActivities" class="card">
-                    <h1>DAW</h1>
-                    <div id="cards-activities">
-                        <div class="lastActivity">
+                <div id="infoCurso" class="card">
+                    <?php
+                        $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
+                        $r = mysqli_query($conn, $selectCurso);
+
+                        if(mysqli_num_rows($r) > 0){
+                            while($fila = mysqli_fetch_assoc($r)) {
+                                echo "<h1>". $fila['nombre'] ."</h1>";
+                            }
+                        }
+                    ?>
+                    <div id="estadisticasCurso">
+                        <div class="cardInfo">
+                            <p>Proyectos: 3</p>
                         </div>
-                        <div class="lastActivity">
+                        <div class="cardInfo">
+                            <p>Students: 25</p>
                         </div>
                     </div>
                 </div>
                 
             </div>
 
-
+            <!-- abajo -->
             <div id="abajo">
 
                 <div id="abajoLeft">
@@ -129,26 +129,21 @@
                         <div id="titulo">
                             <h1>Projects</h1>
                             <div class="listadoProjects">
-                                <button onclick="irProject()">
-                                    <img src="../../imagenes/cursos.png" alt="">
-                                    <p>Micro01</p>
-                                </button>
-                                <button onclick="irProject()">
-                                    <img src="../../imagenes/cursos.png" alt="">
-                                    <p>Micro02</p>
-                                </button>
-                                <button onclick="irProject()">
-                                    <img src="../../imagenes/cursos.png" alt="">
-                                    <p>Micro03</p>
-                                </button>
-                                <button onclick="irProject()">
-                                    <img src="../../imagenes/cursos.png" alt="">
-                                    <p>Micro04</p>
-                                </button>
-                                <button onclick="irProject()">
-                                    <img src="../../imagenes/cursos.png" alt="">
-                                    <p>Micro05</p>
-                                </button>
+                                <?php
+                                    $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
+                                    $r = mysqli_query($conn, $selectProject);
+
+                                    if(mysqli_num_rows($r) > 0){
+                                        while($fila = mysqli_fetch_assoc($r)) {
+                                            echo "<button onclick='irProject(". $fila['id'] .")'>
+                                                    <img src='../../imagenes/cursos.png' alt=''>
+                                                    <p>". $fila['titulo'] ."</p>
+                                                </button>";
+                                        }
+                                    }
+
+                                    mysqli_close($conn);
+                                ?>
                             </div>
                         </div>
                         <div id="botonesProjects">
@@ -157,7 +152,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div><!--Abajo Left-->
 
                 <div id="abajoRight">
                     <div id="estadisticaAlumnos" class="card">
@@ -168,11 +163,12 @@
                     </div>
                 </div>
 
-            </div>
 
-        </div>
-    </div>
+            </div><!--Abajo-->
+
+        </div><!--Contenido-->
+    </div><!--Container-->
         
-    <script src="curso.js"></script>
+    <script src="cursos.js"></script>
 </body>
 </html>

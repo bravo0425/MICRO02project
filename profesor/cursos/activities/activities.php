@@ -21,41 +21,6 @@
     }
 
 
-    if (isset($_GET['id'])) {
-        $idProject = $_GET['id'];
-    
-        // Consulta para obtener los detalles del proyecto
-        $queryProjects = "SELECT * FROM proyectos WHERE id = $idProject";
-        $result = mysqli_query($conn, $queryProjects);
-    
-        if (mysqli_num_rows($result) > 0) {
-            $project = mysqli_fetch_assoc($result);
-            $titulo = $project['titulo'];
-            $descripcion = $project['descripcion'];
-        } else {
-            $titulo = "Proyecto no encontrado";
-            $descripcion = "No hay detalles disponibles para este proyecto.";
-        }
-    
-        // Consulta para obtener las actividades relacionadas con el proyecto
-        $queryActividades = "SELECT * FROM actividades WHERE project_id = $idProject";
-        $resultActividades = mysqli_query($conn, $queryActividades);
-    
-        $actividades = [];
-        if (mysqli_num_rows($resultActividades) > 0) {
-            while ($actividad = mysqli_fetch_assoc($resultActividades)) {
-                $actividades[] = $actividad;
-            }
-        }
-    
-        mysqli_close($conn);
-    } else {
-        $titulo = "Error";
-        $descripcion = "No se recibió el ID del proyecto.";
-        $actividades = [];
-    }
-
-
 
 ?>
 <!DOCTYPE html>
@@ -63,12 +28,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumnos</title>
+    <title>TASKIFY - ACTIVITIES</title>
     <link rel="stylesheet" href="project.css">
 </head>
 <body>
 
-<!--Container general-->
+<!--Container general-->    
     <div class="container">     
         <!-- menu izquierda--> 
         <div class="contenedor-nav">
@@ -126,9 +91,9 @@
 
                 <div id="mobileApp" class="card">
                     <div class="titulosMobile">
-                        <h2>Projects</h2>
+                        <h2>Activity</h2>
                     </div>
-                    <button onclick="goCursos()">Volver a cursos</button>
+                    <button onclick="goCursos()">Volver a project</button>
                 </div>
 
                 <div id="description" class="card">
@@ -142,33 +107,6 @@
 
 
             <div id="abajo" class="card">
-                <div id="tabla">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre de la Actividad</th>
-                                <th>Descripción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if (!empty($actividades)) {
-                                foreach ($actividades as $actividad) {
-                                    echo "<tr>";
-                                    echo "<td><button onclick='goActivity()'>" . htmlspecialchars($actividad['titulo']) . "</button></td>";
-                                    echo "<td>" . htmlspecialchars($actividad['descripcion']) . "</td>";
-                                    echo "</tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='2'>No se encontraron actividades para este proyecto.</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="buttonsTabla">
-
-                </div>
 
             </div>
 
