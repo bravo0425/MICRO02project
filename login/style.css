@@ -23,8 +23,8 @@ body {
 
 .container h1 {
     color: aliceblue;
-    font-weight: 900;
-    font-size: 40px;
+    font-weight: 600;
+    font-size: 2.5rem;
 }
 
 .form {
@@ -42,6 +42,8 @@ body {
     padding-left: 50px;
     color: #FFFFFF;
     padding-top: 10px;
+    font-weight: 400;
+    font-size: 1.3rem;
 }
 
 .form form {
@@ -71,9 +73,10 @@ form #bottonEntrar {
     width: 120px;
     height: 40px;
     background-color: #E2FF32;
-    color: 000000;
-    font-size: 1.1rem;
+    color: #000000;
+    font-size: 0.9rem;
     font-weight: 600;
     border-radius: 15px;
+    border: 0px !important;
     font-family: 'Poppins';
 }

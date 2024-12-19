@@ -31,7 +31,7 @@ if (isset($_POST["entrar"])) {
             $_SESSION['nombre'] = $fila['name'];
             $_SESSION['apellido'] = $fila['last_name'];
 
-            header('Location: ../alumno/main/main.php');
+            header('Location: ../alumno/main/index.php');
             exit();
         }else{
             $consultaP = "SELECT * FROM profesores WHERE username = '$nom' AND pass = '$password'";
@@ -45,7 +45,7 @@ if (isset($_POST["entrar"])) {
                 $_SESSION['apellido'] = $filaP['last_name'];
                 $_SESSION['idCurso'] = $filaP['curso_id'];
 
-                header('location: ../profesor/main/main.php');
+                header('location: ../profesor/main/index.php');
                 exit();
             }
         }
@@ -68,13 +68,12 @@ mysqli_close($conn);
 
 <body>
     <div class="container">
-        <h1>TASKIFY®</h1>
+        <h1>Taskify®</h1>
         <div class="form">
             <h2>Log In</h2>
             <form action="login.php" method="POST">
                 <input type="text" id="username" name="username" placeholder="Username" required>
                 <input type="password" id="password" name="password" placeholder="Password" required>
-
                 <button type="submit" id="bottonEntrar" name="entrar" value="entrar">Join Now</button>
             </form>
         </div>

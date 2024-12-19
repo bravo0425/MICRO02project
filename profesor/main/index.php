@@ -1,15 +1,13 @@
 <?php
     include "../../conexion.php";
+    include "functionsMain.php";
 
     session_start();
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];
-        $idProfe = $_SESSION['idProfe'];
         $nom = $_SESSION['nombre'];
         $apellido = $_SESSION['apellido'];
-        $idCurso = $_SESSION['idCurso'];
-        
     }else{
         header('Location: ../../login/login.php');
         exit();
@@ -29,15 +27,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumnos</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="cursos.css">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
 
 <!--Container general-->
     <div class="container">     
-
-        <!-- menu--> 
+        <!-- menu izquierda--> 
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
@@ -48,7 +44,7 @@
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
-                    <button onclick="goDasboard()" class="menu">
+                    <button onclick="goDasboard()" class="menu active">
                         <div class="positionButton">
                             <div class="imgNav">
                                 <img src="../../imagenes/dashboard.png" width="27px">
@@ -59,7 +55,7 @@
                         </div>
                         
                     </button>
-                    <button onclick="goCursos()" class="menu active">
+                    <button onclick="goCursos()" class="menu">
                         <div class="positionButton">
                             <div class="imgNav">
                                 <img src="../../imagenes/cursos.png" width="27px">
@@ -123,87 +119,85 @@
         <!-- contenido -->
         <div class="contenido">
 
-            <!-- arriba -->
-            <div id="arriba">
-
-                <div id="infoApp" class="card">
+            <div id="left">
+                <div id="mobileApp" class="card">
                     <div class="titulosMobile">
-                        <h2>Cursos</h2>
+                        <h2>User-friendly</h2>
+                        <h2>mobile app</h2>
+                    </div>
+                    <div class="redesSociales">
+                        <div class="centLeft">
+                            <a href="" class="svgG">G</a>
+                            <a href="" class="svgApple"><img src="../../imagenes/747.png" alt=""></a>
+                        </div>
+                        <a href="" class="svgArrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
-
-                <div id="infoCurso" class="card">
-                    <?php
-                        $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
-                        $r = mysqli_query($conn, $selectCurso);
-
-                        if(mysqli_num_rows($r) > 0){
-                            while($fila = mysqli_fetch_assoc($r)) {
-                                echo "<h1>". $fila['nombre'] ."</h1>";
-                            }
-                        }
-                    ?>
-                    <div id="estadisticasCurso">
-                        <div class="cardInfo">
-                            <p>Proyectos: 3</p>
+                <div id="lastProject" class="card">
+                    <div class="contProject">
+                        <div id="tituloProject">
+                            <div class="firsttitle">
+                                <h1>Last project</h1>
+                                <button>All ></button>
+                            </div>
+                            <div class="secondtitle">
+                                <button>MICRO02-DAW -></button>
+                            </div>
                         </div>
-                        <div class="cardInfo">
-                            <p>Students: 25</p>
+                        <img src="../../imagenes/project.jpg" alt="" style="width: 300px;">
+                        <div class="inputFind">
+                            <input type="text" placeholder="Find whatever">
                         </div>
                     </div>
                 </div>
                 
             </div>
 
-            <!-- abajo -->
-            <div id="abajo">
 
-                <div id="abajoLeft">
+            <div id="right">
 
-                    <div id="divProjects" class="card">
-                        <div id="titulo">
-                            <h1>Projects</h1>
-                            <div class="listadoProjects">
-                                <?php
-                                    $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
-                                    $r = mysqli_query($conn, $selectProject);
-
-                                    if(mysqli_num_rows($r) > 0){
-                                        while($fila = mysqli_fetch_assoc($r)) {
-                                            echo "<button onclick='irProject(". $fila['id'] .")'>
-                                                    <img src='../../imagenes/cursos.png' alt=''>
-                                                    <p>". $fila['titulo'] ."</p>
-                                                </button>";
-                                        }
-                                    }
-
-                                    mysqli_close($conn);
-                                ?>
-                            </div>
+                <div id="lastActivities">
+                    <h1>Last Activities</h1>
+                    <div id="cards-activities">
+                        <div class="lastActivity">
+                            <h2>Create DB</h2>
+                            <p>8-12-2024</p>
+                            <p>10:00</p>
                         </div>
-                        <div id="botonesProjects">
-                            <button class="addProject">+Add</button>
-                            <button class="deleteProject">Delete</button>
+                        <div class="lastActivity">
+                            <h2>Create DB</h2>
+                            <p>8-12-2024</p>
+                            <p>10:00</p>
                         </div>
-                    </div>
-
-                </div><!--Abajo Left-->
-
-                <div id="abajoRight">
-                    <div id="estadisticaAlumnos" class="card">
-                        <h1>Students Scores</h1>
-                        <div id="grafica">
-
+                        <div class="lastActivity">
+                            <h2>Create DB</h2>
+                            <p>8-12-2024</p>
+                            <p>10:00</p>
                         </div>
                     </div>
                 </div>
 
+                <div id="estadisticaAlumnos" class="card">
+                    <h1>Students Scores</h1>
+                    <div id="grafica">
 
-            </div><!--Abajo-->
+                    </div>
+                </div>
 
-        </div><!--Contenido-->
-    </div><!--Container-->
+                <div id="hardmode" class="card">
+                    <button class="yellowbtn">Estadisticas</button>
+                    <button class="lilabtn">Ranking</button>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
         
-    <script src="cursos.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ function goStudents() {
 }
 
 function goDasboard(){
-    window.location.href = '../../main/main.php';
+    window.location.href = '../../main/index.php';
 }
 
 function goCursos(){

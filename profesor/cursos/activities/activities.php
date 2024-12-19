@@ -24,95 +24,90 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TASKIFY - ACTIVITIES</title>
-    <link rel="stylesheet" href="project.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto con Cake Frame y Animaciones</title>
+  <style>
+    /* Estilos iniciales */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr); /* 12 columnas para el diseño */
+      grid-template-rows: repeat(12, 1fr); /* 12 filas */
+      gap: 20px; /* Espacio entre los elementos */
+      background: #f4f4f4; /* Fondo gris claro */
+      padding: 20px;
+      overflow: hidden; /* Evitar barras de desplazamiento */
+    }
+
+    /* Fondo de la página con animación */
+    .background {
+      grid-column: 1 / 13; /* Ocupa toda la anchura */
+      grid-row: 1 / 13; /* Ocupa toda la altura */
+      background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Fondo de degradado */
+      border-radius: 10px;
+      animation: backgroundAnim 5s ease-in-out infinite; /* Animación de fondo */
+    }
+
+    /* Animación del fondo */
+    @keyframes backgroundAnim {
+      0% {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+      }
+      50% {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+      }
+      100% {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+      }
+    }
+
+    /* Caja central o contenido con animación */
+    .content {
+      grid-column: 3 / 11; /* Alineación central en el grid */
+      grid-row: 3 / 11; /* Alineación central en el grid */
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      opacity: 0; /* Inicialmente invisible */
+      animation: slideUp 1s ease-out forwards; /* Animación de deslizamiento */
+    }
+
+    /* Animación de deslizamiento */
+    @keyframes slideUp {
+      0% {
+        transform: translateY(100px); /* Comienza desde abajo */
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0); /* Llega a la posición final */
+        opacity: 1;
+      }
+    }
+
+    /* Texto dentro de la caja */
+    .content h1 {
+      font-size: 3em;
+      text-align: center;
+      color: #333;
+    }
+
+    .content p {
+      font-size: 1.2em;
+      color: #666;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-
-<!--Container general-->    
-    <div class="container">     
-        <!-- menu izquierda--> 
-        <div class="contenedor-nav">
-            <div class="nav">
-                <div class="titulo">
-                    <h1>TASKIFY®</h1>
-                    <div class="usuario">
-                        <img src="../../../imagenes/usuario.png" width="23px">
-                        <h3><?php echo $nom . ' ' . $apellido ?></h3>
-                    </div>
-                </div>
-                <div class="navbar">
-                    <button onclick="goDasboard()" class="menu">
-                        <img src="../../../imagenes/dashboard.png" width="27px">
-                        <h2>Dashboard</h2>
-                    </button>
-                    <button onclick="goCursos()" class="menu active">
-                        <img src="../../../imagenes/cursos.png" width="27px">
-                        <h2>Cursos</h2>
-                    </button>
-                    <button onclick="goStudents()" class="menu">
-                        <img src="../../../imagenes/students.png" width="27px">
-                        <h2>Students</h2>
-                    </button>
-                    <button onclick="goChat()" class="menu">
-                        <img src="../../../imagenes/chat.png" width="27px">
-                        <h2>Chat</h2>
-                    </button>
-                    <button onclick="goSettings()" class="menu">
-                        <img src="../../../imagenes/settings.png" width="27px">
-                        <h2>Settings</h2>
-                    </button>
-                </div>
-            </div>
-            <div class="update">
-                <h4>Try to update</h4>
-                <p>Version 1.0v</p>
-                <div class="botones-update">
-                    <button type="button" id="update">Update</button>
-                    <button type="button" id="more">More</button>
-                </div>
-            </div>
-            <form action="" method="POST">
-                <button type="submit" name="logout" value="tonto" class="log-out">
-                    <img src="../../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
-                    <h2>Log out</h2>
-                </button>
-            </form>
-        </div>
-
-        <!-- contenido -->
-        <div class="contenido">
-
-            <div id="arriba">
-
-                <div id="mobileApp" class="card">
-                    <div class="titulosMobile">
-                        <h2>Activity</h2>
-                    </div>
-                    <button onclick="goCursos()">Volver a project</button>
-                </div>
-
-                <div id="description" class="card">
-                    <h1><?php echo htmlspecialchars($titulo); ?></h1>
-                    <div id="text">
-                        <p><?php echo htmlspecialchars($descripcion); ?></p>
-                    </div>
-                </div>
-                
-            </div>
-
-
-            <div id="abajo" class="card">
-
-            </div>
-
-        </div>
-    </div>
-        
-    <script src="project.js"></script>
+  <div class="background"></div>
+  <div class="content">
+    <h1>Bienvenido a mi Proyecto</h1>
+    <p>Este es un ejemplo de un diseño con animaciones usando CSS Grid.</p>
+  </div>
 </body>
 </html>
