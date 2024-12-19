@@ -9,3 +9,8 @@ function goDasboard(){
 function goCursos(){
     window.location.href = '../cursos.php';
 }
+
+function addActivity(){
+    document.querySelector("#insertarActividad").style = "display: flex;";
+    document.querySelector("#tabla").style = "display: none;";
+}

@@ -101,8 +101,10 @@
                     <img src="../../imagenes/students-negro.png" width="27px">
                 </div>
                 <div class="importar-estudiantes">
-                    <h2>+ Import Students CSV</h2>
+                    <input type="file"  value="+ Import Students CSV">
                 </div>
+                
+                
             </div>
             <div class="tabla">
                 <form method="POST" action="" id="listaAlumnos">

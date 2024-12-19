@@ -2,7 +2,7 @@
 
     session_start();
     include "../../../conexion.php";
-
+    include "functions.php";
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];
@@ -48,7 +48,7 @@
             }
         }
     
-        mysqli_close($conn);
+        
     } else {
         $titulo = "Error";
         $descripcion = "No se recibió el ID del proyecto.";
@@ -56,6 +56,11 @@
     }
 
 
+    if(!empty($_POST['añadir'])) {
+        crearActividad($conn);
+    }
+
+    mysqli_close($conn);
 
 ?>
 <!DOCTYPE html>
@@ -128,7 +133,7 @@
                     <div class="titulosMobile">
                         <h2>Projects</h2>
                     </div>
-                    <button onclick="goCursos()">Volver a cursos</button>
+                    <button class='volverCursos' onclick="goCursos()"><a href=""><-</a> Volver a cursos</button>
                 </div>
 
                 <div id="description" class="card">
@@ -146,8 +151,10 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Nombre de la Actividad</th>
-                                <th>Descripción</th>
+                                <th>Activities</th>
+                                <th>Description</th>
+                                <th>Due_Date</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,6 +164,8 @@
                                     echo "<tr>";
                                     echo "<td><button onclick='goActivity()'>" . htmlspecialchars($actividad['titulo']) . "</button></td>";
                                     echo "<td>" . htmlspecialchars($actividad['descripcion']) . "</td>";
+                                    echo "<td>" . htmlspecialchars($actividad['due_date']) . "</td>";
+                                    echo "<td>" . $actividad['active'] ."</td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -166,8 +175,41 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="buttonsTabla">
 
+                <div id="insertarActividad" >
+                    <form action="" method="POST" id="formInsert">
+                        <h2>Crear una nueva Actividad</h2>
+                        <div class="column">
+                            <label for="tituloActNew">titulo</label>
+                            <input type="text" name="tituloActNew" id="">
+                        </div>
+                        <div class="column">
+                            <label for="descriptionActNew">descripcion</label>
+                            <textarea type="text" name="descriptionActNew" id=""></textarea>
+                        </div>
+                        <div class="column">
+                            <label for="dueDateActNew">due_date</label>
+                            <input type="date" name="dueDateActNew" id="">
+                        </div>
+                        <div class="column">
+                            <label for="estadoActNew">Estado</label>
+                            <select name="estadoActNew" id="">
+                                <option value="1">Activa</option>
+                                <option value="0">Inactiva</option>
+                            </select>
+                        </div>
+                        
+                        <div id="buttonsInsert">
+                            <input type="submit" id="add" name="añadir" value="añadir">
+                            <input type="submit" id="cancel" name="cancelar" value="cancelar">
+                        </div>
+                    </form>
+                </div>
+
+                <div id="buttonsTabla">
+                    <button class="addCard" onclick="addActivity()">+ Add new Activity</button>
+                    <button class="editCard">Modify Activity</button>
+                    <button class="deleteCard">Delete Activity</button>
                 </div>
 
             </div>
