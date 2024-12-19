@@ -83,18 +83,7 @@
 
         <!-- contenido -->
         <div class="contenido">
-            <div id="left">
-                <div id="mobileApp" class="card">
-                    <div class="titulosMobile">
-                        <h2>User-friendly</h2>
-                        <h2>mobile app</h2>
-                    </div>
-                    <div class="redesSociales">
-                        <a href="">Google</a>
-                        <a href="">Apple</a>
-                        <a href="">flexa</a>
-                    </div>
-                </div>
+            <!-- <div id="left">
                 <div id="lastProject" class="card">
                     <div id="titulo">
                         <h1>Last project</h1>
@@ -105,28 +94,45 @@
                         <input type="text" placeholder="Find whatever">
                     </div>
                 </div>
-            </div>
-            <div id="right">
-                <div id="lastActivities" class="card">
-                    <h1>Last Activities</h1>
-                    <div class="lastActivity">
-                        <h2>Create DB</h2>
-                        <p>8-12-2024</p>
-                        <p>10:00</p>
+            </div> -->
+            <div class="div-arriba-derecha">
+                <div id="mobileApp" class="card">
+                    <div class="titulosMobile">
+                        <h2>User-friendly</h2>
+                        <h2>mobile app</h2>
                     </div>
-                    <div class="lastActivity" class="card">
-                        <h2>Create DB</h2>
-                        <p>8-12-2024</p>
-                        <p>10:00</p>
+                    <div class="redesSociales">
+                        <div class="google_Apple">
+                            <a href=""><img src="../../imagenes/google.png" width="40px"></a>
+                            <a href=""><img src="../../imagenes/apple.png" width="40px"></a>
+                        </div>
+                        <a href=""><img src="../../imagenes/flecha.png" width="40px"></a>
                     </div>
                 </div>
+                <div id="activities">
+                    <h1>Last Activities:</h1>
+                    <div id="lastActivities">
+                        <div  class="card lastActivity">
+                            <h2>Create DB</h2>
+                            <h2>8-12-2024</h2>
+                            <h2>10:00</h2>
+                        </div>
+                        <div class="card lastActivity">
+                            <h2>Create DB</h2>
+                            <h2>8-12-2024</h2>
+                            <h2>10:00</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div id="right">
                 <div id="estadisticaAlumnos" class="card">
                     <h1>Students Scores</h1>
                 </div>
                 <div id="calendario" class="card">
                     <h1>Calendar</h1>
                 </div>
-            </div>
+            </div> -->
 
 
 

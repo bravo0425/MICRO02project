@@ -1,16 +1,4 @@
 <?php
-    function updateAlumno($conn) {
-        $alumno_id = intval($_POST['alumno_id']);
-        $usernameA = $_POST["username"];
-        $nombreA = $_POST["nombre"];
-        $apellidoA = $_POST["apellido"];
-        $contrasenyaA = $_POST["contrasenya"];
-    
-        $update = "UPDATE alumnos SET username = '$usernameA', pass = '$contrasenyaA', name = '$nombreA', last_name = '$apellidoA' WHERE id = '$alumno_id'";
-
-        mysqli_query($conn, $update);
-    }
-
     function crearAlumno($conn) {
         $usernameA = trim(htmlspecialchars($_POST["username"]));
         $nombreA = trim(htmlspecialchars($_POST["nombre"]));
@@ -36,5 +24,19 @@
         $delete = "DELETE FROM alumnos WHERE id = $alumno_id";
 
         mysqli_query($conn, $delete);
+    }
+
+    
+
+    function updateAlumno($conn) {
+        $alumno_id = intval($_POST['alumno_id']);
+        $usernameA = $_POST["username"];
+        $nombreA = $_POST["nombre"];
+        $apellidoA = $_POST["apellido"];
+        $contrasenyaA = $_POST["contrasenya"];
+    
+        $update = "UPDATE alumnos SET username = '$usernameA', pass = '$contrasenyaA', name = '$nombreA', last_name = '$apellidoA' WHERE id = '$alumno_id'";
+
+        mysqli_query($conn, $update);
     }
 ?>

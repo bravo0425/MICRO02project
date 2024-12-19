@@ -216,6 +216,7 @@ body {
 
 .div-arriba-derecha .importar-estudiantes {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 600px;
@@ -225,10 +226,14 @@ body {
     transition: all 0.3s;
 }
 
-.importar-estudiantes h2{
+.importar-estudiantes button{
     font-size: 1.3rem;
     font-weight: 400;
     color: #FFFFFF;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
 }
 
 .importar-estudiantes:hover{
@@ -280,6 +285,10 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     color: #FFFFFF;
+}
+
+#id_tabla_th {
+    text-align: center !important;
 }
 
 /* Filas de la tabla */
@@ -362,6 +371,37 @@ body {
     align-items: center;
 }
 
+#modificarAl {
+    flex-direction: column;
+}
+
+#modificarAl input{
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+}
+
+#modificarAl label {
+    font-size: 0.9rem;
+    margin: 10px;
+    color: #FFFFFF;
+}
+
+#modificarAl h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+#modificarAl .column {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .botones-crearA {
     display: flex;
     justify-content: center;
@@ -392,4 +432,36 @@ body {
     margin: 10px;
     border-radius: 20px;
     border: 0;
+}
+
+
+/* Estilos del pop-up */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+/* Contenido del pop-up */
+.popup-content {
+    background-color: #fff;
+    color: black;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+}
+
+/* Botón de cierre */
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
 }

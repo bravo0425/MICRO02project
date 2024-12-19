@@ -7,6 +7,7 @@ function mostrarFormularioA() {
 function mostrarTabla() {
     document.querySelector("#listaAlumnos").style = "display: flex;";
     document.querySelector("#crearAlumno").style = "display: none;";
+    document.querySelector("#modificarAl").style = "display: none;";
 }
 
 
