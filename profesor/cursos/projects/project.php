@@ -79,32 +79,63 @@
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
-                    <h1>TASKIFY®</h1>
-                    <div class="usuario">
-                        <img src="../../../imagenes/usuario.png" width="23px">
-                        <h3><?php echo $nom . ' ' . $apellido ?></h3>
-                    </div>
+                    <h1>Taskify®</h1>
+                </div>
+                <div class="usuario">
+                    <img src="../../../imagenes/usuario.png" width="23px">
+                    <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
                     <button onclick="goDasboard()" class="menu">
-                        <img src="../../../imagenes/dashboard.png" width="27px">
-                        <h2>Dashboard</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../../imagenes/dashboard.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Dashboard</h2>
+                            </div>
+                        </div>
+                        
                     </button>
                     <button onclick="goCursos()" class="menu active">
-                        <img src="../../../imagenes/cursos.png" width="27px">
-                        <h2>Cursos</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../../imagenes/cursos.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Cursos</h2>
+                            </div>
+                        </div>
                     </button>
                     <button onclick="goStudents()" class="menu">
-                        <img src="../../../imagenes/students.png" width="27px">
-                        <h2>Students</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../../imagenes/students.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Students</h2>
+                            </div>
+                        </div>
                     </button>
                     <button onclick="goChat()" class="menu">
-                        <img src="../../../imagenes/chat.png" width="27px">
-                        <h2>Chat</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../../imagenes/chat.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Chat</h2>
+                            </div>
+                        </div>
                     </button>
                     <button onclick="goSettings()" class="menu">
-                        <img src="../../../imagenes/settings.png" width="27px">
-                        <h2>Settings</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../../imagenes/settings.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Settings</h2>
+                            </div>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -118,7 +149,10 @@
             </div>
             <form action="" method="POST">
                 <button type="submit" name="logout" value="tonto" class="log-out">
-                    <img src="../../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="iconLogout">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                    </svg>
+
                     <h2>Log out</h2>
                 </button>
             </form>
@@ -129,11 +163,16 @@
 
             <div id="arriba">
 
-                <div id="mobileApp" class="card">
-                    <div class="titulosMobile">
-                        <h2>Projects</h2>
-                    </div>
-                    <button class='volverCursos' onclick="goCursos()"><a href=""><-</a> Volver a cursos</button>
+                <div id="infoApp" class="card">
+                    <h2>Projects</h2>
+                    <button>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                            </svg>
+                        </a>
+                        <p>back to courses</p>
+                    </button>
                 </div>
 
                 <div id="description" class="card">
@@ -166,6 +205,7 @@
                                     echo "<td>" . htmlspecialchars($actividad['descripcion']) . "</td>";
                                     echo "<td>" . htmlspecialchars($actividad['due_date']) . "</td>";
                                     echo "<td>" . $actividad['active'] ."</td>";
+                                    
                                     echo "</tr>";
                                 }
                             } else {

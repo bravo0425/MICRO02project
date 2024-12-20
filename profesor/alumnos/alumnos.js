@@ -7,11 +7,12 @@ function mostrarFormularioA() {
 function mostrarTabla() {
     document.querySelector("#listaAlumnos").style = "display: flex;";
     document.querySelector("#crearAlumno").style = "display: none;";
+    document.querySelector("#modificarAl").style = "display: none;";
 }
 
 
 function goDasboard() {
-    window.location.href = '../main/main.php';
+    window.location.href = '../main/index.php';
 }
 
 function goCursos(){

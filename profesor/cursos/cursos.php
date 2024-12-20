@@ -127,28 +127,54 @@
             <div id="arriba">
 
                 <div id="infoApp" class="card">
-                    <div class="titulosMobile">
-                        <h2>Cursos</h2>
-                    </div>
+                    <h2>Cursos</h2>
+                    <button>
+                        <a href="">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                            </svg>
+                        </a>
+                        <p>back to dashboard</p>
+                    </button>
                 </div>
 
-                <div id="infoCurso" class="card">
-                    <?php
-                        $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
-                        $r = mysqli_query($conn, $selectCurso);
+                <div id="infoCurso">
+                    <div class="tituloCurso">
+                        <?php
+                            $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
+                            $r = mysqli_query($conn, $selectCurso);
 
-                        if(mysqli_num_rows($r) > 0){
-                            while($fila = mysqli_fetch_assoc($r)) {
-                                echo "<h1>". $fila['nombre'] ."</h1>";
+                            if(mysqli_num_rows($r) > 0){
+                                while($fila = mysqli_fetch_assoc($r)) {
+                                    echo "<h1>". $fila['nombre'] ."</h1>";
+                                }
                             }
-                        }
-                    ?>
+                        ?>
+                    </div>
                     <div id="estadisticasCurso">
                         <div class="cardInfo">
-                            <p>Proyectos: 3</p>
+                            <h3>Proyectos</h3>
+                            <div class="numProjects">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+                                </svg>
+                                <p>3</p>
+                            </div>
+                        </div>
+
+                        <div class="cardInfo">
+                            <h3>Students</h3>
+                            <div class="numProjects">
+                                <img src="../../imagenes/students.png">
+                                <p>25</p>
+                            </div>
                         </div>
                         <div class="cardInfo">
-                            <p>Students: 25</p>
+                            <h3>Average Score</h3>
+                            <div class="numProjects">
+                                <div class="redondaStado"></div>
+                                <p>7.5</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -171,7 +197,9 @@
                                     if(mysqli_num_rows($r) > 0){
                                         while($fila = mysqli_fetch_assoc($r)) {
                                             echo "<button onclick='irProject(". $fila['id'] .")'>
-                                                    <img src='../../imagenes/cursos.png' alt=''>
+                                                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                                                        <path stroke-linecap='round' stroke-linejoin='round' d='M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z' />
+                                                    </svg>
                                                     <p>". $fila['titulo'] ."</p>
                                                 </button>";
                                         }
@@ -182,19 +210,21 @@
                             </div>
                         </div>
                         <div id="botonesProjects">
-                            <button class="addProject">+Add</button>
-                            <button class="deleteProject">Delete</button>
+                            <button class="openProject">Open</button>
+                            <div class="displayRow">
+                                <button class="addProject">+Add</button>
+                                <button class="deleteProject">Delete</button>
+                            </div>
+                            
                         </div>
                     </div>
 
                 </div><!--Abajo Left-->
 
-                <div id="abajoRight">
-                    <div id="estadisticaAlumnos" class="card">
-                        <h1>Students Scores</h1>
-                        <div id="grafica">
+                <div id="estadisticaAlumnos" class="card">
+                    <h1>Students Scores</h1>
+                    <div id="grafica">
 
-                        </div>
                     </div>
                 </div>
 

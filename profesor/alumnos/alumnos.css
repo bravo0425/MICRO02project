@@ -37,14 +37,15 @@ body {
 
 .nav {
     background-color: #FFFFFF20;
-    width: 280px;
+    width: 250px;
     height: 450px;
     border-radius: 15px;
     padding: 5px;
     color: #FFFFFF;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
     text-align: center;
     gap: 20px;
 }
@@ -58,7 +59,7 @@ body {
 }
 
 .titulo h1 {
-    font-size: 2.3rem;
+    font-size: 2rem;
     font-weight: 400;
 }
 
@@ -74,9 +75,11 @@ body {
 }
 
 .usuario h3{
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 400;
 }
+
+/* opciones del navBar*/
 
 .navbar {
     display: flex;
@@ -100,9 +103,32 @@ body {
     transition: all 0.3s;
 }
 
+.positionButton{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    width: 130px;
+}
+
+.imgNav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+}
+
+.h2Nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
 .menu h2 {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 300 !important;
+    color: #fafafa75;
 }
 
 .menu:hover {
@@ -110,13 +136,25 @@ body {
     border-radius: 15px;
 }
 
-.menu.active {
+.active {
     background-color: #ffffff40;
     border-radius: 15px;
+    color: #fafafa !important;
 }
 
+.active:hover {
+    background-color: #ffffff30;
+}
+
+.active h2{
+    color: #fafafa !important;
+}
+
+
+/*Update version*/
+
 .update {
-    width: 280px;
+    width: 250px;
     height: 150px;
     background-color: #FFFFFF20;
     display: flex;
@@ -157,8 +195,10 @@ body {
     font-weight: 500;
 }
 
+/*LogOut*/
+
 .log-out {
-    width: 280px;
+    width: 250px;
     height: 50px;
     background-color: #FFFFFF20;
     display: flex;
@@ -171,14 +211,19 @@ body {
     transition: all 0.3s;
 }
 
+.iconLogout{
+    width: 20px;
+}
+
 .log-out h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
 }
 
 .log-out:hover {
     background-color: #FFFFFF40;
 }
+
 
 /*Fin de menu lateral*/
 
