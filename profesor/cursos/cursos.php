@@ -128,14 +128,16 @@
 
                 <div id="infoApp" class="card">
                     <h2>Cursos</h2>
-                    <button>
-                        <a href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                            </svg>
-                        </a>
-                        <p>back to dashboard</p>
-                    </button>
+                    <form method="POST" action="../main/index.php">
+                        <button type="submit">
+                            <a href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                </svg>
+                            </a>
+                            <p>back to dashboard</p>
+                        </button>
+                    </form>
                 </div>
 
                 <div id="infoCurso">
@@ -191,26 +193,37 @@
                             <h1>Projects</h1>
                             <div class="listadoProjects">
                                 <?php
-                                    $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
-                                    $r = mysqli_query($conn, $selectProject);
+                                $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
+                                $r = mysqli_query($conn, $selectProject);
 
-                                    if(mysqli_num_rows($r) > 0){
-                                        while($fila = mysqli_fetch_assoc($r)) {
-                                            echo "<button onclick='irProject(". $fila['id'] .")'>
-                                                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
-                                                        <path stroke-linecap='round' stroke-linejoin='round' d='M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z' />
-                                                    </svg>
-                                                    <p>". $fila['titulo'] ."</p>
-                                                </button>";
-                                        }
+                                if (mysqli_num_rows($r) > 0) {
+                                    while ($fila = mysqli_fetch_assoc($r)) {
+                                        echo "<form method='POST' action=''>
+                                            <input type='hidden' name='idProyecto' value='" . htmlspecialchars($fila['id']) . "'>
+                                            <button type='submit'>
+                                                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                                                    <path stroke-linecap='round' stroke-linejoin='round' d='M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z' />
+                                                </svg>
+                                                <p>" . htmlspecialchars($fila['titulo']) . "</p>
+                                            </button>
+                                        </form>";
                                     }
+                                }
 
-                                    mysqli_close($conn);
+                                mysqli_close($conn);
                                 ?>
                             </div>
                         </div>
                         <div id="botonesProjects">
-                            <button class="openProject">Open</button>
+                            <?php
+                                if (!empty($_POST['idProyecto'])) {
+                                    $idProyecto = htmlspecialchars($_POST['idProyecto']); // Seguridad adicional
+                                    echo "<form method='POST' action='../projects/project.php'>
+                                            <input type='hidden' name='idProyecto' value='" . $idProyecto . "'>
+                                            <button class='openProject' style='width: 100% !important;'>Open</button>
+                                        </form>";
+                                }
+                            ?>
                             <div class="displayRow">
                                 <button class="addProject">+Add</button>
                                 <button class="deleteProject">Delete</button>

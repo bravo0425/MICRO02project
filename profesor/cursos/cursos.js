@@ -6,7 +6,6 @@ function goDasboard(){
     window.location.href = '../main/index.php';
 }
 
-function irProject(idProject){
-    console.log("ID del proyecto:", idProject);
-    window.location.href = 'projects/project.php?id=' + idProject;
+function showProject(){
+    document.querySelector(".openProject").style = "display: block;";
 }

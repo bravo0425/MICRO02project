@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Poppins';
-    background-image: url(../../../imagenes/fondo.jpg);
+    background-image: url(../../imagenes/fondo.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -238,7 +238,7 @@ body {
 
 
 .contenido {
-    width: 980px;
+    width: 960px !important;
     height: 690px;
     display: flex;
     flex-direction: column;
@@ -255,9 +255,10 @@ body {
     display: flex;
     flex-direction: row;
     gap: 20px;
-    height: 180px;
+    height: 160px;
 }
 
+/*Tarjeta amarilla*/
 
 
 #infoApp{
@@ -312,6 +313,18 @@ body {
     align-items: center;
     gap: 10px;
 }
+
+#description h1{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+#text p{
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+
 
 #abajo{
     width: 960px;
@@ -369,6 +382,7 @@ body {
     transition: all 0.4s ease;
 }
 
+
 #tabla tbody tr:hover {
     background-color: #fafafa20;
 }
@@ -379,126 +393,4 @@ body {
     color: #ffffff;
 }
 
-#tabla button {
-    background-color: #fafafa00;
-    border: 0px;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
 
-/*---------Insertar Actividad-------------*/
-
-
-#insertarActividad {
-    display: none;
-}
-
-#formInsert{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-
-#formInsert input{
-    padding: 7px 10px;
-    width: 400px;
-    margin: 10px;
-    border-radius: 20px;
-    border: 0;
-}
-
-#formInsert label {
-    font-size: 0.9rem;
-    margin: 10px;
-    color: #FFFFFF;
-}
-
-#formInsert h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #FFFFFF;
-    margin-bottom: 20px;
-}
-
-#formInsert .column {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.column select {
-    padding: 7px 10px;
-    width: 400px;
-    margin: 10px;
-    border-radius: 20px;
-    border: 0;
-}
-
-#buttonsInsert {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    gap: 20px;
-    width: 300px;
-}
-
-#buttonsInsert button {
-    padding: 10px 50px;
-    border-radius: 15px;
-    border: 0;
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-#buttonsInsert #add {
-    background-color: #E2FF32;
-}
-
-#buttonsInsert #cancel {
-    background-color: #FFFFFF20;
-    color: #FFFFFF;
-}
-
-
-/*---------DIV de botones-------------*/
-
-
-#buttonsTabla{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-
-#buttonsTabla button{
-    padding: 10px;
-    border-radius: 10px;
-    border: 0px;
-    width: 200px;
-    height: 60px;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.addCard{
-    background-color: #E2FF32;
-}
-
-.editCard{
-    background-color: #ffffff30;
-    color: #fafafa;
-}
-
-.deleteCard{
-    background-color: #A600FF;
-}
