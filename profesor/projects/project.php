@@ -21,13 +21,18 @@
     }
 
 
-    if (!empty($_POST['idProyecto'])) {
-        $idProject = intval($_POST['idProyecto']);
+    if (isset($_POST['idProyecto']) && !empty($_POST['idProyecto'])) {
+        $_SESSION['idProyecto'] = intval($_POST['idProyecto']);
+    }
     
+    // Verificar si hay un ID de proyecto guardado en la sesión
+    if (isset($_SESSION['idProyecto'])) {
+        $idProject = $_SESSION['idProyecto'];
+        
         // Consulta para obtener los detalles del proyecto
         $queryProjects = "SELECT * FROM proyectos WHERE id = $idProject";
         $result = mysqli_query($conn, $queryProjects);
-    
+        
         if (mysqli_num_rows($result) > 0) {
             $project = mysqli_fetch_assoc($result);
             $titulo = $project['titulo'];
@@ -36,11 +41,11 @@
             $titulo = "Proyecto no encontrado";
             $descripcion = "No hay detalles disponibles para este proyecto.";
         }
-    
+        
         // Consulta para obtener las actividades relacionadas con el proyecto
         $queryActividades = "SELECT * FROM actividades WHERE project_id = $idProject";
         $resultActividades = mysqli_query($conn, $queryActividades);
-    
+        
         $actividades = [];
         if (mysqli_num_rows($resultActividades) > 0) {
             while ($actividad = mysqli_fetch_assoc($resultActividades)) {
@@ -48,8 +53,9 @@
             }
         }
     } else {
+        // Si no hay ID de proyecto en la sesión, mostrar un mensaje de error
         $titulo = "Error";
-        $descripcion = "No se recibió el ID del proyecto.";
+        $descripcion = "No se seleccionó un proyecto.";
         $actividades = [];
     }
 

@@ -224,11 +224,9 @@
                     </div>
                 </div>
 
-                <form method="POST" action="../evaluar/evaluar.php">
-                    <button type="submit" id="evaluarAlumnos">
-                        <p>Evalua a tus alumnos -></p>
-                    </button>
-                </form>
+                <button id="evaluarAlumnos">
+                  <p>Evalua a tus alumnos -></p>
+                </button>
 
                 <div id="tablaNotas" class="card">
                     <h2>Notas alumnos</h2>

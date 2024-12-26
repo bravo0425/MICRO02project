@@ -22,6 +22,10 @@
         exit();
     }
 
+    if (!empty($_POST['idProyecto'])) {
+        $_SESSION['idProyectoSeleccionado'] = htmlspecialchars($_POST['idProyecto']); // Guardar en la sesión
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -193,14 +197,17 @@
                             <h1>Projects</h1>
                             <div class="listadoProjects">
                                 <?php
+                                // Consultar los proyectos relacionados con el curso
                                 $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
                                 $r = mysqli_query($conn, $selectProject);
 
                                 if (mysqli_num_rows($r) > 0) {
                                     while ($fila = mysqli_fetch_assoc($r)) {
+                                        $isSelected = (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']);
+                                        $classSelected = $isSelected ? 'selectedProject' : '';
                                         echo "<form method='POST' action=''>
                                             <input type='hidden' name='idProyecto' value='" . htmlspecialchars($fila['id']) . "'>
-                                            <button type='submit'>
+                                            <button type='submit' class='projectButton $classSelected'>
                                                 <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
                                                     <path stroke-linecap='round' stroke-linejoin='round' d='M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z' />
                                                 </svg>
@@ -216,19 +223,20 @@
                         </div>
                         <div id="botonesProjects">
                             <?php
-                                if (!empty($_POST['idProyecto'])) {
-                                    $idProyecto = htmlspecialchars($_POST['idProyecto']); // Seguridad adicional
-                                    echo "<form method='POST' action='../projects/project.php'>
-                                            <input type='hidden' name='idProyecto' value='" . $idProyecto . "'>
-                                            <button class='openProject' style='width: 100% !important;'>Open</button>
-                                        </form>";
-                                }
+                            // Mostrar el botón Open solo si hay un proyecto seleccionado
+                            if (isset($_SESSION['idProyectoSeleccionado'])) {
+                                $idProyecto = $_SESSION['idProyectoSeleccionado'];
+                                echo "<form method='POST' action='../projects/project.php'>
+                                        <input type='hidden' name='idProyecto' value='" . $idProyecto . "'>
+                                        <button class='openProject' style='width: 100% !important;'>Open</button>
+                                    </form>";
+                            }
                             ?>
                             <div class="displayRow">
                                 <button class="addProject">+Add</button>
                                 <button class="deleteProject">Delete</button>
                             </div>
-                            
+
                         </div>
                     </div>
 
@@ -240,7 +248,6 @@
 
                     </div>
                 </div>
-
 
             </div><!--Abajo-->
 
