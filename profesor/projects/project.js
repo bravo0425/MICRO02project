@@ -1,13 +1,17 @@
 function goStudents() {
-    window.location.href = '../../alumnos/alumnos.php';
+    window.location.href = '../alumnos/alumnos.php';
 }
 
 function goDasboard(){
-    window.location.href = '../../main/index.php';
+    window.location.href = '../main/index.php';
 }
 
 function goCursos(){
-    window.location.href = '../cursos.php';
+    window.location.href = '../cursos/cursos.php';
+}
+
+function goSettings(){
+    window.location.href = '../settings/settings.php';
 }
 
 function addActivity(){

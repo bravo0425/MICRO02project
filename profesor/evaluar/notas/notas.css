@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Poppins';
-    background-image: url(../../imagenes/fondo.jpg);
+    background-image: url(../../../imagenes/fondo.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 100vh;
@@ -32,7 +32,6 @@ body {
 }
 
 /*MENU LATERAL*/
-
 
 .contenedor-nav {
     display: flex;
@@ -239,7 +238,7 @@ body {
 
 
 .contenido {
-    width: 960px;
+    width: 960px !important;
     height: 690px;
     display: flex;
     flex-direction: column;
@@ -252,14 +251,14 @@ body {
 }
 
 #arriba{
-    width: 100%;
+    width: 960px;
     display: flex;
     flex-direction: row;
     gap: 20px;
     height: 160px;
 }
 
-/*-------DIV amarillo Curso-------------*/
+/*Tarjeta amarilla*/
 
 
 #infoApp{
@@ -301,242 +300,151 @@ body {
 
 }
 
-/*-------DIV PARA INFORMAR DEL CURSO-------------*/
 
-#infoCurso{
+/*---------DIV de descripcion-------------*/
+#description{
     width: 640px;
-    height: 100%;
+    display: flex;
+    color: white;
+    padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-}
-
-.tituloCurso{
-    width: 100%;
-    border-radius: 15px;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fafafa20;
-}
-
-.tituloCurso h1{
-    font-size: 1.1rem;
-    color: #ffffff;
-    font-weight: 500;
-}
-
-#estadisticasCurso{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
-    height: 70px;
-}
-
-
-.cardInfo{
-    text-align: center;
-    padding: 10px;
-    font-size: 1.3rem;
-    color: #ffffff;
-    height: 70px;
-    width: 200px;
-    border-radius: 15px;
-    background-color: #fafafa20;
-}
-
-.cardInfo h3{
-    font-size: 0.9rem;
-    color: #fafafa60;
-    font-weight: 400;
-    text-align: left;
-}
-
-.numProjects{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 10px;
 }
 
-.numProjects svg{
-    width: 20px;
+#description h1{
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
-.numProjects img{
-    width: 20px;
-    height: 22px;
+#text p{
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
-.numProjects p{
-    font-size: 1rem;
-}
-.redondaStado{
-    width: 10px;
-    height: 10px;
-    border-radius: 50px;
-    background-color: #2bff00;
-}
 
-/*-------DIV para mostrar projectos------------*/
+
+/*---------DIV de ABAJO-------------*/
 
 
 #abajo{
-    width: 100%;
+    width: 960px;
+    height: 510px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
-    height: 510px;
-
-}
-
-/*-------DIV para mostrar projectos------------*/
-
-#divProjects{
-    width: 250px;
-    height: 510px;
-    display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-    padding: 10px 15px 10px 15px !important;
-    color: #ffffff;
+    overflow: hidden;
+    color: #fafafa;
 }
 
-#titulo{
+
+/*---------DIV de activity-------------*/
+
+#activity{
     width: 100%;
     display: flex;
+    flex-direction: row;
+    gap: 20px;
+    height: 100px;
+}
+
+
+/*---------DIV de file-------------*/
+
+#file{
+    width: 470px;
+    padding: 10px;
+}
+
+/*---------DIV de info-------------*/
+
+#info{
+    width: 470px;
+    padding: 10px;
+}
+
+
+/*---------DIV de info-------------*/
+
+#info{
+    width: 470px;
+    padding: 10px;
+}
+
+/*---------DIV de info-------------*/
+
+#formItems{
+    height: 390px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#formItems h2{
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding: 10px;
+}
+
+#formItems form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     gap: 20px;
 }
 
-#titulo h1{
-    width: 100%;
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-.listadoProjects{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.listadoProjects button{
+#formItems .inputs{
     display: flex;
     flex-direction: row;
-    width: 200px;
-    padding: 7px;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
-    background-color: #ffffff10;
-    border: 0px;
-    gap: 10px;
-    border-radius: 15px;
-    font-size: 1rem;
-    font-weight: 300;
-    transition: all 0.3s ease;
+    gap: 20px;
+    width: 370px;
 }
 
-
-.listadoProjects button svg{
-    width: 20px;
-    color: #ffffff;
+#formItems .inputs input{
+    width: 250px;
+    height: 30px;
+    border: 1px solid #fafafa40;
+    background-color: #fafafa10;
+    border-radius: 10px;
 }
 
-.listadoProjects button p{
-    color: #ffffff;
-}
-
-.listadoProjects button:hover{
-    background-color: #ffffff20;
-}
-
-#botonesProjects{
+.buttonDiv{
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
+    gap: 30px;
 }
 
-#botonesProjects button{
-    display: flex;
-    flex-direction: row;
-    width: 100px;
-    padding: 8px;
-    justify-content: center;
-    align-items: center;
-    border: 0px;
-    border-radius: 15px;
-    font-weight: 400;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.displayRow{
-    display: flex;
-    gap: 10px;
-}
-
-.addProject{
+#cancelbtn{
     background-color: #A600FF;
-}
-
-.addProject:hover{
-    background-color: #ba42ff;
-}
-
-
-.deleteProject{
-    background-color: #FFFFFF30;
+    border-radius: 15px;
+    height: 40px;
+    width: 170px;
+    border: 0px;
     color: #fafafa;
+    transition: all 0.4s ease;
 }
 
-.deleteProject:hover{
-    background-color: #FFFFFF40;
-    color: #fafafa;
+#cancelbtn:hover{
+    background-color: #bb3dff;
 }
 
-
-
-.openProject{
-    width: 100%;
+#evaluatebtn{
     background-color: #E2FF32;
+    border-radius: 15px;
+    height: 40px;
+    width: 170px;
+    border: 0px;
+    transition: all 0.4s ease;
 }
 
-.selected-project {
-    background-color: #ffffff90; /* Ajuste al esquema de colores existente */
-    border: 2px solid #fafafa; /* Contraste con el fondo */
-    color: #fafafa; /* Alineado con el tema general */
-    font-weight: 500;
-    border-radius: 15px; /* Alineado con otros botones */
+#evaluatebtn:hover{
+    background-color: #c2dc1b;
 }
-
-
-/*---------DIV de abajo del contenido-------------*/
-
-
-
-#estadisticaAlumnos{
-    height: 510px;
-    width: 100%;
-    padding: 10px 15px;
-    color: #ffffff;
-}
-
-#estadisticaAlumnos h1{
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-

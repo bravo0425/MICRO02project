@@ -224,7 +224,7 @@
                     </div>
                 </div>
 
-                <form method="POST" action="../evaluar/evaluar.php">
+                <form method="POST" action="../evaluar/lista/lista.php">
                     <button type="submit" id="evaluarAlumnos">
                         <p>Evalua a tus alumnos -></p>
                     </button>
@@ -309,6 +309,6 @@
         </div>
     </div>
         
-    <script></script>
+    <script src="activity.js"></script>
 </body>
 </html>

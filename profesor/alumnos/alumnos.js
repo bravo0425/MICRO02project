@@ -18,3 +18,7 @@ function goDasboard() {
 function goCursos(){
     window.location.href = '../cursos/cursos.php';
 }
+
+function goSettings(){
+    window.location.href = '../settings/settings.php';
+}

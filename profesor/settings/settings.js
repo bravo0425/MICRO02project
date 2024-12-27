@@ -11,11 +11,5 @@ function goCursos(){
 }
 
 function goSettings(){
-    window.location.href = '../settings/settings.php';
+    window.location.href = 'settings.php';
 }
-
-function showProject(){
-    document.querySelector(".openProject").style = "display: block;";
-}
-
-

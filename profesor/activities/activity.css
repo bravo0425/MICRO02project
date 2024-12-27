@@ -462,7 +462,9 @@ body {
 
 /*---------DIV de Boton Evaluar-------------*/
 
-
+#abajo form{
+    width: 100%;
+}
 
 #evaluarAlumnos{
     width: 100%;

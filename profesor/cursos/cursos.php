@@ -197,27 +197,35 @@
                             <h1>Projects</h1>
                             <div class="listadoProjects">
                                 <?php
-                                // Consultar los proyectos relacionados con el curso
-                                $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
-                                $r = mysqli_query($conn, $selectProject);
+                                    // Consulta los proyectos asociados al curso
+                                    $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
+                                    $r = mysqli_query($conn, $selectProject);
 
-                                if (mysqli_num_rows($r) > 0) {
-                                    while ($fila = mysqli_fetch_assoc($r)) {
-                                        $isSelected = (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']);
-                                        $classSelected = $isSelected ? 'selectedProject' : '';
-                                        echo "<form method='POST' action=''>
-                                            <input type='hidden' name='idProyecto' value='" . htmlspecialchars($fila['id']) . "'>
-                                            <button type='submit' class='projectButton $classSelected'>
-                                                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
-                                                    <path stroke-linecap='round' stroke-linejoin='round' d='M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z' />
-                                                </svg>
-                                                <p>" . htmlspecialchars($fila['titulo']) . "</p>
-                                            </button>
-                                        </form>";
+                                    if (mysqli_num_rows($r) > 0) {
+                                        while ($fila = mysqli_fetch_assoc($r)) {
+                                            // Determina si este proyecto está seleccionado
+                                            $isSelected = '';
+                                            if (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']) {
+                                                $isSelected = 'selected-project';
+                                            }
+                                            
+                                            // Renderiza el formulario para cada proyecto
+                                            echo "<form method='POST' action=''>
+                                                    <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
+                                                    <button type='submit' class='project-button $isSelected'>
+                                                        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                                                            <path stroke-linecap='round' stroke-linejoin='round' d='M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z' />
+                                                        </svg>
+                                                        <p>" . htmlspecialchars($fila['titulo']) . "</p>
+                                                    </button>
+                                                </form>";
+                                        }
+                                    } else {
+                                        echo "<p>No hay proyectos disponibles.</p>";
                                     }
-                                }
 
-                                mysqli_close($conn);
+                                    // Cierra la conexión con la base de datos
+                                    mysqli_close($conn);
                                 ?>
                             </div>
                         </div>
