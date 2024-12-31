@@ -423,14 +423,17 @@ body {
 }
 
 .listadoProjects{
+    padding: 30px 15px 10px 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    height: 310px;
+    overflow: scroll;
 }
 
-.listadoProjects button{
+.project-button{
     display: flex;
     flex-direction: row;
     width: 200px;
@@ -446,19 +449,24 @@ body {
     transition: all 0.3s ease;
 }
 
-
-.listadoProjects button svg{
+.project-button svg{
     width: 20px;
     color: #ffffff;
 }
 
-.listadoProjects button p{
+.project-button p{
     color: #ffffff;
 }
 
-.listadoProjects button:hover{
+.project-button:hover{
     background-color: #ffffff20;
 }
+
+.project-button .selected-project {
+    background-color: #2bff00;
+}
+
+
 
 #botonesProjects{
     display: flex;
@@ -467,6 +475,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 #botonesProjects button{
@@ -483,13 +492,14 @@ body {
     transition: all 0.3s ease;
 }
 
-.displayRow{
+.displayRow form{
     display: flex;
     gap: 10px;
 }
 
 .addProject{
     background-color: #A600FF;
+    color: #fafafa;
 }
 
 .addProject:hover{
@@ -507,20 +517,16 @@ body {
     color: #fafafa;
 }
 
-
+#botonesProjects form{
+    width: 100%;
+}
 
 .openProject{
-    width: 100%;
+    width: 100% !important;
     background-color: #E2FF32;
 }
 
-.selected-project {
-    background-color: #ffffff90; /* Ajuste al esquema de colores existente */
-    border: 2px solid #fafafa; /* Contraste con el fondo */
-    color: #fafafa; /* Alineado con el tema general */
-    font-weight: 500;
-    border-radius: 15px; /* Alineado con otros botones */
-}
+
 
 
 /*---------DIV de abajo del contenido-------------*/
@@ -540,3 +546,83 @@ body {
 }
 
 
+
+#formularioProyecto{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+#formularioProyecto form{
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputsForm{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    width: 400px;
+}
+
+.inputsForm input{
+    width: 200px;
+    background-color: #fafafa20;
+    border: 1px solid #fafafa40;
+    border-radius: 10px;
+    padding: 5px 0px;
+}
+
+.inputsForm textarea{
+    width: 200px;
+    background-color: #fafafa20;
+    border: 1px solid #fafafa40;
+    border-radius: 10px;
+    padding: 5px 0px;
+}
+
+.botonesFormulario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.botonesFormulario form{
+    display: flex;
+    gap: 20px;
+}
+
+.botonesFormulario .guardarProyecto{
+    width: 150px;
+    padding: 10px 0px;
+    border: 0px;
+    background-color: #E2FF32;
+    color: #000;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+}
+
+.botonesFormulario .guardarProyecto:hover{
+    background-color: #ecff74;
+}
+
+.botonesFormulario .cancelarProyecto{
+    width: 150px;
+    padding: 10px 0px;
+    border: 0px;
+    background-color: #A600FF;
+    color: #ffffff;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+}
+
+.botonesFormulario .cancelarProyecto:hover{
+    background-color: #ba42ff;
+}

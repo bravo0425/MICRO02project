@@ -1,7 +1,7 @@
 <?php
-
-    session_start();
     include "../../conexion.php";
+    
+    session_start();
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];

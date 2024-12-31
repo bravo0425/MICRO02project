@@ -1,5 +1,6 @@
 <?php
     include "../../conexion.php";
+    include "funciones.php";
 
     session_start();
 
@@ -22,8 +23,35 @@
         exit();
     }
 
-    if (!empty($_POST['idProyecto'])) {
-        $_SESSION['idProyectoSeleccionado'] = htmlspecialchars($_POST['idProyecto']); // Guardar en la sesión
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProyecto'])) {
+        $_SESSION['idProyectoSeleccionado'] = $_POST['idProyecto'];
+    }
+
+    $mostrarFormulario = false;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addProject'])) {
+        $mostrarFormulario = true;
+    }
+
+    // Manejar el caso cuando el usuario cancela agregar un proyecto
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelAddProject'])) {
+        $mostrarFormulario = false;
+    }
+
+    if(!empty($_POST["safeAddProject"])){
+        insertarProject($conn);
+    }
+
+    if(!empty($_POST['deleteProject'])){
+        eliminarProyecto($conn);
+    }
+
+    $queryContarProyectos = "SELECT COUNT(*) AS total_proyectos FROM proyectos WHERE curso_id = $idCurso";
+    $resultadoContarProyectos = mysqli_query($conn, $queryContarProyectos);
+
+    // Obtén el número total de proyectos
+    $totalProyectos = 0;
+    if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
+        $totalProyectos = $fila['total_proyectos'];
     }
 
 ?>
@@ -164,7 +192,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
                                 </svg>
-                                <p>3</p>
+                                <p><?php echo $totalProyectos; ?></p>
                             </div>
                         </div>
 
@@ -189,78 +217,91 @@
 
             <!-- abajo -->
             <div id="abajo">
-
                 <div id="abajoLeft">
-
                     <div id="divProjects" class="card">
                         <div id="titulo">
                             <h1>Projects</h1>
                             <div class="listadoProjects">
                                 <?php
-                                    // Consulta los proyectos asociados al curso
                                     $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
                                     $r = mysqli_query($conn, $selectProject);
 
                                     if (mysqli_num_rows($r) > 0) {
                                         while ($fila = mysqli_fetch_assoc($r)) {
-                                            // Determina si este proyecto está seleccionado
-                                            $isSelected = '';
+                                            $style = '';
                                             if (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']) {
-                                                $isSelected = 'selected-project';
+                                                $style = "style='background-color: #fafafa40; border: 0px; color: #ffffff; font-weight: 300;'";
                                             }
                                             
-                                            // Renderiza el formulario para cada proyecto
                                             echo "<form method='POST' action=''>
-                                                    <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
-                                                    <button type='submit' class='project-button $isSelected'>
-                                                        <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
-                                                            <path stroke-linecap='round' stroke-linejoin='round' d='M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z' />
-                                                        </svg>
-                                                        <p>" . htmlspecialchars($fila['titulo']) . "</p>
-                                                    </button>
-                                                </form>";
+                                                <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
+                                                <button type='submit' class='project-button' $style>
+                                                    <p>" . htmlspecialchars($fila['titulo']) . "</p>
+                                                </button>
+                                            </form>";
                                         }
                                     } else {
                                         echo "<p>No hay proyectos disponibles.</p>";
                                     }
-
-                                    // Cierra la conexión con la base de datos
-                                    mysqli_close($conn);
                                 ?>
                             </div>
                         </div>
                         <div id="botonesProjects">
                             <?php
-                            // Mostrar el botón Open solo si hay un proyecto seleccionado
-                            if (isset($_SESSION['idProyectoSeleccionado'])) {
-                                $idProyecto = $_SESSION['idProyectoSeleccionado'];
-                                echo "<form method='POST' action='../projects/project.php'>
-                                        <input type='hidden' name='idProyecto' value='" . $idProyecto . "'>
-                                        <button class='openProject' style='width: 100% !important;'>Open</button>
-                                    </form>";
-                            }
+                                if (isset($_SESSION['idProyectoSeleccionado'])) {
+                                    $idProyecto = $_SESSION['idProyectoSeleccionado'];
+                                    echo "<form method='POST' action='../projects/project.php'>
+                                            <input type='hidden' name='idProyecto' value='" . $idProyecto . "'>
+                                            <button class='openProject'>Open</button>
+                                        </form>";
+                                }
                             ?>
                             <div class="displayRow">
-                                <button class="addProject">+Add</button>
-                                <button class="deleteProject">Delete</button>
+                                <form method="POST" action="">
+                                    <button type="submit" class="addProject" name="addProject" value="true">+Add</button>
+                                    <button type="submit" class="deleteProject" name="deleteProject" value="delete">Delete</button>
+                                </form>
                             </div>
-
                         </div>
                     </div>
-
                 </div><!--Abajo Left-->
 
                 <div id="estadisticaAlumnos" class="card">
-                    <h1>Students Scores</h1>
-                    <div id="grafica">
-
-                    </div>
+                    <?php if (!$mostrarFormulario): ?>
+                        <h1>Students Scores</h1>
+                        <div id="grafica">
+                            <p>Gráfica de estudiantes</p>
+                        </div>
+                    <?php else: ?>
+                        <h1>Add a New Project</h1>
+                        <div id="formularioProyecto">
+                            <form method="POST" action="">
+                                <div class="inputsForm">
+                                    <label for="tituloProyecto">Título del Proyecto:</label>
+                                    <input type="text" id="tituloProyecto" name="tituloProyecto">
+                                </div>
+                                
+                                <div class="inputsForm">
+                                    <label for="descripcionProyecto">Descripción:</label>
+                                    <textarea id="descripcionProyecto" name="descripcionProyecto"></textarea>
+                                </div>
+                                
+                                <div class="botonesFormulario">
+                                    <form method="POST" action="">
+                                        <button type="submit" name="safeAddProject" value="true" class="guardarProyecto">Crear Proyecto</button>
+                                        <button type="submit" name="cancelAddProject" value="true" class="cancelarProyecto">Cancelar</button>
+                                    </form>
+                                </div>
+                            </form>
+                        </div>
+                    <?php endif; ?>
                 </div>
-
             </div><!--Abajo-->
 
         </div><!--Contenido-->
     </div><!--Container-->
+
+    <?php mysqli_close($conn); ?>
         
     <script src="cursos.js"></script>
 </body>
