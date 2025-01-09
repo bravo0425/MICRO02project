@@ -386,7 +386,8 @@ body {
     font-size: 16px;
     text-align: left;
     color: #ffffff;
-    background-color: #414141;
+    background-color: #fafafa20;
+    backdrop-filter: blur(10px); 
 
 }
 
@@ -412,6 +413,7 @@ body {
 }
 
 #tabla tbody tr {
+    height: 40px;
     background-color: #fafafa00;
     transition: all 0.4s ease;
 }
@@ -540,25 +542,13 @@ body {
 
 
 #buttonsTabla button{
-    padding: 10px;
+    padding: 0.5rem 0rem;
     border-radius: 10px;
     border: 0px;
-    width: 200px;
-    height: 60px;
+    width: 300px;
+    height: 50px;
     font-size: 0.9rem;
     font-weight: 500;
-}
-
-.addCard{
-    background-color: #E2FF32 !important;
-    color: #000 !important;
-}
-
-.editCard{
-    background-color: #ffffff30 !important;
-    color: #fafafa;
-}
-
-.deleteCard{
-    background-color: #A600FF !important;
+    background-color: #E2FF32;
+    color: #000;
 }
