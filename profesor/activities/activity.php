@@ -1,5 +1,6 @@
 <?php
     include "../../conexion.php";
+    include "functions.php";
     
     session_start();
 
@@ -17,6 +18,10 @@
         session_destroy();
         header('Location: ../../login/login.php');
         exit();
+    }
+
+    if (!empty($_POST['añadirItem'])) {
+        añadirItem($conn);
     }
 
 ?>
@@ -135,9 +140,18 @@
                 </div>
 
                 <div id="description" class="card">
-                    <h1>Make a web design</h1>
-                    <p>Width Html and CSS make a web beautiful</p>
-                    <p>Last date: 10-12-2024 10:00</p>
+                    <?php
+                        $IdActividad = $_GET['actividad_id'];
+                        $select = "SELECT titulo, descripcion, due_date FROM actividades WHERE id = '$IdActividad'";
+                        $resACT = mysqli_query($conn, $select);
+                        while ($fila = mysqli_fetch_assoc($resACT)) {
+                            ?>
+                            <h1><?php echo $fila['titulo'] ?><h1>
+                            <p><?php echo $fila['descripcion']?></p>
+                            <p>Last date: <?php echo $fila['due_date']?></p>
+                    <?php
+                        }
+                    ?>
                 </div>
                 
                 <div id="estadoActividad" class="card">
@@ -151,10 +165,48 @@
                 <div id="items" class="card">
                     <div class="buttonsItems">
                       <h2>Items</h2>
-                      <button class="addbtn">+ Add new Item</button>
+                      <button type="button" name="show_popup" class="addbtn" id="addbtn">+ Add new Item</button>
+                      <div id="popUp">
+                        <form action="" method="POST" id="añadirItemF">
+                            <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
+                            <div class="contenidoForm">
+                                <label for="actividad">Actividad:</label>
+                                <select name="actividad" id="actividad">
+                                    <?php
+                                        $selectAct = "SELECT id, titulo FROM actividades";
+                                        $resActividad = mysqli_query($conn, $selectAct);
+                                        while ($fila = mysqli_fetch_assoc($resActividad)) {
+                                            echo "<option required value='" . $fila['id'] . "'>" . $fila['titulo'] . "</option>";
+                                        }
+                                    ?>
+                                </select>
+                                <label for="titulo">Title: </label>
+                                <input type="text" name="titulo" id="titulo">
+                                <label for="valor">Value: </label>
+                                <select name="valores" id="valores">
+                                    <option value="10">10%</option>
+                                    <option value="20">20%</option>
+                                    <option value="30">30%</option>
+                                    <option value="40">40%</option>
+                                    <option value="50">50%</option>
+                                    <option value="60">60%</option>
+                                    <option value="70">70%</option>
+                                    <option value="80">80%</option>
+                                    <option value="90">90%</option>
+                                    <option value="100">100%</option>
+                                </select>
+                                <button type="submit" id="añadirItem" name="añadirItem" value="añadirItem">Add Item</button>
+                            </div>
+                        </form>
+                      </div>
                       <button class="deletebtn">BIN</button>
                     </div>
                     <div id="itemsGroup">
+                        <?php
+                            $selectItems = "SELECT titulo, valor FROM items WHERE activity_id = $IdActividad";
+                            $resItem = mysqli_query($conn, $selectItems);
+                            while ($fila = mysqli_fetch_assoc($resItem)) {
+                        ?>
                         <div class="cardItem">
                             <div class="contenidoItem">
                                 <div class="imgItem">
@@ -163,54 +215,10 @@
                                     </svg>
                                 </div>
                                 <div class="tituloItem">
-                                <h2>Estrucutra</h2>
+                                <h2><?php echo $fila['titulo'] ?></h2>
                                 </div>
                                 <div class="valueItem">
-                                <p>20% <</p>
-                                </div>
-                            </div>
-                            <div class="editBtn">
-                                    <button>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                        </svg>
-                                    </button>
-                            </div>
-                        </div>
-                        <div class="cardItem">
-                            <div class="contenidoItem">
-                                <div class="imgItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-                                    </svg>
-                                </div>
-                                <div class="tituloItem">
-                                <h2>Estrucutra</h2>
-                                </div>
-                                <div class="valueItem">
-                                <p>20% <</p>
-                                </div>
-                            </div>
-                            <div class="editBtn">
-                                    <button>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                        </svg>
-                                    </button>
-                            </div>
-                        </div>
-                        <div class="cardItem">
-                            <div class="contenidoItem">
-                                <div class="imgItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-                                    </svg>
-                                </div>
-                                <div class="tituloItem">
-                                <h2>Estrucutra</h2>
-                                </div>
-                                <div class="valueItem">
-                                <p>20% <</p>
+                                <p><?php echo $fila['valor'] ?></p>
                                 </div>
                             </div>
                             <div class="editBtn">
@@ -221,6 +229,9 @@
                                 </button>
                             </div>
                         </div>
+                    <?php
+                            }
+                    ?>
                     </div>
                 </div>
 

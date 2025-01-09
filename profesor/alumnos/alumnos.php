@@ -23,16 +23,6 @@
         updateAlumno($conn);
     }
 
-    $showPopup = false;
-
-    if (isset($_POST['show_popup'])) {
-        $showPopup = true;
-    }
-
-    if (isset($_POST['close_popup'])) {
-        $showPopup = false;
-    }
-
     if (!empty($_POST['importar'])) {
         importarAlumnos($conn);
     }
@@ -147,20 +137,20 @@
                     <img src="../../imagenes/students-negro.png" width="27px">
                 </div>
                 <form action="" class="importar-estudiantes" method="post" >
-                    <button type="submit" name="show_popup" id="show_popup">+ Import Students CSV</button>
+                    <button type="button" name="show_popup" id="show_popup">+ Import Students CSV</button>
                 </form>
-                <?php if ($showPopup): ?>
-                    <div class="popup">
-                        <div class="popup-content">
-                            <form method="POST" action="importar_alumnos.php" enctype="multipart/form-data">
-                                <button type="submit" name="close_popup" class="close-btn" value="close_popup">x</button>
-                                <h2>Add your file: </h2>
+                <div id="popup">
+                    <div class="popup-content">
+                        <form method="POST" action="importar_alumnos.php" enctype="multipart/form-data">
+                            <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
+                            <div class="buttonsPopup">
+                                <label for="csv_file">Add you file</label>
                                 <input type="file" name="csv_file" id="csv_file" accept=".csv">
                                 <button type="submit" name="importar" value="importar">Importar</button>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
-                <?php endif; ?>
+                </div>
             </div>
             <div class="tabla">
                         <?php
