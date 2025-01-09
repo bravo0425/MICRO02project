@@ -1,5 +1,5 @@
 function goDasboard(){
-    window.location.href = 'index.php';
+    window.location.href = '../main/index.php';
 }
 
 function goStudents() {

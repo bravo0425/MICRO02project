@@ -1,5 +1,5 @@
 function goDasboard(){
-    window.location.href = 'index.php';
+    window.location.href = '../main/index.php';
 }
 
 function goStudents() {
@@ -7,9 +7,15 @@ function goStudents() {
 }
 
 function goCursos(){
-    window.location.href = '../cursos/cursos.php';
+    window.location.href = 'cursos.php';
 }
 
 function goSettings(){
     window.location.href = '../settings/settings.php';
 }
+
+function showProject(){
+    document.querySelector(".openProject").style = "display: block;";
+}
+
+

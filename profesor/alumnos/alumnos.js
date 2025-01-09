@@ -12,9 +12,13 @@ function mostrarTabla() {
 
 
 function goDasboard() {
-    window.location.href = '../main/main.php';
+    window.location.href = '../main/index.php';
 }
 
 function goCursos(){
     window.location.href = '../cursos/cursos.php';
+}
+
+function goSettings(){
+    window.location.href = '../settings/settings.php';
 }

@@ -22,7 +22,7 @@ body {
 }
 
 .container {
-    height: 700px;
+    height: 690px;
     width: 1250px;
     display: flex;
     flex-direction: row;
@@ -238,10 +238,10 @@ body {
 
 
 .contenido {
-    width: 960px;
+    width: 960px !important;
     height: 690px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
 }
 
@@ -250,285 +250,350 @@ body {
     border-radius: 15px;
 }
 
-#left{
-    width: 300px;
+#arriba{
+    width: 960px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
-    height: 100%;
-    overflow: hidden;
+    height: 160px;
 }
 
+/*Tarjeta amarilla*/
 
-/*--------Container para mobil--------*/
 
-
-#mobileApp{
-    width: 100%;
+#infoApp{
+    width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-color: #E2FF32;
     align-items: flex-start;
     padding: 10px 10px 10px 15px !important;
-    height: 250px;
+    
 }
 
-.titulosMobile h2{
+#infoApp h2{
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-.redesSociales{
+#infoApp button{
     display: flex;
-    justify-content: space-around;
-    gap: 160px;
+    gap: 5px;
+    background-color: #fafafa00;
+    border: 0px;
 }
-
-.centLeft{
-    display: flex;
-
-}
-
-.svgG{
+#infoApp button a{
     border: 1px solid #000;
-    background-color: #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #fafafa;
-}
-
-.svgApple{
-    border: 1px solid #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #fafafa;
-}
-
-.svgApple img{
-    width: 16px;
-}
-
-.svgArrow{
-    border: 1px solid #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-a svg{
-    color: #000;
     width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+#infoApp button svg{
+    width: 15px;
+
 }
 
 
-
-/*--------Container para ultimas actividades--------*/
-
-
-#lastActivities{
+/*---------DIV de descripcion-------------*/
+#description{
+    width: 640px;
+    display: flex;
+    color: white;
+    padding: 10px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
     gap: 10px;
-    height: 130px;
 }
 
-#lastActivities h1{
-    padding-top: 5px;
-    font-size: 1.1rem;
-    color: #ffffff;
+#description h1{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+#description h4{
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #fafafa70;
+}
+
+#text p{
+    font-size: 0.9rem;
     font-weight: 400;
 }
 
-#cards-activities{
+
+
+#abajo{
+    width: 960px;
+    height: 500px;
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.lastActivity{
-    padding: 10px;
-    border-radius: 15px;
+
+/*---------DIV de descripcion-------------*/
+
+#verTabla{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+    overflow: auto;
+    border: 0px;
+}
+
+#tabla{
+    width: 100%;
+    max-height: 380px !important;
+    border: 0px;
+    overflow-y: auto; /* Habilitar scroll vertical */
+
+}
+
+#tabla table{
+    color: #fafafa;
+    width: 100%;
+    height: 400px !important;
+    overflow: auto;
+    border-collapse: collapse;
+}
+
+#tabla thead {
     background-color: #fafafa20;
+}
+
+#tabla thead th {
+    position: sticky; /* Fijar el encabezado */
+    top: 0; 
+    z-index: 1;
+    padding: 12px;
+    font-size: 16px;
+    text-align: left;
     color: #ffffff;
-    width: 205px;
+    background-color: #414141;
+
 }
 
-.lastActivity h2{
-    font-size: 1rem;
+#borderLeft{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
-.lastActivity p{
+#borderRight{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#tabla tbody{
+    color: #fafafa;
+   /*height: 200px;
+    overflow: hidden;
+    */
+}
+
+#tabla tbody tr {
+    background-color: #fafafa00;
+    transition: all 0.4s ease;
+}
+
+#tabla tbody tr:nth-child(odd) {
+    background-color: #ffffff00; /* Fondo para las filas impares */
+}
+
+#tabla tbody tr:nth-child(even) {
+    background-color: #ffffff08; /* Fondo para las filas pares */
+}
+
+#tabla tbody td button {
+    color: #fafafa;
+}
+
+#tabla tbody tr:hover {
+    background-color: #fafafa20;
+}
+
+#tabla tbody td {
+    padding: 12px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+#tabla button {
+    background-color: #fafafa00;
+    border: 0px;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+/*---------Insertar Actividad-------------*/
+
+
+#insertarActividad {
+    display: none;
+}
+
+#formInsert{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+#formInsert input{
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+}
+
+#formInsert label {
+    font-size: 0.9rem;
+    margin: 10px;
+    color: #FFFFFF;
+}
+
+#formInsert h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+}
+
+#formInsert .column {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.column select {
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+}
+
+#buttonsInsert {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 20px;
+    width: 300px;
+}
+
+#buttonsInsert button {
+    padding: 10px 50px;
+    border-radius: 15px;
+    border: 0;
+    font-weight: 500;
     font-size: 0.9rem;
 }
 
-
-
-/*--------Container para abajo--------*/
-
-
-#right{
-    width: 640px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow: hidden;
-    height: 100%;
-}
-
-
-/*--------Container para ultimo proyecto--------*/
-
-
-#lastProject{
-    width: 300px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fafafa;
-}
-
-.contProject{
-   width: 260px; 
-   height: 460px;
-   overflow: hidden;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-}
-
-.contProject img{
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-#tituloProject{
-    display: flex;
-    flex-direction: column;
-    gap: 17px;
-}
-
-.firsttitle{
-    display: flex;
-    justify-content: space-between;
-}
-
-.firsttitle h1{
-    font-size: 1.2rem;
-    font-weight: 400;
-    align-items: center;
-}
-
-.firsttitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #fafafa;
-    padding: 3px 5px 3px 5px;
-    transition: all 0.3s;
-}
-
-.firsttitle button:hover{
-    background-color: #00000040;
-    border-radius: 10px;
-}
-
-
-.secondtitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #E2FF32;
-    transition: all 0.3s ease;
-    padding: 3px;
-}
-
-.secondtitle button:hover{
-    background-color: #00000030;
-    border-radius: 10px;
-}
-
-#tituloProject h1{
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-.inputFind{
-    width: 100%;
-}
-
-.inputFind input{
-    border: 1px solid #fafafa60;
-    border-radius: 15px;
-    width: 100%;
-    padding: 10px;
-    background-color: #fafafa20;
-}
-
-/*--------Container para estadisticas alumnos--------*/
-
-
-#abajoRight{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/*--------Container para estadisticas alumnos--------*/
-
-
-#estadisticaAlumnos{
-    height: 370px;
-    padding: 10px 15px;
-    color: #ffffff;
-}
-
-#estadisticaAlumnos h1{
-   font-size: 1.2rem;
-   font-weight: 500;
-}
-
-#hardmode{
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-#hardmode button{
-    width: 200px;
-    padding: 10px;
-    border-radius: 15px;
-    border: 0px
-}
-
-.yellowbtn{
+#buttonsInsert #add {
     background-color: #E2FF32;
-    color: #000;
 }
 
-.lilabtn{
-    background-color: #A600FF;
+#buttonsInsert #cancel {
+    background-color: #FFFFFF20;
+    color: #FFFFFF;
+}
+
+
+/*---------DIV de botones-------------*/
+
+
+#buttonsTabla{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+
+#buttonsTabla button{
+    padding: 10px;
+    border-radius: 10px;
+    border: 0px;
+    width: 200px;
+    height: 60px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.addCard{
+    background-color: #E2FF32 !important;
+    color: #000 !important;
+}
+
+.editCard{
+    background-color: #ffffff30 !important;
     color: #fafafa;
+}
+
+.deleteCard{
+    background-color: #A600FF !important;
+}
+
+#modificarACT-form{
+    background-color: #FFFFFF20;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+#modificarACT-form h2 {
+    color: #fafafa;
+}
+
+#modificarACT-form label {
+    color: #fafafa;
+}
+
+.botones-modificarACT {
+    padding-top: 5px;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+#BModificarAct {
+    background-color: #A600FF;
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+#back {
+    background-color: #E2FF32;
+    border: 0;
+    padding: 10px 20px;
+    border-radius: 10px;
 }
