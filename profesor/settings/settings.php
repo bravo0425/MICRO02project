@@ -1,5 +1,6 @@
 <?php
     include "../../conexion.php";
+    include "functions.php";
 
     session_start();
 
@@ -21,6 +22,10 @@
         exit();
     }
 
+    if(!empty($_POST['updateBTN'])){
+        updateImg($conn);
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +33,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="settings.css">
 </head>
@@ -43,7 +49,7 @@
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
@@ -152,44 +158,63 @@
             
             <!-- abajo -->
             <section id="abajo" class="card">
-                <nav class="navSettings">
-                    <ul>
-                        <li><button>General</button></li>
-                        <li><button>Security</button></li>
-                        <li><button>Help</button></li>
-                    </ul>
-                </nav>
+            <nav class="navSettings">
+                <ul>
+                    <li><button onclick="showSection('divGeneral', this)" class="activeN">General</button></li>
+                    <li><button onclick="showSection('divSecurity', this)">Security</button></li>
+                    <li><button onclick="showSection('divHelp', this)">Help</button></li>
+                </ul>
+            </nav>
 
-                <section class="divGeneral">
-                    <div class="changeImg">
-                        <img src="../../imagenes/project.jpg" alt="">
-                        <form action="" method="POST">
-                            <p>Your img profile</p>
-                            <button type="submit" name="updateBTN" id="updateBTN">Update</button>
-                        </form>
-                        
+            <section class="divGeneral">
+                <div class="changeImg">
+                    <?php mostrarImg($conn); ?>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <p>Your img profile</p>
+                        <label for="fileUpload" class="custom-file-upload">Update img</label>
+                        <input type="file" name="updateImg" id="fileUpload">
+                        <button type="submit" name="updateBTN" value="awdawd" id="updateBTN">Upload</button>
+                    </form>
+                </div>
+                <div class="inputGeneral">
+                    <p>Username</p>
+                    <div class="showText">
+                        <p><?php mostrarUsername($conn); ?></p>
                     </div>
-                    <div class="inputGeneral">
-                        <p>Username</p>
-                        <div class="showText">
-                            <p>mave</p>
-                        </div>
+                </div>
+                <div class="inputGeneral">
+                    <p>Email</p>
+                    <div class="showText">
+                        <p><?php mostrarMail($conn); ?></p>
                     </div>
-                    <div class="inputGeneral">
-                        <p>Email</p>
-                        <div class="showText">
-                            <p>maveto@taskify.com</p>
-                        </div>
+                </div>
+            </section>
+
+            <section class="divSecurity" style="display: none;">
+                <p>Change your password</p>
+                <div class="inputGeneral">
+                    <p>your password</p>
+                    <div class="showText">
+                        <input type="text" name="" id="">
                     </div>
-                </section>
+                </div>
+                <div class="inputGeneral">
+                    <p>New password</p>
+                    <div class="showText">
+                        <input type="text" name="" id="">
+                    </div>
+                </div>
+                <div class="inputGeneral">
+                    <p>Repeat new password</p>
+                    <div class="showText">
+                        <input type="text" name="" id="">
+                    </div>
+                </div>
+            </section>
 
-                <section class="divSecurity">
-
-                </section>
-
-                <section class="divHelp">
-
-                </section>
+            <section class="divHelp" style="display: none;">
+                <p>Help section goes here</p>
+            </section>
 
             </section>
 

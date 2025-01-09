@@ -90,6 +90,13 @@ body {
     font-weight: 400;
 }
 
+.usuario img{
+    object-fit: cover;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    border: 0;
+}
 /* opciones del navBar*/
 
 .navbar {
@@ -358,25 +365,36 @@ body {
 }
 
 .navSettings button{
-    background-color: #e0e0e0;
+    background-color: #fafafa00;
     border: 0;
     border-radius: 40px;
     width: 140px;
+    font-size: 0.9rem;
     padding: 0.4rem 0rem;
     cursor: pointer;
     transition: all 0.4s ease;
 }
 
 .navSettings button:hover{
-    background-color: #fafafa;
+    background-color: #fafafa90;
 }
+
+.activeN{
+    background-color: #fafafa90 !important;
+}
+
+.activeN:hover{
+    background-color: #fafafa !important;
+}
+
+/*-----DIV GENERAL SETTINGS----*/
 
 .divGeneral{
     width: 600px;
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 40px !important;
 }
 
 .changeImg{
@@ -403,14 +421,34 @@ body {
     justify-content: space-evenly;
 }
 
-.changeImg form button{
-    width: 150px;
+/* Ocultar el input original */
+input[type="file"] {
+    display: none;
+}
+
+/* Estilo para el label que simula el botón del input */
+.custom-file-upload {
+    width: 200px;
+    border: 0;
+    border-radius: 15px;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
+    background-color: #E2FF32;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #000;
+}
+
+/* Estilo para los botones */
+.changeImg form button {
+    width: 200px;
     border: 0;
     border-radius: 15px;
     padding: 0.5rem 0rem;
     cursor: pointer;
     background-color: #E2FF32;
 }
+
 
 .inputGeneral{
     width: 100%;
@@ -435,8 +473,11 @@ body {
     margin-right: 1rem;
 }
 
+/*-----DIV GENERAL SETTINGS----*/
 
+.divSecurity{
 
+}
 
 
 
