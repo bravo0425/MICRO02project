@@ -85,6 +85,14 @@ body {
     font-weight: 400;
 }
 
+.usuario img{
+    object-fit: cover;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    border: 0;
+}
+
 /* opciones del navBar*/
 
 .navbar {

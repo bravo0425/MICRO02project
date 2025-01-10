@@ -26,6 +26,8 @@
         updateImg($conn);
     }
 
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +35,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="settings.css">
 </head>
@@ -173,7 +176,7 @@
                         <p>Your img profile</p>
                         <label for="fileUpload" class="custom-file-upload">Update img</label>
                         <input type="file" name="updateImg" id="fileUpload">
-                        <button type="submit" name="updateBTN" value="awdawd" id="updateBTN">Upload</button>
+                        <button type="submit" name="updateBTN" value="awdawd" id="updateBTN">Confirm</button>
                     </form>
                 </div>
                 <div class="inputGeneral">
@@ -191,25 +194,28 @@
             </section>
 
             <section class="divSecurity" style="display: none;">
+                
+                <?php if(!empty($_POST['cambiar'])){
+                    cambiarPass($conn);
+                } ?>
+
                 <p>Change your password</p>
-                <div class="inputGeneral">
-                    <p>your password</p>
-                    <div class="showText">
-                        <input type="text" name="" id="">
+                <form action="" method="POST">
+                    <div class="inputGeneral">
+                        <label for="oldpass">Your Password</label>
+                        <input type="text" name="oldpass" id="oldpass">
                     </div>
-                </div>
-                <div class="inputGeneral">
-                    <p>New password</p>
-                    <div class="showText">
-                        <input type="text" name="" id="">
+                    <div class="inputGeneral">
+                        <label for="newpass">New Password</label>
+                        <input type="text" name="newpass" id="newpass">
                     </div>
-                </div>
-                <div class="inputGeneral">
-                    <p>Repeat new password</p>
-                    <div class="showText">
-                        <input type="text" name="" id="">
+                    <div class="inputGeneral">
+                        <label for="newpass2">Repeat New Password</label>
+                        <input type="text" name="newpass2" id="newpass2">
                     </div>
-                </div>
+                    <input type="submit" name="cambiar" value="Confirm" id="changePass">
+                </form>
+                
             </section>
 
             <section class="divHelp" style="display: none;">
@@ -220,7 +226,12 @@
 
         </section>
     </main>
-        
+    
+    <div class="popupAlerts">
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.0/dist/sweetalert2.all.min.js"></script>
     <script src="settings.js"></script>
 </body>
 </html>

@@ -27,7 +27,7 @@ body {
 
 .container {
     height: 690px;
-    width: 1250px;
+    width: 1250px !important;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -92,11 +92,13 @@ body {
 
 .usuario img{
     object-fit: cover;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 50px;
     border: 0;
 }
+
+
 /* opciones del navBar*/
 
 .navbar {
@@ -298,7 +300,7 @@ body {
 }
 
 .tituloInfo svg{
-    width: 30px;
+    width: 25px;
 }
 
 
@@ -366,6 +368,7 @@ body {
 
 .navSettings button{
     background-color: #fafafa00;
+    color: #fafafa;
     border: 0;
     border-radius: 40px;
     width: 140px;
@@ -381,6 +384,7 @@ body {
 
 .activeN{
     background-color: #fafafa90 !important;
+    color: #000 !important;
 }
 
 .activeN:hover{
@@ -433,10 +437,10 @@ input[type="file"] {
     border-radius: 15px;
     padding: 0.5rem 0rem;
     cursor: pointer;
-    background-color: #E2FF32;
+    background-color: #ffffff60;
     text-align: center;
     font-size: 0.8rem;
-    color: #000;
+    color: #fafafa;
 }
 
 /* Estilo para los botones */
@@ -476,8 +480,22 @@ input[type="file"] {
 /*-----DIV GENERAL SETTINGS----*/
 
 .divSecurity{
-
+    width: 600px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 40px !important;
 }
 
+.divSecurity form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+}
 
-
+.divSecurity form input{
+    width: 150px;
+}

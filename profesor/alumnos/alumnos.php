@@ -1,6 +1,7 @@
 <?php
     include "../../conexion.php";
     include "funciones.php";
+    include "importar_alumnos.php";
 
     session_start();
 
@@ -34,7 +35,7 @@
     }
 
     if (!empty($_POST['importar'])) {
-        importarAlumnos($conn);
+        $importarAlumnos($conn);
     }
 
     if (!empty($_POST['logout'])) {
@@ -64,7 +65,7 @@
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">

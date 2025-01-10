@@ -76,8 +76,8 @@
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../imagenes/usuario.png" width="23px">
-                    <h3><?php echo $nom ?></h3>
+                <?php mostrarImg($conn); ?>
+                <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
                     <button onclick="goDasboard()" class="menu">
