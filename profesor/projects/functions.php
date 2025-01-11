@@ -1,19 +1,30 @@
 <?php
-function mostrarImg($conn){
-    $idProfe = $_SESSION['idProfe'];
+    function mostrarImg($conn){
+        $idProfe = $_SESSION['idProfe'];
 
-    $queryName = 'SELECT img, tipus FROM profesores WHERE id = ' . $idProfe;
-    
-    $r = mysqli_query($conn, $queryName);
-
-    // Asegúrate de que haya resultados
-    if ($r && mysqli_num_rows($r) > 0) {
-        $fila = mysqli_fetch_assoc($r);
+        $queryName = 'SELECT img, tipus FROM profesores WHERE id = ' . $idProfe;
         
-        // Mostrar la imagen a través de un archivo PHP
-        echo "<img src='data:" . $fila['tipus'] . ";base64," . base64_encode($fila['img']) . "' >";
+        $r = mysqli_query($conn, $queryName);
+
+        if ($r && mysqli_num_rows($r) > 0) {
+            $fila = mysqli_fetch_assoc($r);
+            
+            echo "<img src='data:" . $fila['tipus'] . ";base64," . base64_encode($fila['img']) . "' >";
+        }
     }
-}
 
-
+    function crearActividad($conn) {
+        // Obtener los datos del formulario
+        $titulo = $_POST['tituloActNew'];
+        $descripcion = $_POST['descriptionActNew'];
+        $dueDate = $_POST['dueDateActNew'];
+        $idProject = $_SESSION['idProyecto'];
+        $estado = $_POST['estadoActNew'];
+    
+        // Crear la consulta SQL
+        $sql = "INSERT INTO actividades (titulo, descripcion, project_id, due_date, active) 
+                VALUES ('$titulo', '$descripcion', '$idProject', '$dueDate', '$estado')";
+        
+        mysqli_query($conn, $sql);
+    }
 ?>

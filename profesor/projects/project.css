@@ -87,8 +87,8 @@ body {
 
 .usuario img{
     object-fit: cover;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     border-radius: 50px;
     border: 0;
 }
@@ -322,17 +322,39 @@ body {
     gap: 10px;
 }
 
-#description h1{
-    font-size: 1.2rem;
-    font-weight: 500;
+.description-action{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
-#description h4{
+.description-action h4{
     width: 100%;
     text-align: left;
     font-size: 0.9rem;
     font-weight: 400;
-    color: #fafafa70;
+    color: #fafafa80;
+}
+
+.editProject{
+    background-color: #fafafa00;
+    border: 0;
+}
+
+.editProject svg{
+    color: #fafafa80;
+    transition: all 0.4s ease;
+}
+
+.editProject svg:hover{
+    color: #fafafa;
+}
+
+
+
+#description h1{
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 #text p{
@@ -465,6 +487,15 @@ body {
 
 #insertarActividad {
     display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#insertarActividad h2{
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #fafafa;
+    
 }
 
 #formInsert{
@@ -481,6 +512,18 @@ body {
     margin: 10px;
     border-radius: 20px;
     border: 0;
+    background-color: #fafafa90;
+    color: #000;
+}
+
+#formInsert textarea{
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+    background-color: #fafafa90;
+    color: #000;
 }
 
 #formInsert label {
@@ -496,7 +539,8 @@ body {
     margin-bottom: 20px;
 }
 
-#formInsert .column {
+.column {
+    width: 525px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -508,6 +552,8 @@ body {
     margin: 10px;
     border-radius: 20px;
     border: 0;
+    background-color: #fafafa90;
+    color: #000;
 }
 
 #buttonsInsert {
@@ -550,8 +596,8 @@ body {
 
 
 #buttonsTabla button{
-    padding: 0.5rem 0rem;
-    border-radius: 10px;
+    padding: 0.4rem 0rem;
+    border-radius: 15px;
     border: 0px;
     width: 300px;
     height: 50px;
