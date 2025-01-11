@@ -167,39 +167,41 @@
                       <h2>Items</h2>
                       <button type="button" name="show_popup" class="addbtn" id="addbtn">+ Add new Item</button>
                       <div id="popUp">
-                        <form action="" method="POST" id="añadirItemF">
-                            <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
-                            <div class="contenidoForm">
-                                <label for="actividad">Actividad:</label>
-                                <select name="actividad" id="actividad">
-                                    <?php
-                                        $selectAct = "SELECT id, titulo FROM actividades";
-                                        $resActividad = mysqli_query($conn, $selectAct);
-                                        while ($fila = mysqli_fetch_assoc($resActividad)) {
-                                            echo "<option required value='" . $fila['id'] . "'>" . $fila['titulo'] . "</option>";
-                                        }
-                                    ?>
-                                </select>
-                                <label for="titulo">Title: </label>
-                                <input type="text" name="titulo" id="titulo">
-                                <label for="valor">Value: </label>
-                                <select name="valores" id="valores">
-                                    <option value="10">10%</option>
-                                    <option value="20">20%</option>
-                                    <option value="30">30%</option>
-                                    <option value="40">40%</option>
-                                    <option value="50">50%</option>
-                                    <option value="60">60%</option>
-                                    <option value="70">70%</option>
-                                    <option value="80">80%</option>
-                                    <option value="90">90%</option>
-                                    <option value="100">100%</option>
-                                </select>
-                                <button type="submit" id="añadirItem" name="añadirItem" value="añadirItem">Add Item</button>
-                            </div>
-                        </form>
-                      </div>
-                      <button class="deletebtn">BIN</button>
+                        <div class="popup-content">
+                            <form action="" method="POST" id="añadirItemF">
+                                <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
+                                <div class="contenidoForm">
+                                    <label for="actividad">Actividad:</label>
+                                    <select name="actividad" id="actividad">
+                                        <?php
+                                            $selectAct = "SELECT id, titulo FROM actividades";
+                                            $resActividad = mysqli_query($conn, $selectAct);
+                                            while ($fila = mysqli_fetch_assoc($resActividad)) {
+                                                echo "<option required value='" . $fila['id'] . "'>" . $fila['titulo'] . "</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                    <label for="titulo">Title: </label>
+                                    <input type="text" name="titulo" id="titulo">
+                                    <label for="valor">Value: </label>
+                                    <select name="valores" id="valores">
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                        <option value="40">40%</option>
+                                        <option value="50">50%</option>
+                                        <option value="60">60%</option>
+                                        <option value="70">70%</option>
+                                        <option value="80">80%</option>
+                                        <option value="90">90%</option>
+                                        <option value="100">100%</option>
+                                    </select>
+                                    <button type="submit" id="añadirItem" name="añadirItem" value="añadirItem">Add Item</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <button class="deletebtn">BIN</button>
                     </div>
                     <div id="itemsGroup">
                         <?php
