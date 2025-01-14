@@ -2,6 +2,7 @@
 
     session_start();
     include "../../../conexion.php";
+    include "functions.php";
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];
@@ -19,13 +20,41 @@
         exit();
     }
 
+    if (isset($_SESSION['idActividad'])) {
+        // Asegurarse de que el ID es un número entero para prevenir inyecciones SQL
+        $idActivity = intval($_SESSION['idActividad']);
+        
+        // Consulta para obtener los detalles de la actividad
+        $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
+        $result = mysqli_query($conn, $queryAct);
+        
+        // Verificar si la consulta devuelve algún resultado
+        if (mysqli_num_rows($result) > 0) {
+            // Si la actividad es encontrada, obtener los detalles
+            $act = mysqli_fetch_assoc($result);
+            $titulo = htmlspecialchars($act['titulo']);
+            $descripcion = htmlspecialchars($act['descripcion']);
+            $dueDate = htmlspecialchars($act['due_date']);
+            $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
+
+        } else {
+            // Si no se encuentra la actividad, establecer un mensaje por defecto
+            $titulo = "Actividad no encontrada";
+            $descripcion = "No hay detalles disponibles para esta actividad.";
+        }
+    }
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluate Activity</title>
+    <title>Lista Evaluar Activity</title>
     <link rel="stylesheet" href="lista.css">
 </head>
 <body>
@@ -39,7 +68,7 @@
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
@@ -138,9 +167,19 @@
                 </div>
 
                 <div id="description" class="card">
-                    <h1>Make a web design</h1>
-                    <p>Width Html and CSS make a web beautiful</p>
-                    <p>Last date: 10-12-2024 10:00</p>
+                    <div class="description-action">
+                        <h4>Activity</h4>
+                        <button class="editProject" onclick="abrirEditorProject()">
+                            <svg xmlns='http://www.w3.org/2000/svg' fill='none' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                                <path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="descriptionInfo">
+                        <h1><?php echo $titulo; ?></h1>
+                        <p><?php echo $descripcion; ?></p>
+                        <p>Last date: <span><?php echo $dueDate; ?></span> </p>
+                    </div>
                 </div>
                 
             </div>
@@ -152,55 +191,56 @@
                     <table>
                       <thead>
                         <tr>
-                          <th>Nom</th>
+                          <th id="borderLeft">Nom</th>
                           <th>File</th>
                           <th>Activity status</th>
-                          <th>Evaluar</th>
+                          <th id="borderRight">Evaluar</th>
                         </tr>
                       </thead>
                       <tbody>
                         <form action="../notas/notas.php">
+                        <?php mostrarTablaAlumnos($conn); ?>
                         <tr>
                           <td>Ferran Bravo</td>
                           <td>Descargar</td>
                           <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
+                          <td><button class="noEva">Evaluar</button></td>
                         </tr>
                         <tr>
                           <td>Ferran Bravo</td>
                           <td>Descargar</td>
                           <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
+                          <td><button class="noEva">Evaluar</button></td>
                         </tr>
                         <tr>
                           <td>Ferran Bravo</td>
                           <td>Descargar</td>
                           <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
+                          <td><button class="noEva">Evaluar</button></td>
                         </tr>
                         <tr>
                           <td>Ferran Bravo</td>
                           <td>Descargar</td>
                           <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
+                          <td><button class="noEva">Evaluar</button></td>
                         </tr>
                         <tr>
                           <td>Ferran Bravo</td>
                           <td>Descargar</td>
                           <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
+                          <td><button class="noEva">Evaluar</button></td>
                         </tr>
                         <tr>
                           <td>Ferran Bravo</td>
                           <td>Descargar</td>
                           <td>Entregado</td>
-                          <td><button>Evaluado</button></td>
+                          <td><button class="okEva">Evaluado</button></td>
                         </tr>
                         <tr>
                           <td>Ferran Bravo</td>
                           <td>Descargar</td>
                           <td>Entregado</td>
-                          <td><button>Evaluado</button></td>
+                          <td><button class="okEva">Evaluado</button></td>
                         </tr>
                         </form>
                       </tbody>

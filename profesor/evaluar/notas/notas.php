@@ -2,6 +2,7 @@
 
     session_start();
     include "../../../conexion.php";
+    include "functions.php";
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];
@@ -17,6 +18,30 @@
         session_destroy();
         header('Location: ../../../login/login.php');
         exit();
+    }
+
+    if (isset($_SESSION['idActividad'])) {
+        // Asegurarse de que el ID es un número entero para prevenir inyecciones SQL
+        $idActivity = intval($_SESSION['idActividad']);
+        
+        // Consulta para obtener los detalles de la actividad
+        $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
+        $result = mysqli_query($conn, $queryAct);
+        
+        // Verificar si la consulta devuelve algún resultado
+        if (mysqli_num_rows($result) > 0) {
+            // Si la actividad es encontrada, obtener los detalles
+            $act = mysqli_fetch_assoc($result);
+            $titulo = htmlspecialchars($act['titulo']);
+            $descripcion = htmlspecialchars($act['descripcion']);
+            $dueDate = htmlspecialchars($act['due_date']);
+            $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
+
+        } else {
+            // Si no se encuentra la actividad, establecer un mensaje por defecto
+            $titulo = "Actividad no encontrada";
+            $descripcion = "No hay detalles disponibles para esta actividad.";
+        }
     }
 
 ?>
@@ -39,7 +64,7 @@
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>                    
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">

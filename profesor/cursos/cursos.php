@@ -234,11 +234,11 @@
                                             }
                                             
                                             echo "<form method='POST' action=''>
-                                                <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
-                                                <button type='submit' class='project-button' $style>
-                                                    <p>" . htmlspecialchars($fila['titulo']) . "</p>
-                                                </button>
-                                            </form>";
+                                                    <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
+                                                    <button type='submit' class='project-button' $style>
+                                                        <p>" . htmlspecialchars($fila['titulo']) . "</p>
+                                                    </button>
+                                                </form>";
                                         }
                                     } else {
                                         echo "<p>No hay proyectos disponibles.</p>";

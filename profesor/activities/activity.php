@@ -1,5 +1,6 @@
 <?php
     include "../../conexion.php";
+    include "functions.php";
     
     session_start();
 
@@ -19,7 +20,49 @@
         exit();
     }
 
+    if (isset($_POST['seeActivity']) && !empty($_POST['seeActivity'])) {
+        $idActivity = $_SESSION['idActividad'];
+    }
+
+    if (isset($_SESSION['idActividad'])) {
+        // Asegurarse de que el ID es un número entero para prevenir inyecciones SQL
+        $idActivity = intval($_SESSION['idActividad']);
+        
+        // Consulta para obtener los detalles de la actividad
+        $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
+        $result = mysqli_query($conn, $queryAct);
+        
+        // Verificar si la consulta devuelve algún resultado
+        if (mysqli_num_rows($result) > 0) {
+            // Si la actividad es encontrada, obtener los detalles
+            $act = mysqli_fetch_assoc($result);
+            $titulo = htmlspecialchars($act['titulo']);
+            $descripcion = htmlspecialchars($act['descripcion']);
+            $dueDate = htmlspecialchars($act['due_date']);
+            $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
+
+        } else {
+            // Si no se encuentra la actividad, establecer un mensaje por defecto
+            $titulo = "Actividad no encontrada";
+            $descripcion = "No hay detalles disponibles para esta actividad.";
+        }
+    }
+
+    if(isset($_POST['estadoAct']) && !empty($_POST['estadoAct'])){
+        $newEstado = (intval($act['active']) == 1) ? 0 : 1;  // Cambiar de 1 a 0 o de 0 a 1
+    
+        // Actualizar el estado en la base de datos
+        $updateQuery = "UPDATE actividades SET active = $newEstado WHERE id = $idActivity";
+        mysqli_query($conn, $updateQuery);
+        
+        // Recargar la página para reflejar el cambio
+        header('Location: ' . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +82,7 @@
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
@@ -135,15 +178,25 @@
                 </div>
 
                 <div id="description" class="card">
-                    <h1>Make a web design</h1>
-                    <p>Width Html and CSS make a web beautiful</p>
-                    <p>Last date: 10-12-2024 10:00</p>
+                    <div class="description-action">
+                        <h4>Activity</h4>
+                        <button class="editProject" onclick="abrirEditorProject()">
+                            <svg xmlns='http://www.w3.org/2000/svg' fill='none' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                                <path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="descriptionInfo">
+                        <h1><?php echo $titulo; ?></h1>
+                        <p><?php echo $descripcion; ?></p>
+                        <p>Last date: <span><?php echo $dueDate; ?></span> </p>
+                    </div>
                 </div>
                 
-                <div id="estadoActividad" class="card">
-                  <p>estado</p>
-                  <button>Active</button>
-                </div>
+                <form action="" method="POST" id="estadoActividad" class="card">
+                    <p>Estado</p>
+                    <input type="submit" class="statusAct" name="estadoAct" value="<?php echo $estado; ?>"  id="">
+                </form>
             </div>
 
 
@@ -232,76 +285,78 @@
 
                 <div id="tablaNotas" class="card">
                     <h2>Notas alumnos</h2>
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>nom</th>
-                          <th>item 1</th>
-                          <th>item 2</th>
-                          <th>item 3</th>
-                          <th>item 4</th>
-                          <th>Nota final</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>8</td>
-                          <td>7</td>
-                          <td>10</td>
-                          <td>5</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>8</td>
-                          <td>7</td>
-                          <td>10</td>
-                          <td>5</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>8</td>
-                          <td>7</td>
-                          <td>10</td>
-                          <td>5</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>8</td>
-                          <td>7</td>
-                          <td>10</td>
-                          <td>5</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>8</td>
-                          <td>7</td>
-                          <td>10</td>
-                          <td>5</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>8</td>
-                          <td>7</td>
-                          <td>10</td>
-                          <td>5</td>
-                          <td>8</td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>8</td>
-                          <td>7</td>
-                          <td>10</td>
-                          <td>5</td>
-                          <td>8</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div class="tbln">
+                        <table>
+                        <thead>
+                            <tr>
+                            <th id="borderLeft">nom</th>
+                            <th>item 1</th>
+                            <th>item 2</th>
+                            <th>item 3</th>
+                            <th>item 4</th>
+                            <th id="borderRight">Nota final</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>Ferran Bravo</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>8</td>
+                            </tr>
+                            <tr>
+                            <td>Ferran Bravo</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>8</td>
+                            </tr>
+                            <tr>
+                            <td>Ferran Bravo</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>8</td>
+                            </tr>
+                            <tr>
+                            <td>Ferran Bravo</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>8</td>
+                            </tr>
+                            <tr>
+                            <td>Ferran Bravo</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>8</td>
+                            </tr>
+                            <tr>
+                            <td>Ferran Bravo</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>8</td>
+                            </tr>
+                            <tr>
+                            <td>Ferran Bravo</td>
+                            <td>8</td>
+                            <td>7</td>
+                            <td>10</td>
+                            <td>5</td>
+                            <td>8</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>

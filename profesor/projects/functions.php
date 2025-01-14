@@ -27,4 +27,18 @@
         
         mysqli_query($conn, $sql);
     }
+
+    function editarProyecto($conn){
+        // Obtener los datos del formulario
+        $titulo = $_POST['editTitle'];
+        $descripcion = $_POST['editDesc'];
+        $idProject = $_SESSION['idProyecto'];
+
+    
+        // Crear la consulta SQL
+        $sql = "UPDATE proyectos SET titulo = '$titulo', descripcion = '$descripcion' WHERE id = '$idProject'";
+        
+        mysqli_query($conn, $sql);
+    }
+
 ?>

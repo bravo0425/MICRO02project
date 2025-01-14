@@ -85,6 +85,14 @@ body {
     font-weight: 400;
 }
 
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
 /* opciones del navBar*/
 
 .navbar {
@@ -282,6 +290,7 @@ body {
     gap: 5px;
     background-color: #fafafa00;
     border: 0px;
+    cursor: pointer;
 }
 #infoApp button a{
     border: 1px solid #000;
@@ -306,22 +315,72 @@ body {
     width: 530px;
     display: flex;
     color: white;
-    padding: 10px;
+    padding: 0.7rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
 }
 
-#description h1{
+
+
+/*---------parte de arriba de la descripcion incluido el button-------------*/
+
+
+.description-action{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.description-action h4{
+    width: 100%;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #fafafa80;
+}
+
+.editProject{
+    background-color: #fafafa00;
+    border: 0;
+}
+
+.editProject svg{
+    width: 18px;
+    height: 18px;
+    color: #fafafa80;
+    transition: all 0.4s ease;
+}
+
+.editProject svg:hover{
+    color: #fafafa;
+}
+
+/*--------- Informaciond de la actividad -------------*/
+
+.descriptionInfo{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: hidden;
+    padding: 0.7rem 0rem;
+}
+
+.descriptionInfo h1{
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-#text p{
-    font-size: 0.9rem;
+.descriptionInfo p{
+    font-size: 0.8rem;
     font-weight: 400;
+    color: #fafafa90;
+}
+
+.descriptionInfo p span{
+    color: #fafafa !important;
 }
 
 
@@ -331,31 +390,33 @@ body {
 #estadoActividad{
     width: 90px;
     display: flex;
-    justify-content: center;
-    padding: 10px;
-    gap: 10px;
+    justify-content: flex-start;
+    padding: 0.7rem;
+    gap: 33px;
     align-items: flex-start;
     flex-direction: column;
 }
 
-#estadoActividad button{
+.statusAct{
     width: 100%;
     border-radius: 15px;
     border: 0px;
     background-color: #E2FF32;
     color: #000;
-    padding: 10px 0px;
+    padding: 0.7rem 0rem;
     transition: all 0.3s ease;
 }
 
-#estadoActividad button:hover{
+.statusAct:hover{
     background-color: #d8f900;
+
 }
 
+
 #estadoActividad p{
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 400;
-    color: #00000080;
+    color: #fafafa80;
 }
 
 
@@ -384,7 +445,7 @@ body {
     color: #fafafa;
     height: 200px;
     overflow: hidden;
-    padding: 10px;
+    padding: 0.7rem;
     gap: 10px;
 }
 
@@ -470,24 +531,113 @@ body {
     width: 100%;
     border: 0px;
     background-color: #8500CD;
-    padding: 10px;
+    padding: 0.7rem;
     border-radius: 15px;
 }
 
 #evaluarAlumnos p{
     color: #fafafa;
-    font-size: 1rem;
+    font-size: 0.9rem;
+}
+
+
+/*---------DIV de Tabla-------------*/
+
+#tablaNotas{
+    width: 960px;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+
+#tablaNotas h2{
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #fafafa;
 }
 
 
 /*---------DIV de Tabla-------------*/
 
 
-#tablaNotas{
-    padding: 10px;
+.tbln{
     width: 100%;
+    max-height: 400px !important;
+    border: 0px;
+    overflow-y: auto
+}
+
+table{
     color: #fafafa;
-    height: 220px;
+    width: 100%;
+    height: 210px;
+    overflow: auto;
+    border-collapse: collapse;
+}
+
+thead{
+    background-color: #fafafa20;
+}
+
+thead th {
+    position: sticky; /* Fijar el encabezado */
+    top: 0; 
+    z-index: 1;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    color: #ffffff;
+    background-color: #fafafa20;
+    backdrop-filter: blur(10px); 
+
+
+}
+
+#borderLeft{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#borderRight{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+tbody{
+    color: #fafafa;
+}
+
+tbody td{
+    padding: 0 0 0 0;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+tbody tr {
+    height: 40px;
+    background-color: #fafafa00;
+    transition: all 0.4s ease;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff00; /* Fondo para las filas impares */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #ffffff08; /* Fondo para las filas pares */
+}
+
+tbody tr:hover {
+    background-color: #fafafa20;
 }
 
 
