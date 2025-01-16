@@ -42,10 +42,14 @@
             $titulo = "Actividad no encontrada";
             $descripcion = "No hay detalles disponibles para esta actividad.";
         }
+
     }
 
-
-
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviarIdAlumno'])){
+        $_SESSION['idAlumno'] = $_POST['enviarIdAlumno'];
+        header('Location: ../notas/notas.php');
+        exit;
+    }
 
 
 ?>
@@ -189,61 +193,48 @@
                 <h2>Listado de alumnos</h2>
                 <div id="tablaNotas">
                     <table>
-                      <thead>
-                        <tr>
-                          <th id="borderLeft">Nom</th>
-                          <th>File</th>
-                          <th>Activity status</th>
-                          <th id="borderRight">Evaluar</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <form action="../notas/notas.php">
-                        <?php mostrarTablaAlumnos($conn); ?>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button class="noEva">Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button class="noEva">Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button class="noEva">Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button class="noEva">Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button class="noEva">Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button class="okEva">Evaluado</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button class="okEva">Evaluado</button></td>
-                        </tr>
-                        </form>
-                      </tbody>
+                        <thead>
+                            <tr>
+                                <th id='borderLeft'>Nom</th>
+                                <th>File</th>
+                                <th>Activity status</th>
+                                <th id='borderRight'>Evaluar</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                                $queryStudents = " SELECT alumnos.name AS alumno_name, alumnos.last_name, alumnos_actividades.id_alumno, alumnos_actividades.notas, alumnos_actividades.id_actividad, alumnos_actividades.evaluado, alumnos_actividades.entregado FROM alumnos_actividades JOIN alumnos ON alumnos_actividades.id_alumno = alumnos.id WHERE alumnos_actividades.id_actividad = $idActivity ";
+
+                                $resultStudents = mysqli_query($conn, $queryStudents);
+
+                                while ($fila = mysqli_fetch_assoc($resultStudents)) {
+                            ?>
+                                <form action="" method="POST">
+                                    <tr>
+                                        <td><?php echo $fila['alumno_name'] . ' ' . $fila['last_name']; ?></td>
+                                        <td><button class="descargarBtn">Descargar</button></td>
+
+                                    <?php
+                                        $entregado = $fila['entregado'];
+                                        if ($entregado == 1) {
+                                            echo "<td>Entregado</td>";
+                                        } else {
+                                            echo "<td>No entregado</td>";
+                                        }
+
+                                        // Botón para evaluar o mostrar como ya evaluado
+                                        $evaluado = $fila['evaluado'];
+                                        if ($evaluado == 1) {
+                                            echo "<td><button type='submit' name='enviarIdAlumno' value='" . $fila['id_alumno'] . "' class='okEva'>Evaluado</button></td>";
+                                        } else {
+                                            echo "<td><button type='submit' name='enviarIdAlumno' value='" . $fila['id_alumno'] . "' class='noEva'>Evaluar</button></td>";
+                                        }
+                                    ?>
+                                    </tr>
+                                </form>
+                            <?php } ?>
+                        </tbody>                          
                     </table>
                 </div>
 

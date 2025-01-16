@@ -59,7 +59,7 @@
 </head>
 <body>
     <div class="container">      
-    <div class="contenedor-nav">
+        <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
                     <h1>Taskify®</h1>

@@ -26,6 +26,8 @@
                 VALUES ('$titulo', '$descripcion', '$idProject', '$dueDate', '$estado')";
         
         mysqli_query($conn, $sql);
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
 
     function editarProyecto($conn){
@@ -39,6 +41,8 @@
         $sql = "UPDATE proyectos SET titulo = '$titulo', descripcion = '$descripcion' WHERE id = '$idProject'";
         
         mysqli_query($conn, $sql);
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
 
 ?>

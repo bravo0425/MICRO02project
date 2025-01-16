@@ -29,6 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    font-family: 'Poppins';
 }
 
 /*MENU LATERAL*/
@@ -400,7 +401,6 @@ body {
 #tabla table{
     color: #fafafa;
     width: 100%;
-    height: 400px !important;
     overflow: auto;
     border-collapse: collapse;
 }
@@ -444,16 +444,17 @@ body {
 }
 
 #tabla tbody tr {
-    height: 40px;
     background-color: #fafafa00;
     transition: all 0.4s ease;
 }
 
 #tabla tbody tr:nth-child(odd) {
+    max-height: 70px !important;
     background-color: #ffffff00; /* Fondo para las filas impares */
 }
 
 #tabla tbody tr:nth-child(even) {
+    max-height: 70px !important;
     background-color: #ffffff08; /* Fondo para las filas pares */
 }
 
@@ -466,9 +467,10 @@ body {
 }
 
 #tabla tbody td {
-    padding: 12px;
+    padding: 1rem;
     font-size: 14px;
     color: #ffffff;
+    max-height: 70px;
 }
 
 #tabla button {

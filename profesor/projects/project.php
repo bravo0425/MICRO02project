@@ -235,7 +235,7 @@
                                         echo "<tr>";
                                         echo "<td>" . htmlspecialchars($actividad['titulo']) . "</td>";
                                         echo "<td>" . htmlspecialchars($actividad['due_date']) . "</td>";
-                                        echo "<td>" . $actividad['active'] ."</td>";
+                                        echo "<td>" . $actividad['active'] = (intval($actividad['active']) == 1) ? 'Active' : 'Inactive' ."</td>";
                                         echo "<td>
                                                 <form method='POST' action=''>
                                                     <button type='sumbit' name='seeActivity' value='" . $actividad['id'] ."'>

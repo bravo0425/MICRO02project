@@ -21,28 +21,42 @@
     }
 
     if (isset($_SESSION['idActividad'])) {
-        // Asegurarse de que el ID es un número entero para prevenir inyecciones SQL
         $idActivity = intval($_SESSION['idActividad']);
         
-        // Consulta para obtener los detalles de la actividad
         $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
         $result = mysqli_query($conn, $queryAct);
         
-        // Verificar si la consulta devuelve algún resultado
-        if (mysqli_num_rows($result) > 0) {
-            // Si la actividad es encontrada, obtener los detalles
-            $act = mysqli_fetch_assoc($result);
+        while($act = mysqli_fetch_assoc($result)){
             $titulo = htmlspecialchars($act['titulo']);
             $descripcion = htmlspecialchars($act['descripcion']);
             $dueDate = htmlspecialchars($act['due_date']);
             $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
-
-        } else {
-            // Si no se encuentra la actividad, establecer un mensaje por defecto
-            $titulo = "Actividad no encontrada";
-            $descripcion = "No hay detalles disponibles para esta actividad.";
         }
     }
+
+    if(isset($_SESSION['idAlumno'])){
+        $idAlumno = $_SESSION['idAlumno'];
+       
+        $searchAlumno = "SELECT * FROM alumnos WHERE id = $idAlumno";
+        $r = mysqli_query($conn, $searchAlumno);
+
+        while($alumno = mysqli_fetch_assoc($r)){
+            $idStudent = $alumno['id'];
+            $nomStudent = $alumno['name'];
+            $cogStudent = $alumno['last_name'];
+        }
+    }
+
+    $searchItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+    $rItems = mysqli_query($conn, $searchItems);
+
+    $items = [];
+    if (mysqli_num_rows($rItems) > 0) {
+        while ($item = mysqli_fetch_assoc($rItems)) {
+            $items[] = $item;
+        }
+    }
+
 
 ?>
 <!DOCTYPE html>
@@ -160,7 +174,7 @@
                 </div>
 
                 <div id="description" class="card">
-                    <h1>Ferran Bravo Chapinal</h1>
+                    <h1><?php echo htmlspecialchars($nomStudent ?? '') . ' ' . htmlspecialchars($cogStudent ?? '') ; ?></h1>
                 </div>
             </div>
 
@@ -173,35 +187,30 @@
                     </div>
                     <div id="info"  class="card">
                         <p>Activity</p>
-                        <p>Make a web design</p>
-                        <p>Width Html and CSS make a web beautiful</p>
+                        <p><?php echo htmlspecialchars($titulo) ?></p>    
+                        <p><?php echo htmlspecialchars($descripcion) ?></p>
                     </div>
                 </div>
 
                 <div id="formItems" class="card">
                     <h2>Asign Scores of the Activity</h2>
-                    <form method="POST" action="">
-                        <div class="inputs">
-                            <label for="">Structure</label>
-                            <input type="text" name="" value="">
-                        </div>
-                        <div class="inputs">
-                            <label for="">Contingut</label>
-                            <input type="text" name="" value="">
-                        </div>
-                        <div class="inputs">
-                            <label for="">Actitud</label>
-                            <input type="text" name="" value="">
-                        </div>
-                        <div class="notaFinal">
-                            <p>Nota Final: 7.5</p>
-                        </div>
-                        <div class="buttonDiv">
-                            <input type="submit" id="cancelbtn" name="cancel" value="Cancel">
-                            <input type="submit" id="evaluatebtn" name="evaluate" value="Evaluate">
-                        </div>
-                        
-                    </form>
+                    <?php if (!empty($items)): ?>
+                        <form method="POST" action="">
+                            <?php foreach ($items as $item): ?>
+                                <div class="inputs">
+                                    <label for="item_<?php $item['id']; ?>"><?= htmlspecialchars($item['titulo']) . ' ' . htmlspecialchars($item['valor']); ?>%</label>
+                                    <?php $idItem = $item['id']; ?>
+                                    <input type="text" name="item_<?php $item['id']; ?>" value="<?php mostrarNotaItemAlumno($conn, $idStudent, $idItem); ?>" min="0" max="10" required>
+                                </div>
+                                
+                            <?php endforeach; ?>
+                            <div class="buttonDiv">
+                                <input type="submit" id="evaluatebtn" name="evaluate" value="Evaluate">
+                            </div>
+                        </form>
+                    <?php else: ?>
+                        <p>No items assigned to this activity.</p>
+                    <?php endif; ?>
                 </div>
 
             </div>

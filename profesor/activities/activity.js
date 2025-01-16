@@ -31,3 +31,24 @@ show_popup.addEventListener('click', () => {
 close_popup.addEventListener('click', () => {
     popUp.style.display = 'none';
 });
+
+
+
+document.getElementById('añadirItemF').addEventListener('submit', function(event) {
+    let totalPercentage = 0;
+    
+    // Obtener los porcentajes de los ítems existentes
+    let items = document.querySelectorAll('input[name="valor[]"]');
+    items.forEach(function(item) {
+        totalPercentage += parseInt(item.value);
+    });
+
+    // Obtener el valor del nuevo ítem
+    let newItemValue = document.getElementById('valorNewItem').value;
+
+    // Validar si la suma de los porcentajes supera 100
+    if ((totalPercentage + parseInt(newItemValue)) > 100) {
+        alert("El total de los porcentajes excede el 100%. No se puede agregar el ítem.");
+        event.preventDefault(); // Evita el envío del formulario
+    }
+});

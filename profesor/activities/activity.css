@@ -474,7 +474,8 @@ body {
 }
 
 #items .deletebtn{
-    background-color: #8500CD;
+    width: 55px;
+    background-color: #8500CD00;
     color: #fafafa;
 }
 
@@ -489,7 +490,10 @@ body {
 
 #items .cardItem{
     display: flex;
+    width: 100px;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
     background-color: #fafafa20;
     border-radius: 15px;
     padding: 10px;
@@ -505,19 +509,31 @@ body {
 
 .imgItem{
     padding: 5px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    background-color: #ffffff90;
+    width: 45px;
+    height: 45px;
+    background-color: #ffffff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.imgItem svg{
-    color: #000;
+.imgItem img{
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50px;
+    object-fit: cover;
+
 }
 
 .tituloItem h2{
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 0.8rem;
+    font-weight: 300;
+}
+
+.valueItem p{
+    font-size: 0.8rem;
+    font-weight: 300;
 }
 
 
@@ -574,7 +590,6 @@ body {
 table{
     color: #fafafa;
     width: 100%;
-    height: 210px;
     overflow: auto;
     border-collapse: collapse;
 }
@@ -641,4 +656,145 @@ tbody tr:hover {
 }
 
 
+/*popup*/
 
+#popUp {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #00000080; 
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    position: relative;
+    width: 900px;
+    height: 600px;
+    padding: 1rem;
+    background-color: #1f1f1f70;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px #25252533;
+    text-align: center;
+}
+
+#añadirItemF {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.close-btn{
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border: 0;
+    border-radius: 30px;
+}
+
+.mostrarItems{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.items{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.item{
+    width: 150px;
+    height: 200px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}
+
+.item img{
+    width: 50px;
+    height: 50px;
+    border: 0;
+    border-radius: 50px;
+   
+}
+
+.contenidoForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formAdd{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+    gap: 10px;
+    height: 200px;
+}
+
+.itemColumn{
+    display: flex;
+    gap: 10px;
+}
+
+.itemColumn label{
+    width: 100px;
+}
+
+.itemColumn input{
+    width: 250px;
+    background-color: #ffffff;
+}
+
+.itemColumn select{
+    width: 250px;
+    background-color: #ffffff;
+}
+
+.selectIcon{
+    width: 250px !important;
+    background-color: #ffffff;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    color: #000;
+}
+
+#imgIcon{
+    display: none;
+}
+
+.contenidoForm #valores {
+    width: 200px;
+}
+
+.contenidoForm button {
+    display: flex;
+    width: 400px;
+    height: 30px;
+    background-color: #A600FF;
+    border: 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-size: 0.8rem;
+}

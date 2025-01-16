@@ -1,81 +1,103 @@
 <?php
-    include "../../conexion.php";
-    include "functions.php";
-    
-    session_start();
+include "../../conexion.php";
+include "functions.php";
 
-    if(isset($_SESSION['nombreUser'])){
-        $usuarioLog = $_SESSION['nombreUser'];
-        $nom = $_SESSION['nombre'];
-        $apellido = $_SESSION['apellido'];
-    }else{
-        header('Location: ../../login/login.php');
-        exit();
+session_start();
+
+if (isset($_SESSION['nombreUser'])) {
+    $usuarioLog = $_SESSION['nombreUser'];
+    $nom = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+} else {
+    header('Location: ../../login/login.php');
+    exit();
+}
+
+if (!empty($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: ../../login/login.php');
+    exit();
+}
+
+if (isset($_POST['seeActivity']) && !empty($_POST['seeActivity'])) {
+    $idActivity = $_SESSION['idActividad'];
+}
+
+if (isset($_SESSION['idActividad'])) {
+    $idActivity = intval($_SESSION['idActividad']);
+
+    // Consulta para obtener los detalles de la actividad
+    $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
+    $result = mysqli_query($conn, $queryAct);
+
+    // Verificar si la consulta devuelve algún resultado
+    // Si la actividad es encontrada, obtener los detalles
+    if (mysqli_num_rows($result) > 0) {
+        $act = mysqli_fetch_assoc($result);
+        $titulo = htmlspecialchars($act['titulo']);
+        $descripcion = htmlspecialchars($act['descripcion']);
+        $dueDate = htmlspecialchars($act['due_date']);
+        $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
+    } else {
+        $titulo = "Actividad no encontrada";
+        $descripcion = "No hay detalles disponibles para esta actividad.";
     }
 
-    if (!empty($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        header('Location: ../../login/login.php');
-        exit();
-    }
+    //consulta para ver los items que hay en esa actividad
+    $queryItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+    $resultItems = mysqli_query($conn, $queryItems);
 
-    if (isset($_POST['seeActivity']) && !empty($_POST['seeActivity'])) {
-        $idActivity = $_SESSION['idActividad'];
-    }
-
-    if (isset($_SESSION['idActividad'])) {
-        // Asegurarse de que el ID es un número entero para prevenir inyecciones SQL
-        $idActivity = intval($_SESSION['idActividad']);
-        
-        // Consulta para obtener los detalles de la actividad
-        $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
-        $result = mysqli_query($conn, $queryAct);
-        
-        // Verificar si la consulta devuelve algún resultado
-        if (mysqli_num_rows($result) > 0) {
-            // Si la actividad es encontrada, obtener los detalles
-            $act = mysqli_fetch_assoc($result);
-            $titulo = htmlspecialchars($act['titulo']);
-            $descripcion = htmlspecialchars($act['descripcion']);
-            $dueDate = htmlspecialchars($act['due_date']);
-            $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
-
-        } else {
-            // Si no se encuentra la actividad, establecer un mensaje por defecto
-            $titulo = "Actividad no encontrada";
-            $descripcion = "No hay detalles disponibles para esta actividad.";
+    $itemsAct = [];
+    if (mysqli_num_rows($resultItems) > 0) {
+        while ($item = mysqli_fetch_assoc($resultItems)) {
+            $itemsAct[] = $item;
         }
     }
+}
 
-    if(isset($_POST['estadoAct']) && !empty($_POST['estadoAct'])){
-        $newEstado = (intval($act['active']) == 1) ? 0 : 1;  // Cambiar de 1 a 0 o de 0 a 1
-    
-        // Actualizar el estado en la base de datos
-        $updateQuery = "UPDATE actividades SET active = $newEstado WHERE id = $idActivity";
-        mysqli_query($conn, $updateQuery);
-        
-        // Recargar la página para reflejar el cambio
-        header('Location: ' . $_SERVER['PHP_SELF']);
-        exit();
-    }
+
+
+if (isset($_POST['estadoAct']) && !empty($_POST['estadoAct'])) {
+    $newEstado = (intval($act['active']) == 1) ? 0 : 1;
+
+    $updateQuery = "UPDATE actividades SET active = $newEstado WHERE id = $idActivity";
+    mysqli_query($conn, $updateQuery);
+
+    // Recargar la página para reflejar el cambio
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['añadirItem']) && !empty($_POST['añadirItem'])) {
+    añadirItem($conn, $idActivity);
+}
+
+
+// Verificar cuántos ítems existen para esta actividad
+$checkItemsQuery = "SELECT COUNT(*) AS item_count FROM items WHERE activity_id = $idActivity";
+$result = mysqli_query($conn, $checkItemsQuery);
+$row = mysqli_fetch_assoc($result);
+$itemCount = $row['item_count'];
 
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activities</title>
     <link rel="stylesheet" href="activity.css">
 </head>
+
 <body>
 
-<!--Container general-->
-    <div class="container">     
-        <!-- menu izquierda--> 
+    <!--Container general-->
+    <div class="container">
+        <!-- menu izquierda-->
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
@@ -95,7 +117,7 @@
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-                        
+
                     </button>
                     <button onclick="goCursos()" class="menu active">
                         <div class="positionButton">
@@ -192,88 +214,96 @@
                         <p>Last date: <span><?php echo $dueDate; ?></span> </p>
                     </div>
                 </div>
-                
+
                 <form action="" method="POST" id="estadoActividad" class="card">
                     <p>Estado</p>
-                    <input type="submit" class="statusAct" name="estadoAct" value="<?php echo $estado; ?>"  id="">
+                    <input type="submit" class="statusAct" name="estadoAct" value="<?php echo $estado; ?>" id="">
                 </form>
             </div>
 
 
             <div id="abajo">
+
                 <div id="items" class="card">
                     <div class="buttonsItems">
-                      <h2>Items</h2>
-                      <button class="addbtn">+ Add new Item</button>
-                      <button class="deletebtn">BIN</button>
+                        <h2>Items</h2>
+                        <button type="button" name="show_popup" class="addbtn" id="addbtn">Pannel Items</button>
+
+                        <div id="popUp">
+                            <div class="popup-content">
+
+                                <form action="" method="POST" id="añadirItemF" enctype="multipart/form-data">
+                                    <div class="mostrarItems">
+                                        <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
+                                        <div class="items">
+                                            <?php mostrarItems($conn, $idActivity); ?>
+                                        </div>
+                                    </div>
+
+                                    <?php if ($itemCount < 5): ?>
+                                        <div class="contenidoForm">
+                                            <div class="formAdd">
+                                                <h2>Insert new Item</h2>
+                                                <div class="itemColumn">
+                                                    <label for="imgIcon">Img Icon:</label>
+                                                    <label for="imgIcon" class="selectIcon">select img Icon</label>
+                                                    <input type="file" name="imgIcon" id="imgIcon" accept="image/*">
+                                                </div>
+                                                <div class="itemColumn">
+                                                    <label for="tituloNewItem">Title:</label>
+                                                    <input type="text" name="tituloNewItem" id="tituloNewItem">
+                                                </div>
+
+                                                <div class="itemColumn">
+                                                    <label for="valorNewItem">Value:</label>
+                                                    <select name="valorNewItem" id="valorNewItem">
+                                                        <option value="10">10%</option>
+                                                        <option value="20">20%</option>
+                                                        <option value="30">30%</option>
+                                                        <option value="40">40%</option>
+                                                        <option value="50">50%</option>
+                                                        <option value="60">60%</option>
+                                                        <option value="70">70%</option>
+                                                        <option value="80">80%</option>
+                                                        <option value="90">90%</option>
+                                                        <option value="100">100%</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                    <button type="submit" id="añadirItem" name="añadirItem" value="añadirItem">Aplicar cambios</button>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <button class="deletebtn"></button>
                     </div>
                     <div id="itemsGroup">
-                        <div class="cardItem">
-                            <div class="contenidoItem">
-                                <div class="imgItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-                                    </svg>
-                                </div>
-                                <div class="tituloItem">
-                                <h2>Estrucutra</h2>
-                                </div>
-                                <div class="valueItem">
-                                <p>20% <</p>
-                                </div>
-                            </div>
-                            <div class="editBtn">
-                                    <button>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                        </svg>
-                                    </button>
-                            </div>
-                        </div>
-                        <div class="cardItem">
-                            <div class="contenidoItem">
-                                <div class="imgItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-                                    </svg>
-                                </div>
-                                <div class="tituloItem">
-                                <h2>Estrucutra</h2>
-                                </div>
-                                <div class="valueItem">
-                                <p>20% <</p>
+                        <?php
+                        $selectItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+                        $resItem = mysqli_query($conn, $selectItems);
+                        while ($fila = mysqli_fetch_assoc($resItem)) {
+                            $idItem = $fila['id'];
+                        ?>
+                            <div class="cardItem">
+                                <div class="contenidoItem">
+                                    <div class="imgItem">
+                                        <?php mostrarIcon($conn, $idItem); ?>
+                                    </div>
+                                    <div class="tituloItem">
+                                        <h2><?php echo $fila['titulo'] ?></h2>
+                                    </div>
+                                    <div class="valueItem">
+                                        <p><?php echo $fila['valor'] ?> %</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="editBtn">
-                                    <button>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                        </svg>
-                                    </button>
-                            </div>
-                        </div>
-                        <div class="cardItem">
-                            <div class="contenidoItem">
-                                <div class="imgItem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75 16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
-                                    </svg>
-                                </div>
-                                <div class="tituloItem">
-                                <h2>Estrucutra</h2>
-                                </div>
-                                <div class="valueItem">
-                                <p>20% <</p>
-                                </div>
-                            </div>
-                            <div class="editBtn">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
 
@@ -287,75 +317,76 @@
                     <h2>Notas alumnos</h2>
                     <div class="tbln">
                         <table>
-                        <thead>
-                            <tr>
-                            <th id="borderLeft">nom</th>
-                            <th>item 1</th>
-                            <th>item 2</th>
-                            <th>item 3</th>
-                            <th>item 4</th>
-                            <th id="borderRight">Nota final</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                            <td>Ferran Bravo</td>
-                            <td>8</td>
-                            <td>7</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>8</td>
-                            </tr>
-                            <tr>
-                            <td>Ferran Bravo</td>
-                            <td>8</td>
-                            <td>7</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>8</td>
-                            </tr>
-                            <tr>
-                            <td>Ferran Bravo</td>
-                            <td>8</td>
-                            <td>7</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>8</td>
-                            </tr>
-                            <tr>
-                            <td>Ferran Bravo</td>
-                            <td>8</td>
-                            <td>7</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>8</td>
-                            </tr>
-                            <tr>
-                            <td>Ferran Bravo</td>
-                            <td>8</td>
-                            <td>7</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>8</td>
-                            </tr>
-                            <tr>
-                            <td>Ferran Bravo</td>
-                            <td>8</td>
-                            <td>7</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>8</td>
-                            </tr>
-                            <tr>
-                            <td>Ferran Bravo</td>
-                            <td>8</td>
-                            <td>7</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>8</td>
-                            </tr>
-                        </tbody>
+                            <?php
+                            if (!empty($itemsAct)) {
+                                // Generar el encabezado
+                                echo "<thead>";
+                                echo "<tr>";
+                                echo "<th id='borderLeft'>Nom</th>"; // Encabezado para nombres de alumnos
+                                foreach ($itemsAct as $item) {
+                                    echo "<th>" . htmlspecialchars($item['titulo']) . "</th>"; // Mostrar nombres reales de los items
+                                }
+                                echo "<th id='borderRight'>Nota final</th>"; // Encabezado para nota final
+                                echo "</tr>";
+                                echo "</thead>";
+
+                                // Consulta para obtener datos de alumnos e items
+                                $queryAlumnos = " SELECT alumnos.id AS alumno_id, alumnos.name AS alumno_name, alumnos_items.notaItem, alumnos_items.id_item, items.valor AS item_valor FROM alumnos_items INNER JOIN alumnos ON alumnos_items.id_alumno = alumnos.id INNER JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity ";
+
+                                $resultItems = mysqli_query($conn, $queryAlumnos);
+
+                                // Crear un array para almacenar los datos por alumno
+                                $alumnosData = [];
+                                while ($fila = mysqli_fetch_assoc($resultItems)) {
+                                    $alumnoId = $fila['alumno_id'];
+                                    if (!isset($alumnosData[$alumnoId])) {
+                                        $alumnosData[$alumnoId] = [
+                                            'name' => $fila['alumno_name'],
+                                            'items' => array_fill(0, count($itemsAct), ['nota' => '-', 'valor' => 0]) // Inicializar notas con guiones
+                                        ];
+                                    }
+                                    // Mapear nota del item y su valor a la columna correcta
+                                    foreach ($itemsAct as $index => $item) {
+                                        if ($item['id'] == $fila['id_item']) {
+                                            $alumnosData[$alumnoId]['items'][$index] = [
+                                                'nota' => $fila['notaItem'],
+                                                'valor' => $fila['item_valor']
+                                            ];
+                                        }
+                                    }
+                                }
+
+                                // Mostrar el cuerpo de la tabla
+                                echo "<tbody>";
+                                foreach ($alumnosData as $alumno) {
+                                    echo "<tr>";
+                                    echo "<td>" . htmlspecialchars($alumno['name']) . "</td>";
+
+                                    $notaFinal = 0;
+                                    $totalValor = 0;
+
+                                    foreach ($alumno['items'] as $item) {
+                                        echo "<td>" . htmlspecialchars($item['nota']) . "</td>";
+                                        if ($item['nota'] !== '-') {
+                                            $notaFinal += floatval($item['nota']) * ($item['valor'] / 100); // Calcular el aporte de cada item
+                                            $totalValor += $item['valor']; // Sumar el valor total ponderado
+                                        }
+                                    }
+
+                                    // Normalizar la nota final al 100% si los valores no suman 100
+                                    $notaFinal = ($totalValor > 0) ? $notaFinal * (100 / $totalValor) : 0;
+
+                                    // Mostrar la nota final con 2 decimales
+                                    echo "<td>" . number_format($notaFinal, 2) . "</td>";
+                                    echo "</tr>";
+                                }
+                                echo "</tbody>";
+                            } else {
+                                echo "<p>No hay items en la actividad</p>";
+                            }
+                            ?>
                         </table>
+
                     </div>
                 </div>
 
@@ -363,7 +394,8 @@
 
         </div>
     </div>
-        
+
     <script src="activity.js"></script>
 </body>
+
 </html>
