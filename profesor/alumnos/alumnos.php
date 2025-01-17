@@ -163,8 +163,6 @@
                                     $username = '';
                                     $password = '';
 
-                                   
-                            
                                     if ($radioSeleccionada) {
                                         $modificarSelect = "SELECT name, last_name, username, pass FROM alumnos WHERE id = ". $radioSeleccionada;
                                         $result = mysqli_query($conn, $modificarSelect);

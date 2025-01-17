@@ -7,6 +7,7 @@
         $usuarioLog = $_SESSION['nombreUser'];
         $nom = $_SESSION['nombre'];
         $apellido = $_SESSION['apellido'];
+        $idAlumno = $_SESSION['idAlumno'];
     }else{
         header('Location: ../../login/login.php');
         exit();
@@ -47,13 +48,13 @@
                         <img src="../../imagenes/dashboard.png" width="27px">
                         <h2>Dashboard</h2>
                     </button>
-                    <button onclick="goCursos()" class="menu">
+                    <button onclick="goTasks()" class="menu">
                         <img src="../../imagenes/cursos.png" width="27px">
-                        <h2>Cursos</h2>
+                        <h2>Tasks</h2>
                     </button>
-                    <button onclick="goStudents()" class="menu">
+                    <button onclick="goProjects()" class="menu">
                         <img src="../../imagenes/students.png" width="27px">
-                        <h2>Students</h2>
+                        <h2>Projects</h2>
                     </button>
                     <button onclick="goChat()" class="menu">
                         <img src="../../imagenes/chat.png" width="27px">
@@ -74,7 +75,7 @@
                 </div>
             </div>
             <form action="" method="POST">
-                <button type="submit" name="logout" value="tonto" class="log-out">
+                <button type="submit" name="logout" value="logout" class="log-out">
                     <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
                     <h2>Log out</h2>
                 </button>
@@ -82,60 +83,75 @@
         </div>
 
         <!-- contenido -->
-        <div class="contenido">
-            <!-- <div id="left">
-                <div id="lastProject" class="card">
-                    <div id="titulo">
-                        <h1>Last project</h1>
-                        <h2>MICRO02-DAW</h2>
-                    </div>
-                    <img src="../../imagenes/project.jpg" alt="">
-                    <div>
-                        <input type="text" placeholder="Find whatever">
-                    </div>
-                </div>
-            </div> -->
-            <div class="div-arriba-derecha">
+        <div class="contenido"> 
+            <div id="arriba">
                 <div id="mobileApp" class="card">
                     <div class="titulosMobile">
                         <h2>User-friendly</h2>
                         <h2>mobile app</h2>
                     </div>
                     <div class="redesSociales">
-                        <div class="google_Apple">
-                            <a href=""><img src="../../imagenes/google.png" width="40px"></a>
-                            <a href=""><img src="../../imagenes/apple.png" width="40px"></a>
+                        <div class="centLeft">
+                            <a href="" class="svgG">G</a>
+                            <a href="" class="svgApple"><img src="../../imagenes/747.png" alt=""></a>
                         </div>
-                        <a href=""><img src="../../imagenes/flecha.png" width="40px"></a>
+                        <a href="" class="svgArrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                            </svg>
+                        </a>
                     </div>
                 </div>
-                <div id="activities">
-                    <h1>Last Activities:</h1>
-                    <div id="lastActivities">
-                        <div  class="card lastActivity">
-                            <h2>Create DB</h2>
-                            <h2>8-12-2024</h2>
-                            <h2>10:00</h2>
+                <div id="lastActivities">
+                    <h1>Last Activities</h1>
+                    <?php
+                    $select = "SELECT id_actividad FROM alumnos_actividades WHERE id_alumno = $idAlumno";
+                    $resultado = mysqli_query($conn, $select);
+                    
+                    $actividades = [];
+                    if (mysqli_num_rows($resultado) > 0) {
+                        while ($fila = mysqli_fetch_assoc($resultado)) {
+                            $idActividad = $fila['id_actividad'];
+                            $array_id_actividades[] = $idActividad;
+                        }
+                    }    
+                    $selectActividad = "SELECT id, titulo, due_date FROM actividades WHERE id IN (".implode(',', $array_id_actividades).") ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC LIMIT 0";
+                    $resultadoActividad = mysqli_query($conn, $selectActividad);
+                    ?>
+                    <div id="cards-activities">
+                    <?php
+                    
+                    if (mysqli_num_rows($resultadoActividad) > 0) {
+                        $contador_act = 1;
+                        while ($fila = mysqli_fetch_assoc($resultadoActividad)) {
+                            ?>
+                            <?php
+                            
+                            if($contador_act <= 3){
+                                ?>
+                                <div class="lastActivity">
+                                    <h2><?php echo $fila['titulo']; ?></h2>
+                                    <p><?php echo $fila['due_date']; ?></p>
+                                </div>
+                                <?php
+                                $contador_act++;
+                            } 
+                        }
+                    } else {
+                        ?>
+                        <div class="noActivities">
+                            <h2>No activities</h2>
                         </div>
-                        <div class="card lastActivity">
-                            <h2>Create DB</h2>
-                            <h2>8-12-2024</h2>
-                            <h2>10:00</h2>
-                        </div>
+                        <?php
+                    }
+                    ?> 
                     </div>
                 </div>
             </div>
-            <!-- <div id="right">
-                <div id="estadisticaAlumnos" class="card">
-                    <h1>Students Scores</h1>
-                </div>
-                <div id="calendario" class="card">
-                    <h1>Calendar</h1>
-                </div>
-            </div> -->
-
-
-
+            <div id="abajo">
+                <button type="button" id="tasks" onclick="location.href='../tasks/tasks.php'" >Tasks</button>
+                <button type="button" id="projects" onclick="location.href='../projects/projects.php'">Projects</button>
+            </div>
         </div>
     </div>
         
