@@ -27,12 +27,9 @@ if (isset($_POST['seeActivity']) && !empty($_POST['seeActivity'])) {
 if (isset($_SESSION['idActividad'])) {
     $idActivity = intval($_SESSION['idActividad']);
 
-    // Consulta para obtener los detalles de la actividad
     $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
     $result = mysqli_query($conn, $queryAct);
 
-    // Verificar si la consulta devuelve algún resultado
-    // Si la actividad es encontrada, obtener los detalles
     if (mysqli_num_rows($result) > 0) {
         $act = mysqli_fetch_assoc($result);
         $titulo = htmlspecialchars($act['titulo']);
@@ -44,7 +41,6 @@ if (isset($_SESSION['idActividad'])) {
         $descripcion = "No hay detalles disponibles para esta actividad.";
     }
 
-    //consulta para ver los items que hay en esa actividad
     $queryItems = "SELECT * FROM items WHERE activity_id = $idActivity";
     $resultItems = mysqli_query($conn, $queryItems);
 
@@ -57,28 +53,36 @@ if (isset($_SESSION['idActividad'])) {
 }
 
 
-
 if (isset($_POST['estadoAct']) && !empty($_POST['estadoAct'])) {
     $newEstado = (intval($act['active']) == 1) ? 0 : 1;
 
     $updateQuery = "UPDATE actividades SET active = $newEstado WHERE id = $idActivity";
     mysqli_query($conn, $updateQuery);
 
-    // Recargar la página para reflejar el cambio
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['añadirItem']) && !empty($_POST['añadirItem'])) {
-    añadirItem($conn, $idActivity);
-}
 
 
-// Verificar cuántos ítems existen para esta actividad
 $checkItemsQuery = "SELECT COUNT(*) AS item_count FROM items WHERE activity_id = $idActivity";
 $result = mysqli_query($conn, $checkItemsQuery);
 $row = mysqli_fetch_assoc($result);
 $itemCount = $row['item_count'];
+
+
+$modoEdicion = isset($_POST['modo']) && $_POST['modo'] === 'editar'; // Determina si estás en modo edición
+$nuevoItem = isset($_POST['añadirItem']); // Determina si se está añadiendo un ítem nuevo
+
+
+if (isset($_POST['deleteItem'])) {
+    eliminarItem($conn, $_POST['deleteItem']);
+}
+
+if (isset($_POST['añadirItem'])) {
+    añadirItem($conn, $idActivity);
+}
+
 
 ?>
 
@@ -227,20 +231,18 @@ $itemCount = $row['item_count'];
                 <div id="items" class="card">
                     <div class="buttonsItems">
                         <h2>Items</h2>
-                        <button type="button" name="show_popup" class="addbtn" id="addbtn">Pannel Items</button>
-
+                        <?php if ($itemCount < 5): ?> 
+                        <button type="button" name="show_popup" class="addbtn" id="addbtn">+ Add Items</button>
+                        
+                        <?php endif; ?>
+                        
                         <div id="popUp">
                             <div class="popup-content">
-
                                 <form action="" method="POST" id="añadirItemF" enctype="multipart/form-data">
                                     <div class="mostrarItems">
                                         <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
-                                        <div class="items">
-                                            <?php mostrarItems($conn, $idActivity); ?>
-                                        </div>
-                                    </div>
-
-                                    <?php if ($itemCount < 5): ?>
+                                    </div>  
+                                    <?php if ($itemCount < 5): ?> 
                                         <div class="contenidoForm">
                                             <div class="formAdd">
                                                 <h2>Insert new Item</h2>
@@ -249,6 +251,7 @@ $itemCount = $row['item_count'];
                                                     <label for="imgIcon" class="selectIcon">select img Icon</label>
                                                     <input type="file" name="imgIcon" id="imgIcon" accept="image/*">
                                                 </div>
+
                                                 <div class="itemColumn">
                                                     <label for="tituloNewItem">Title:</label>
                                                     <input type="text" name="tituloNewItem" id="tituloNewItem">
@@ -269,11 +272,10 @@ $itemCount = $row['item_count'];
                                                         <option value="100">100%</option>
                                                     </select>
                                                 </div>
-
+                                                <button type="submit" id="añadirItem" name="añadirItem" value="añadirItem">Insert New Item</button>
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                    <button type="submit" id="añadirItem" name="añadirItem" value="añadirItem">Aplicar cambios</button>
                                 </form>
 
                             </div>
@@ -282,29 +284,20 @@ $itemCount = $row['item_count'];
                         <button class="deletebtn"></button>
                     </div>
                     <div id="itemsGroup">
-                        <?php
-                        $selectItems = "SELECT * FROM items WHERE activity_id = $idActivity";
-                        $resItem = mysqli_query($conn, $selectItems);
-                        while ($fila = mysqli_fetch_assoc($resItem)) {
-                            $idItem = $fila['id'];
-                        ?>
-                            <div class="cardItem">
-                                <div class="contenidoItem">
-                                    <div class="imgItem">
-                                        <?php mostrarIcon($conn, $idItem); ?>
-                                    </div>
-                                    <div class="tituloItem">
-                                        <h2><?php echo $fila['titulo'] ?></h2>
-                                    </div>
-                                    <div class="valueItem">
-                                        <p><?php echo $fila['valor'] ?> %</p>
-                                    </div>
-                                </div>
+                        <form action="" method="post" class="fromItemsEdit">
+                            <div class="ItemsEdit">
+                                <?php mostrarItems($conn, $idActivity); ?>
                             </div>
-                        <?php
-                        }
-                        ?>
+                            
+                            <button type="submit" name="confirmarCambios" value="confirmUpdate" class="confirm">Confirmar</button>
+                        </form>
+                        <div class="itemsBD">
+                            <?php 
+                                mostrarItemsBD($conn, $idActivity);
+                            ?>
+                        </div>        
                     </div>
+
                 </div>
 
                 <form method="POST" action="../evaluar/lista/lista.php">
@@ -313,13 +306,12 @@ $itemCount = $row['item_count'];
                     </button>
                 </form>
 
-                <div id="tablaNotas" class="card">
+                <!--<div id="tablaNotas" class="card">
                     <h2>Notas alumnos</h2>
                     <div class="tbln">
                         <table>
                             <?php
                             if (!empty($itemsAct)) {
-                                // Generar el encabezado
                                 echo "<thead>";
                                 echo "<tr>";
                                 echo "<th id='borderLeft'>Nom</th>"; // Encabezado para nombres de alumnos
@@ -388,7 +380,7 @@ $itemCount = $row['item_count'];
                         </table>
 
                     </div>
-                </div>
+                </div>-->
 
             </div>
 
@@ -399,3 +391,4 @@ $itemCount = $row['item_count'];
 </body>
 
 </html>
+

@@ -20,108 +20,32 @@ function mostrarIcon($conn, $idItem){
     if ($result && mysqli_num_rows($result) > 0) {
         $fila = mysqli_fetch_assoc($result);
         
-        // Verificar que la imagen y el tipo están presentes
         if (!empty($fila['icon']) && !empty($fila['tipus'])) {
             echo "<img src='data:" . $fila['tipus'] . ";base64," . base64_encode($fila['icon']) . "' alt='Icono'>";
         } else {
-            echo "<p>NoIMG</p>"; // En caso de que no haya imagen
+            echo "<img src='../../imagenes/raul.jpg'>";
         }
     } else {
-        echo "<p>NoIMG</p>"; // En caso de que no se encuentre el item
+        echo "<img src='../../imagenes/raul.jpg'>";
     }
 }
 
-function addItem($conn, $idActivity, $titulo, $valor, $file) {
-    if ($file && $file['error'] == 0) {
-        $imgData = mysqli_real_escape_string($conn, file_get_contents($file['tmp_name']));
-        $tipus = mysqli_real_escape_string($conn, $file['type']);
-    } else {
-        $imgData = null;
-        $tipus = null;
-    }
+function añadirItem($conn, $idActivity) {    
+    $titulo = $_POST['tituloNewItem'];
+    $valor = $_POST['valorNewItem']; 
+    $icono = $_FILES['imgIcon'];
+    $tipus = $_FILES['imgIcon']['type'];
 
-    $titulo = mysqli_real_escape_string($conn, $titulo);
-    $valor = mysqli_real_escape_string($conn, $valor);
-
-    if (empty($titulo) || empty($valor)) {
-        return "Error: Título y valor son obligatorios.";
-    }
+    $imgData = file_get_contents($icono['tmp_name']);
+    $imgData = mysqli_real_escape_string($conn, $imgData);
 
     $insertQuery = "INSERT INTO items (activity_id, titulo, valor, icon, tipus) 
                     VALUES ('$idActivity', '$titulo', '$valor', '$imgData', '$tipus')";
-    if (mysqli_query($conn, $insertQuery)) {
-        return "";
-    } else {
-        return "Error al insertar el ítem: " . mysqli_error($conn);
-    }
-}
+    mysqli_query($conn, $insertQuery);
 
-function editItem($conn, $idItem, $titulo, $valor) {
-    $titulo = mysqli_real_escape_string($conn, $titulo);
-    $valor = mysqli_real_escape_string($conn, $valor);
-
-    if (empty($titulo) || empty($valor)) {
-        return "Error: Título y valor son obligatorios.";
-    }
-
-    $updateQuery = "UPDATE items SET titulo = '$titulo', valor = '$valor' WHERE id = $idItem";
-    if (mysqli_query($conn, $updateQuery)) {
-        return "";
-    } else {
-        return "Error al actualizar el ítem: " . mysqli_error($conn);
-    }
-}
-
-function validateTotalValue($conn, $idActivity) {
-    $query = "SELECT SUM(valor) AS total_valor FROM items WHERE activity_id = $idActivity";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        return $row['total_valor'] == 100;
-    } else {
-        return false; // Error al consultar la base de datos
-    }
-}
-
-
-function añadirItem($conn, $idActivity) {
-    $tituloItems = $_POST['titulo'] ?? [];
-    $valorItems = $_POST['valor'] ?? [];
-    $idItems = $_POST['idItem'] ?? [];
-    
-    $nuevoTitulo = $_POST['tituloNewItem'] ?? null;
-    $nuevoValor = $_POST['valorNewItem'] ?? null; 
-    $file = $_FILES['imgIcon'] ?? null;
-
-    // Update existing items
-    foreach ($idItems as $index => $idItem) {
-        $result = editItem($conn, $idItem, $tituloItems[$index], $valorItems[$index]);
-        if (strpos($result, "Error") !== false) {
-            echo $result;
-            return;
-        }
-    }
-
-    // Add new item if provided
-    if (!empty($nuevoTitulo) && !empty($nuevoValor)) {
-        $result = addItem($conn, $idActivity, $nuevoTitulo, $nuevoValor, $file);
-        if (strpos($result, "Error") !== false) {
-            echo $result;
-            return;
-        }
-    }
-
-    // Validate total value
-    if (!validateTotalValue($conn, $idActivity)) {
-        echo "La suma total de los porcentajes debe ser exactamente 100%.";
-        return;
-    }
-
-    // Redirect to avoid form resubmission
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: ". $_SERVER['PHP_SELF']);
     exit();
 }
-
 
 
 function mostrarItems($conn, $idActivity) {
@@ -131,29 +55,78 @@ function mostrarItems($conn, $idActivity) {
     if ($rI && mysqli_num_rows($rI) > 0) {
         while ($fila = mysqli_fetch_assoc($rI)) {
             $idItem = $fila['id'];
-            $titulo = $fila['titulo'];
+            $titulo = htmlspecialchars($fila['titulo']);
             $valor = $fila['valor'];
-            $icon = $fila['tipus'];
+
+            echo '<div class="itemContent">';
+            echo '<div class="rightPartItem">';
+            echo '  <button type="submit" name="deleteItem" value="' .$idItem . '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg></button>';
+            echo '</div>';
+
+            echo '<div class="leftPartItem">';
+            echo '  <div class="imgItem">';
+            echo    mostrarIcon($conn, $idItem);
+            echo '  </div>';
+
+            echo '  <label for="icon-' . $idItem . '" class="updateIcon">Update Icon:</label>';
+            echo '  <input type="file" class="none" id="imgItems" name="iconItem[' . $idItem . ']" value="">';
+
+            echo '  <label for="titulo-' . $idItem . '">Título:</label>';
+            echo '  <input type="text" id="tituloItems" name="titulo[' . $idItem . ']" value="' . $titulo . '">';
+
+            echo '  <label for="valor-' . $idItem . '">Valor:</label>';
+            echo '  <select name="valor[' . $idItem . ']" id="valorItems">';
+                for ($i = 10; $i <= 100; $i += 10) {
+                    $selected = ($valor == $i) ? 'selected' : '';
+                    echo '<option value="' . $i . '" ' . $selected . '>' . $i . '%</option>';
+                }
+            echo '  </select>';
+            echo '</div>';
+        echo '</div>';
+
+        }
+    } else {
+        echo "No se encontraron ítems para esta actividad.";
+    }
+}
+
+
+function eliminarItem($conn, $idItem) {
+    $idItem = intval($idItem);
+
+    $query = "DELETE FROM items WHERE id = $idItem";
+    mysqli_query($conn, $query);
+
+}
+
+
+     
+function mostrsarItems($conn, $idActivity) {
+    $serachItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+    $rI = mysqli_query($conn, $serachItems);
+
+    if ($rI && mysqli_num_rows($rI) > 0) {
+        while ($fila = mysqli_fetch_assoc($rI)) {
+            $idItem = $fila['id'];
+            $titulo = htmlspecialchars($fila['titulo']);
+            $valor = $fila['valor'];
 
             echo '<div class="item">';
-                echo '<input type="hidden" name="idItem[]" value="' . $idItem . '">';
+                echo '<button type="submit" name="deleteItem" value="' .$idItem . '">bin</button>';
                 echo mostrarIcon($conn, $idItem);
 
-                
-                echo '<label for="titulo_' . $idItem . '">Título:</label>';
-                echo '<input type="text" id="titulo_' . $idItem . '" name="titulo[]" value="' . htmlspecialchars($titulo) . '">';
-                
-                echo '<label for="valor_' . $idItem . '">Valor:</label>';
-                echo '<select name="valor[]" id="valor_' . $idItem . '">';
-                    for ($i = 10; $i <= 100; $i += 10) {
-                        if ($valor == $i) {
-                            $selected = 'selected';
-                        } else {
-                            $selected = '';
-                        }
-                        
-                        echo '<option value="' . $i . '" ' . $selected . '>' . $i . '%</option>';
-                    }
+                echo '<label for="icon-' . $idItem . '" class="updateIcon">Update Icon:</label>';
+                echo '<input type="file" id="icon-' . $idItem . '" name="iconItem[' . $idItem . ']" value="">';
+
+                echo '<label for="titulo-' . $idItem . '">Título:</label>';
+                echo '<input type="text" id="titulo-' . $idItem . '" name="titulo[' . $idItem . ']" value="' . $titulo . '">';
+
+                echo '<label for="valor-' . $idItem . '">Valor:</label>';
+                echo '<select name="valor[' . $idItem . ']" id="valor-' . $idItem . '">';
+                for ($i = 10; $i <= 100; $i += 10) {
+                    $selected = ($valor == $i) ? 'selected' : '';
+                    echo '<option value="' . $i . '" ' . $selected . '>' . $i . '%</option>';
+                }
                 echo '</select>';
             echo '</div>';
         }
@@ -162,8 +135,36 @@ function mostrarItems($conn, $idActivity) {
     }
 }
 
+function mostrarItemsBD($conn, $idActivity) {
+    $serachItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+    $rI = mysqli_query($conn, $serachItems);
 
+    if ($rI && mysqli_num_rows($rI) > 0) {
+        while ($fila = mysqli_fetch_assoc($rI)) {
+            $idItem = $fila['id'];
+            $titulo = htmlspecialchars($fila['titulo']);
+            $valor = $fila['valor'];
+
+            echo '<div class="item">';
+            echo '    <div class="contenidoItem">';
+            echo '        <div class="imgItem">';
+            echo            mostrarIcon($conn, $idItem);
+            echo '        </div>';
+            echo '        <div class="tituloItem">';
+            echo '            <h2>' . $titulo . '</h2>';
+            echo '        </div>';
+            echo '        <div class="valueItem">';
+            echo '            <p>' . $valor . ' %</p>';
+            echo '        </div>';
+            echo '    </div>';
+            echo '</div>';
+        }
+    } else {
+        echo "Any item yet";
+    }
+}
 
 
 
 ?>
+

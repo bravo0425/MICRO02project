@@ -442,8 +442,9 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     color: #fafafa;
-    height: 200px;
+    height: 400px;
     overflow: hidden;
     padding: 0.7rem;
     gap: 10px;
@@ -485,7 +486,7 @@ body {
     gap: 15px;
     align-items: center;
     justify-content: center;
-    height: 230px;
+    height: 350px;
 }
 
 #items .cardItem{
@@ -507,24 +508,7 @@ body {
     gap: 5px;
 }
 
-.imgItem{
-    padding: 5px;
-    width: 45px;
-    height: 45px;
-    background-color: #ffffff00;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.imgItem img{
-    width: 40px;
-    height: 40px;
-    border: 0;
-    border-radius: 50px;
-    object-fit: cover;
-
-}
 
 .tituloItem h2{
     font-size: 0.8rem;
@@ -673,8 +657,8 @@ tbody tr:hover {
 
 .popup-content {
     position: relative;
-    width: 900px;
-    height: 600px;
+    width: 700px;
+    height: 400px;
     padding: 1rem;
     background-color: #1f1f1f70;
     border-radius: 15px;
@@ -707,32 +691,125 @@ tbody tr:hover {
     align-items: flex-end;
 }
 
-.items{
+/*item de la tabla que se muestra con inputs*/
+
+
+.fromItemsEdit{
     width: 100%;
+    height: 350px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+/*contenido Item que muestra con inputs*/
+
+.ItemsEdit{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.itemContent{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 160px;
+    gap: 5px;
+    overflow: hidden;
+    background-color: #fafafa10;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 15px;
+}
+
+/*buton para eliminar*/
+
+.rightPartItem{
+    display: flex;
+}
+
+.rightPartItem button{
+    width: 25px;
+    height: 25px;
+    border: 0;
+    border-radius: 50px;
+    background-color: #ff5c5c;
+    color: #fafafa;
+    font-size: 0.9rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
 }
 
-.item{
-    width: 150px;
-    height: 200px;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
+.rightPartItem button svg{
+    width: 17px;
+    height: 17px;
 }
 
-.item img{
-    width: 50px;
+/*Inputs Item*/
+
+.leftPartItem{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.imgItem{
+    padding: 5px;
+    width: 100px;
     height: 50px;
+    background-color: #ffffff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgItem img{
+    width: 45px;
+    height: 45px;
     border: 0;
     border-radius: 50px;
-   
+    object-fit: cover;
+}
+
+.leftPartItem label{
+    font-size: 0.8rem;
+}
+
+.leftPartItem input{
+    width: 100px;
+}
+
+.updateIcon{
+    width: 100px !important;
+    background-color: #ffffff;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    color: #000;
+}
+
+.none{
+    display: none;
+}
+
+.confirm{
+    height: 35px;
+    width: 150px;
+    background-color: #8500CD;
+    border: 0;
+    border-radius: 15px;
+    color: #fafafa;
 }
 
 .contenidoForm{
     width: 100%;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -797,4 +874,17 @@ tbody tr:hover {
     align-items: center;
     border-radius: 15px;
     font-size: 0.8rem;
+}
+
+
+#icon-id-item{
+    display: none;
+}
+
+
+
+/*DIV para mostrar los items de la bd*/
+
+.itemsBD{
+    display: none;
 }
