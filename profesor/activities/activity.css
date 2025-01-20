@@ -435,7 +435,7 @@ body {
 }
 
 
-/*---------DIV de Items-------------*/
+/*---------DIV de Items normal-------------*/
 
 
 #items{
@@ -444,52 +444,114 @@ body {
     flex-direction: column;
     justify-content: space-between;
     color: #fafafa;
-    height: 400px;
+    height: 250px;
     overflow: hidden;
     padding: 0.7rem;
     gap: 10px;
 }
 
-#items .buttonsItems{
+.buttonsItems{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-#items .buttonsItems h2{
+.buttonsItems h2{
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-#items .buttonsItems button{
+.butonsItems{
+    display: flex;
+}
+
+.buttonsItems button{
     padding: 5px;
     border-radius: 15px;
     border: 0px;
 }
 
-#items .addbtn{
+.addbtn{
     background-color: #E2FF32;
     color: #000;
     width: 300px;
     font-size: 0.9rem;
 }
 
-#items .deletebtn{
-    width: 55px;
-    background-color: #8500CD00;
+
+
+.formEditItems{
+    width: 105px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editItems{
+    width: 105px;
+    background-color: #aa0bff;
     color: #fafafa;
 }
 
-#items #itemsGroup{
+.vacio{
+    width: 40px;
+    background-color: #aa0bff00;
+}
+
+#itemsGroup{
     display: flex;
     flex-direction: row;
     gap: 15px;
     align-items: center;
     justify-content: center;
-    height: 350px;
+    height: 200px;
+    width: 100%;
 }
 
-#items .cardItem{
+.itemListContainer{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.itemCard{
+    width: 130px;
+    height: 150px;
+    overflow: hidden;
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #fafafa30;
+}
+
+.itemImage{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemImage img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.itemCard p{
+    font-size: 0.85rem;
+
+}
+
+.cardItem{
     display: flex;
     width: 100px;
     flex-direction: row;
@@ -500,7 +562,7 @@ body {
     padding: 10px;
 }
 
-#items .contenidoItem{
+.contenidoItem{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -520,6 +582,145 @@ body {
     font-weight: 300;
 }
 
+/*---------DIV de Items editandolos-------------*/
+
+
+#itemsEdit{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fafafa;
+    height: 510px;
+    overflow: hidden;
+    padding: 0.7rem;
+    gap: 10px;
+}
+
+
+.titleItems{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.titleItems h2{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+#divItems{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    height: 450px;
+    width: 100%;
+}
+
+.fromItemsEdit{
+    width: 100%;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.itemsContainer{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.itemWrapper{
+    width: 180px;
+    height: 220px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: #fafafa20;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 15px;
+}
+
+/*--buton para delete*/
+.itemDeleteButton{
+    width: 20px;
+   
+}
+
+.itemDeleteButton button{
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    background-color: #eb2a2a;
+    color: #fafafa;
+    cursor: pointer;
+}
+
+
+
+.itemDeleteButton svg{
+    width: 18px;
+    height: 18px;
+}
+
+
+.itemDetailsWrapper{
+    width: 140px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.itemImageContainer{
+    width: 140px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemImageContainer img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.optionsItemsEdit{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.optionsItemsEdit button{
+    padding: 0.5rem 0;
+    width: 150px;
+    border-radius: 15px;
+    border: 0;
+}
+
+
+.confirmButton{
+    background-color: #d8f900;
+}
+
+.cancelButton{
+    background-color: #A600FF;
+}
 
 /*---------DIV de Boton Evaluar-------------*/
 
@@ -691,130 +892,6 @@ tbody tr:hover {
     align-items: flex-end;
 }
 
-/*item de la tabla que se muestra con inputs*/
-
-
-.fromItemsEdit{
-    width: 100%;
-    height: 350px;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-}
-/*contenido Item que muestra con inputs*/
-
-.ItemsEdit{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.itemContent{
-    display: flex;
-    flex-direction: row-reverse;
-    width: 160px;
-    gap: 5px;
-    overflow: hidden;
-    background-color: #fafafa10;
-    padding: 0.5rem;
-    border: 0;
-    border-radius: 15px;
-}
-
-/*buton para eliminar*/
-
-.rightPartItem{
-    display: flex;
-}
-
-.rightPartItem button{
-    width: 25px;
-    height: 25px;
-    border: 0;
-    border-radius: 50px;
-    background-color: #ff5c5c;
-    color: #fafafa;
-    font-size: 0.9rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.rightPartItem button svg{
-    width: 17px;
-    height: 17px;
-}
-
-/*Inputs Item*/
-
-.leftPartItem{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.imgItem{
-    padding: 5px;
-    width: 100px;
-    height: 50px;
-    background-color: #ffffff00;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.imgItem img{
-    width: 45px;
-    height: 45px;
-    border: 0;
-    border-radius: 50px;
-    object-fit: cover;
-}
-
-.leftPartItem label{
-    font-size: 0.8rem;
-}
-
-.leftPartItem input{
-    width: 100px;
-}
-
-.updateIcon{
-    width: 100px !important;
-    background-color: #ffffff;
-    border: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 2px;
-    font-size: 0.8rem;
-    color: #000;
-}
-
-.none{
-    display: none;
-}
-
-.confirm{
-    height: 35px;
-    width: 150px;
-    background-color: #8500CD;
-    border: 0;
-    border-radius: 15px;
-    color: #fafafa;
-}
-
-.contenidoForm{
-    width: 100%;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .formAdd{
     width: 400px;
     display: flex;
@@ -824,6 +901,7 @@ tbody tr:hover {
     gap: 10px;
     height: 200px;
 }
+
 
 .itemColumn{
     display: flex;
@@ -856,8 +934,21 @@ tbody tr:hover {
     color: #000;
 }
 
-#imgIcon{
-    display: none;
+.confirm{
+    height: 35px;
+    width: 150px;
+    background-color: #8500CD;
+    border: 0;
+    border-radius: 15px;
+    color: #fafafa;
+}
+
+.contenidoForm{
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .contenidoForm #valores {
@@ -876,6 +967,129 @@ tbody tr:hover {
     font-size: 0.8rem;
 }
 
+.none{
+    display: none;
+}
+
+/*
+
+
+
+.fromItemsEdit{
+    width: 100%;
+    height: 320px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+.ItemsEdit{
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.itemContent{
+    display: flex;
+    flex-direction: row-reverse;
+    width: 160px;
+    height: 200px;
+    gap: 5px;
+    overflow: hidden;
+    background-color: #fafafa10;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 15px;
+}
+
+
+.rightPartItem{
+    display: flex;
+}
+
+.rightPartItem button{
+    width: 25px;
+    height: 25px;
+    border: 0;
+    border-radius: 50px;
+    background-color: #ff5c5c;
+    color: #fafafa;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rightPartItem button svg{
+    width: 17px;
+    height: 17px;
+}
+
+
+.leftPartItem{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+
+.imgItem{
+    padding: 5px;
+    width: 100px;
+    height: 50px;
+    background-color: #ffffff00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.leftPartItem img{
+    width: 45px;
+    height: 45px;
+    border: 0;
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+.leftPartItem label{
+    font-size: 0.8rem;
+}
+
+.leftPartItem input{
+    width: 100px;
+}
+
+.updateIcon{
+    width: 100px !important;
+    background-color: #ffffff;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    color: #000;
+}
+
+
+
+
+
+
+
+
+
+#imgIcon{
+    display: none;
+}
+
+
 
 #icon-id-item{
     display: none;
@@ -883,8 +1097,8 @@ tbody tr:hover {
 
 
 
-/*DIV para mostrar los items de la bd*/
 
 .itemsBD{
     display: none;
 }
+*/

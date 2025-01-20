@@ -71,9 +71,7 @@ $row = mysqli_fetch_assoc($result);
 $itemCount = $row['item_count'];
 
 
-$modoEdicion = isset($_POST['modo']) && $_POST['modo'] === 'editar'; // Determina si estás en modo edición
-$nuevoItem = isset($_POST['añadirItem']); // Determina si se está añadiendo un ítem nuevo
-
+$modoEdicion = isset($_POST['modo']) && $_POST['modo'] === 'editar';
 
 if (isset($_POST['deleteItem'])) {
     eliminarItem($conn, $_POST['deleteItem']);
@@ -81,6 +79,10 @@ if (isset($_POST['deleteItem'])) {
 
 if (isset($_POST['añadirItem'])) {
     añadirItem($conn, $idActivity);
+}
+
+if(!empty($_POST['confirmarCambios'])){
+    updateItems($conn, $idActivity);
 }
 
 
@@ -228,28 +230,46 @@ if (isset($_POST['añadirItem'])) {
 
             <div id="abajo">
 
-                <div id="items" class="card">
-                    <div class="buttonsItems">
-                        <h2>Items</h2>
-                        <?php if ($itemCount < 5): ?> 
-                        <button type="button" name="show_popup" class="addbtn" id="addbtn">+ Add Items</button>
-                        
-                        <?php endif; ?>
-                        
-                        <div id="popUp">
-                            <div class="popup-content">
-                                <form action="" method="POST" id="añadirItemF" enctype="multipart/form-data">
-                                    <div class="mostrarItems">
-                                        <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
-                                    </div>  
-                                    <?php if ($itemCount < 5): ?> 
+                <?php if($modoEdicion){ ?>
+                    <div id="itemsEdit" class="card">
+                        <div class="titleItems">
+                            <h2>Items</h2>
+                        </div>
+                        <div id="divItems">
+                            <form action="" method="post" class="fromItemsEdit">
+                                <?php mostrarItemsEditar($conn, $idActivity); ?>
+                                <div class="optionsItemsEdit">
+                                    <button type="submit" name="confirmarCambios" value="confirmUpdate" class="confirmButton">Confirmar</button>
+                                    <button type="submit" name="cancelChanges" value="cancelChanges" class="cancelButton">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                <?php }else{ ?>
+                    <div id="items" class="card">
+                        <div class="buttonsItems">
+                            <h2>Items</h2>
+                            <div class="butonsItems">
+                                <?php if ($itemCount < 5): ?>
+                                    <button type="button" name="show_popup" class="addbtn" id="addbtn">+ Add Items</button>
+                                <?php endif; ?>
+                                <form action="" method="post" class="formEditItems">
+                                    <button type="submit" name="modo" value="editar" class="editItems">Editar</button>
+                                </form>
+                            </div>
+                            <div id="popUp">
+                                <div class="popup-content">
+                                    <form action="" method="POST" id="añadirItemF" enctype="multipart/form-data">
+                                        <div class="mostrarItems">
+                                            <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
+                                        </div>
                                         <div class="contenidoForm">
                                             <div class="formAdd">
                                                 <h2>Insert new Item</h2>
                                                 <div class="itemColumn">
                                                     <label for="imgIcon">Img Icon:</label>
                                                     <label for="imgIcon" class="selectIcon">select img Icon</label>
-                                                    <input type="file" name="imgIcon" id="imgIcon" accept="image/*">
+                                                    <input type="file" name="imgIcon" id="imgIcon" accept="image/*" class="none">
                                                 </div>
 
                                                 <div class="itemColumn">
@@ -275,112 +295,98 @@ if (isset($_POST['añadirItem'])) {
                                                 <button type="submit" id="añadirItem" name="añadirItem" value="añadirItem">Insert New Item</button>
                                             </div>
                                         </div>
-                                    <?php endif; ?>
-                                </form>
-
+                                    </form>
+                                </div>
                             </div>
+                            <button class="vacio"></button>
                         </div>
-
-                        <button class="deletebtn"></button>
-                    </div>
-                    <div id="itemsGroup">
-                        <form action="" method="post" class="fromItemsEdit">
-                            <div class="ItemsEdit">
-                                <?php mostrarItems($conn, $idActivity); ?>
-                            </div>
-                            
-                            <button type="submit" name="confirmarCambios" value="confirmUpdate" class="confirm">Confirmar</button>
-                        </form>
-                        <div class="itemsBD">
-                            <?php 
-                                mostrarItemsBD($conn, $idActivity);
-                            ?>
-                        </div>        
+                        <div id="itemsGroup">
+                            <?php mostrarItems($conn, $idActivity); ?>
+                        </div>
                     </div>
 
-                </div>
+                    <form method="POST" action="../evaluar/lista/lista.php">
+                        <button type="submit" id="evaluarAlumnos">
+                            <p>Evalua a tus alumnos -></p>
+                        </button>
+                    </form>
 
-                <form method="POST" action="../evaluar/lista/lista.php">
-                    <button type="submit" id="evaluarAlumnos">
-                        <p>Evalua a tus alumnos -></p>
-                    </button>
-                </form>
-
-                <!--<div id="tablaNotas" class="card">
-                    <h2>Notas alumnos</h2>
-                    <div class="tbln">
-                        <table>
+                    <div id="tablaNotas" class="card">
+                        <h2>Notas alumnos</h2>
+                        <div class="tbln">
+                            <table>
                             <?php
-                            if (!empty($itemsAct)) {
-                                echo "<thead>";
-                                echo "<tr>";
-                                echo "<th id='borderLeft'>Nom</th>"; // Encabezado para nombres de alumnos
-                                foreach ($itemsAct as $item) {
-                                    echo "<th>" . htmlspecialchars($item['titulo']) . "</th>"; // Mostrar nombres reales de los items
-                                }
-                                echo "<th id='borderRight'>Nota final</th>"; // Encabezado para nota final
-                                echo "</tr>";
-                                echo "</thead>";
-
-                                // Consulta para obtener datos de alumnos e items
-                                $queryAlumnos = " SELECT alumnos.id AS alumno_id, alumnos.name AS alumno_name, alumnos_items.notaItem, alumnos_items.id_item, items.valor AS item_valor FROM alumnos_items INNER JOIN alumnos ON alumnos_items.id_alumno = alumnos.id INNER JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity ";
-
-                                $resultItems = mysqli_query($conn, $queryAlumnos);
-
-                                // Crear un array para almacenar los datos por alumno
-                                $alumnosData = [];
-                                while ($fila = mysqli_fetch_assoc($resultItems)) {
-                                    $alumnoId = $fila['alumno_id'];
-                                    if (!isset($alumnosData[$alumnoId])) {
-                                        $alumnosData[$alumnoId] = [
-                                            'name' => $fila['alumno_name'],
-                                            'items' => array_fill(0, count($itemsAct), ['nota' => '-', 'valor' => 0]) // Inicializar notas con guiones
-                                        ];
+                                if (!empty($itemsAct)) {
+                                    echo "<thead>";
+                                    echo "<tr>";
+                                    echo "<th id='borderLeft'>Nom</th>"; // Encabezado para nombres de alumnos
+                                    foreach ($itemsAct as $item) {
+                                        echo "<th>" . htmlspecialchars($item['titulo']) . "</th>"; // Mostrar nombres reales de los items
                                     }
-                                    // Mapear nota del item y su valor a la columna correcta
-                                    foreach ($itemsAct as $index => $item) {
-                                        if ($item['id'] == $fila['id_item']) {
-                                            $alumnosData[$alumnoId]['items'][$index] = [
-                                                'nota' => $fila['notaItem'],
-                                                'valor' => $fila['item_valor']
+                                    echo "<th id='borderRight'>Nota final</th>"; // Encabezado para nota final
+                                    echo "</tr>";
+                                    echo "</thead>";
+
+                                    // Consulta para obtener datos de alumnos e items
+                                    $queryAlumnos = " SELECT alumnos.id AS alumno_id, alumnos.name AS alumno_name, alumnos_items.notaItem, alumnos_items.id_item, items.valor AS item_valor FROM alumnos_items INNER JOIN alumnos ON alumnos_items.id_alumno = alumnos.id INNER JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity ";
+
+                                    $resultItems = mysqli_query($conn, $queryAlumnos);
+
+                                    // Crear un array para almacenar los datos por alumno
+                                    $alumnosData = [];
+                                    while ($fila = mysqli_fetch_assoc($resultItems)) {
+                                        $alumnoId = $fila['alumno_id'];
+                                        if (!isset($alumnosData[$alumnoId])) {
+                                            $alumnosData[$alumnoId] = [
+                                                'name' => $fila['alumno_name'],
+                                                'items' => array_fill(0, count($itemsAct), ['nota' => '-', 'valor' => 0]) // Inicializar notas con guiones
                                             ];
                                         }
-                                    }
-                                }
-
-                                // Mostrar el cuerpo de la tabla
-                                echo "<tbody>";
-                                foreach ($alumnosData as $alumno) {
-                                    echo "<tr>";
-                                    echo "<td>" . htmlspecialchars($alumno['name']) . "</td>";
-
-                                    $notaFinal = 0;
-                                    $totalValor = 0;
-
-                                    foreach ($alumno['items'] as $item) {
-                                        echo "<td>" . htmlspecialchars($item['nota']) . "</td>";
-                                        if ($item['nota'] !== '-') {
-                                            $notaFinal += floatval($item['nota']) * ($item['valor'] / 100); // Calcular el aporte de cada item
-                                            $totalValor += $item['valor']; // Sumar el valor total ponderado
+                                        // Mapear nota del item y su valor a la columna correcta
+                                        foreach ($itemsAct as $index => $item) {
+                                            if ($item['id'] == $fila['id_item']) {
+                                                $alumnosData[$alumnoId]['items'][$index] = [
+                                                    'nota' => $fila['notaItem'],
+                                                    'valor' => $fila['item_valor']
+                                                ];
+                                            }
                                         }
                                     }
 
-                                    // Normalizar la nota final al 100% si los valores no suman 100
-                                    $notaFinal = ($totalValor > 0) ? $notaFinal * (100 / $totalValor) : 0;
+                                    // Mostrar el cuerpo de la tabla
+                                    echo "<tbody>";
+                                    foreach ($alumnosData as $alumno) {
+                                        echo "<tr>";
+                                        echo "<td>" . htmlspecialchars($alumno['name']) . "</td>";
 
-                                    // Mostrar la nota final con 2 decimales
-                                    echo "<td>" . number_format($notaFinal, 2) . "</td>";
-                                    echo "</tr>";
+                                        $notaFinal = 0;
+                                        $totalValor = 0;
+
+                                        foreach ($alumno['items'] as $item) {
+                                            echo "<td>" . htmlspecialchars($item['nota']) . "</td>";
+                                            if ($item['nota'] !== '-') {
+                                                $notaFinal += floatval($item['nota']) * ($item['valor'] / 100); // Calcular el aporte de cada item
+                                                $totalValor += $item['valor']; // Sumar el valor total ponderado
+                                            }
+                                        }
+
+                                        // Normalizar la nota final al 100% si los valores no suman 100
+                                        $notaFinal = ($totalValor > 0) ? $notaFinal * (100 / $totalValor) : 0;
+
+                                        // Mostrar la nota final con 2 decimales
+                                        echo "<td>" . number_format($notaFinal, 2) . "</td>";
+                                        echo "</tr>";
+                                    }
+                                    echo "</tbody>";
+                                } else {
+                                    echo "<p>No hay items en la actividad</p>";
                                 }
-                                echo "</tbody>";
-                            } else {
-                                echo "<p>No hay items en la actividad</p>";
-                            }
-                            ?>
-                        </table>
+                                ?>
+                            </table>
 
+                        </div>
                     </div>
-                </div>-->
+                <?php } ?>
 
             </div>
 
@@ -392,3 +398,20 @@ if (isset($_POST['añadirItem'])) {
 
 </html>
 
+
+
+<?php
+/*
+    if (isset($_POST['modo']) && $_POST['modo'] === 'editar') {
+        echo '<div id="itemsGroup">';
+        echo '<form action="" method="post" class="fromItemsEdit">';
+            mostrarItemsEditar($conn, $idActivity);
+        echo '</form>';
+        echo '</div>';
+    } else {
+        echo '<div id="itemsGroup">';
+            mostrarItems($conn, $idActivity);
+        echo '</div>';
+    }
+*/
+?>
