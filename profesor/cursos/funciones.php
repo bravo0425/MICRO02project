@@ -24,11 +24,15 @@ function insertarProject($conn) {
                      VALUES ('$titulo', '$descripcion', '$idCurso', '$idProfe')";
 
         // Ejecutar la consulta
-        if (mysqli_query($conn, $insertar)) {
-            echo "<script>alert('Proyecto insertado correctamente');</script>";
-        } else {
-            echo "<script>alert('Error al insertar el proyecto: " . mysqli_error($conn) . "');</script>";
-        }
+        mysqli_query($conn, $insertar);
+            $idProject = mysqli_insert_id($conn);
+            $select = "SELECT id FROM alumnos WHERE curso_id = $idCurso";
+            $r = mysqli_query($conn, $select);
+            while ($row = mysqli_fetch_assoc($r)) {
+                $idAlumno = $row['id'];
+                $insert = "INSERT INTO alumnos_proyectos (id_alumno, id_proyecto) VALUES ('$idAlumno', '$idProject')";
+                mysqli_query($conn, $insert);
+            }       
     } else {
         echo "<script>alert('Faltan datos del formulario');</script>";
     }
@@ -40,6 +44,8 @@ function eliminarProyecto($conn){
     $eliminarProject = "DELETE FROM proyectos WHERE id = $idProyecto";
 
     if (mysqli_query($conn, $eliminarProject)) {
+        $eliminarProyecto = "DELETE FROM alumnos_proyectos WHERE id_proyecto = $idProyecto";
+        mysqli_query($conn, $eliminarProyecto);
         echo "<script>alert('Proyecto eliminado correctamente');</script>";
         unset($_SESSION['idProyectoSeleccionado']); // Limpia la selección del proyecto
     } else {

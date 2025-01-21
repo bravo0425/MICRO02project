@@ -29,6 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 30px;
+    font-family: 'Poppins';
 }
 
 /*MENU LATERAL*/
@@ -83,6 +84,14 @@ body {
 .usuario h3{
     font-size: 1rem;
     font-weight: 400;
+}
+
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
 }
 
 /* opciones del navBar*/
@@ -282,6 +291,7 @@ body {
     gap: 5px;
     background-color: #fafafa00;
     border: 0px;
+    cursor: pointer;
 }
 #infoApp button a{
     border: 1px solid #000;
@@ -314,17 +324,39 @@ body {
     gap: 10px;
 }
 
-#description h1{
-    font-size: 1.2rem;
-    font-weight: 500;
+.description-action{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
-#description h4{
+.description-action h4{
     width: 100%;
     text-align: left;
     font-size: 0.9rem;
     font-weight: 400;
-    color: #fafafa70;
+    color: #fafafa80;
+}
+
+.editProject{
+    background-color: #fafafa00;
+    border: 0;
+}
+
+.editProject svg{
+    color: #fafafa80;
+    transition: all 0.4s ease;
+}
+
+.editProject svg:hover{
+    color: #fafafa;
+}
+
+
+
+#description h1{
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 #text p{
@@ -369,7 +401,6 @@ body {
 #tabla table{
     color: #fafafa;
     width: 100%;
-    height: 400px !important;
     overflow: auto;
     border-collapse: collapse;
 }
@@ -386,7 +417,8 @@ body {
     font-size: 16px;
     text-align: left;
     color: #ffffff;
-    background-color: #414141;
+    background-color: #fafafa20;
+    backdrop-filter: blur(10px); 
 
 }
 
@@ -417,10 +449,12 @@ body {
 }
 
 #tabla tbody tr:nth-child(odd) {
+    max-height: 70px !important;
     background-color: #ffffff00; /* Fondo para las filas impares */
 }
 
 #tabla tbody tr:nth-child(even) {
+    max-height: 70px !important;
     background-color: #ffffff08; /* Fondo para las filas pares */
 }
 
@@ -433,9 +467,10 @@ body {
 }
 
 #tabla tbody td {
-    padding: 12px;
+    padding: 1rem;
     font-size: 14px;
     color: #ffffff;
+    max-height: 70px;
 }
 
 #tabla button {
@@ -449,82 +484,6 @@ body {
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
-
-/*---------Insertar Actividad-------------*/
-
-
-#insertarActividad {
-    display: none;
-}
-
-#formInsert{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-
-#formInsert input{
-    padding: 7px 10px;
-    width: 400px;
-    margin: 10px;
-    border-radius: 20px;
-    border: 0;
-}
-
-#formInsert label {
-    font-size: 0.9rem;
-    margin: 10px;
-    color: #FFFFFF;
-}
-
-#formInsert h2 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #FFFFFF;
-    margin-bottom: 20px;
-}
-
-#formInsert .column {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.column select {
-    padding: 7px 10px;
-    width: 400px;
-    margin: 10px;
-    border-radius: 20px;
-    border: 0;
-}
-
-#buttonsInsert {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    gap: 20px;
-    width: 300px;
-}
-
-#buttonsInsert button {
-    padding: 10px 50px;
-    border-radius: 15px;
-    border: 0;
-    font-weight: 500;
-    font-size: 0.9rem;
-}
-
-#buttonsInsert #add {
-    background-color: #E2FF32;
-}
-
-#buttonsInsert #cancel {
-    background-color: #FFFFFF20;
-    color: #FFFFFF;
-}
-
 
 /*---------DIV de botones-------------*/
 
@@ -540,60 +499,128 @@ body {
 
 
 #buttonsTabla button{
-    padding: 10px;
-    border-radius: 10px;
+    padding: 0.4rem 0rem;
+    border-radius: 15px;
     border: 0px;
-    width: 200px;
-    height: 60px;
+    width: 300px;
+    height: 50px;
     font-size: 0.9rem;
     font-weight: 500;
+    background-color: #E2FF32;
+    color: #000;
 }
 
-.addCard{
-    background-color: #E2FF32 !important;
-    color: #000 !important;
-}
 
-.editCard{
-    background-color: #ffffff30 !important;
-    color: #fafafa;
-}
+/*---------Insertar Actividad-------------*/
 
-.deleteCard{
-    background-color: #A600FF !important;
-}
 
-#modificarACT-form{
-    background-color: #FFFFFF20;
-    padding: 10px;
-    border-radius: 15px;
-}
-
-#modificarACT-form h2 {
-    color: #fafafa;
-}
-
-#modificarACT-form label {
-    color: #fafafa;
-}
-
-.botones-modificarACT {
-    padding-top: 5px;
+#insertarActividad {
+    display: none;
+    flex-direction: column;
     gap: 20px;
+}
+
+.tituloForms{
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #fafafa;
+}
+
+.forms{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+.forms input{
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+    background-color: #fafafa90;
+    color: #000;
+}
+
+.forms textarea{
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+    background-color: #fafafa90;
+    color: #000;
+}
+
+.forms label {
+    font-size: 0.9rem;
+    margin: 10px;
+    color: #FFFFFF;
+}
+
+.column {
+    width: 525px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.column select {
+    padding: 7px 10px;
+    width: 400px;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0;
+    background-color: #fafafa90;
+    color: #000;
+}
+
+.buttonsInsert {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
+    gap: 20px;
+    width: 300px;
 }
 
-#BModificarAct {
-    background-color: #A600FF;
+.agre {
+    background-color: #E2FF32 !important;
+    color: #000;
+    padding: 0.5rem 0rem;
+    width: 140px !important;
+    border-radius: 15px;
     border: 0;
-    padding: 10px 20px;
-    border-radius: 10px;
+    font-weight: 400;
+    font-size: 0.8rem;
 }
 
-#back {
-    background-color: #E2FF32;
+.dele{
+    background-color: #FFFFFF20 !important;
+    color: #FFFFFF !important;
+    padding: 0.5rem 0rem;
+    width: 140px !important;
+    border-radius: 15px;
     border: 0;
-    padding: 10px 20px;
-    border-radius: 10px;
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+
+
+
+
+
+/*---------DIV de editar proyecto-------------*/
+
+#editarProyecto{
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+#editarActivity{
+    flex-direction: column;
+    gap: 20px;
 }

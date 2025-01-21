@@ -115,7 +115,7 @@
                             $array_id_actividades[] = $idActividad;
                         }
                     }    
-                    $selectActividad = "SELECT id, titulo, due_date FROM actividades WHERE id IN (".implode(',', $array_id_actividades).") ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC LIMIT 0";
+                    $selectActividad = "SELECT id, titulo, due_date FROM actividades WHERE id IN (".implode(',', $array_id_actividades).") ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC";
                     $resultadoActividad = mysqli_query($conn, $selectActividad);
                     ?>
                     <div id="cards-activities">
@@ -124,9 +124,6 @@
                     if (mysqli_num_rows($resultadoActividad) > 0) {
                         $contador_act = 1;
                         while ($fila = mysqli_fetch_assoc($resultadoActividad)) {
-                            ?>
-                            <?php
-                            
                             if($contador_act <= 3){
                                 ?>
                                 <div class="lastActivity">

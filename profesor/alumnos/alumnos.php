@@ -250,7 +250,6 @@
                                                     <th>Username</th>
                                                     <th>Creation Date</th>
                                                     <th>Course ID</th>
-                                                    <th>Project ID</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -265,7 +264,6 @@
                                                         echo "<td>" . $fila["username"] . "</td>";
                                                         echo "<td>" . $fila["created_at"] . "</td>";
                                                         echo "<td>" . $fila["curso_id"] . "</td>";
-                                                        echo "<td>" . $fila['project_id'] . "</td>";
                                                         echo "</tr>";
                                                     }
                                                 } else {

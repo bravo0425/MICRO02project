@@ -16,5 +16,11 @@ function goSettings(){
 
 function addActivity(){
     document.querySelector("#insertarActividad").style = "display: flex;";
-    document.querySelector("#tabla").style = "display: none;";
+    document.querySelector("#verTabla").style = "display: none;";
+}
+
+function abrirEditorProject(){
+    document.querySelector("#editarProyecto").style = "display: flex;";
+    document.querySelector("#insertarActividad").style = "display: none;";
+    document.querySelector("#verTabla").style = "display: none;";
 }

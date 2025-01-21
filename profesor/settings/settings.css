@@ -7,6 +7,10 @@
     font-family: 'Poppins';
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Poppins';
     background-image: url(../../imagenes/fondo.jpg);
@@ -23,7 +27,7 @@ body {
 
 .container {
     height: 690px;
-    width: 1250px;
+    width: 1250px !important;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -85,6 +89,15 @@ body {
     font-size: 1rem;
     font-weight: 400;
 }
+
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
 
 /* opciones del navBar*/
 
@@ -273,10 +286,23 @@ body {
     
 }
 
-#infoApp h2{
+.tituloInfo{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 5px;
+}
+
+.tituloInfo h2{
     font-size: 1.2rem;
     font-weight: 500;
 }
+
+.tituloInfo svg{
+    width: 25px;
+}
+
 
 #infoApp button{
     display: flex;
@@ -312,223 +338,164 @@ body {
     align-items: center;
 }
 
-.tituloCurso{
-    width: 100%;
-    border-radius: 15px;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fafafa20;
-}
-
-.tituloCurso h1{
-    font-size: 1.1rem;
-    color: #ffffff;
-    font-weight: 500;
-}
-
-#estadisticasCurso{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
-    height: 70px;
-}
-
-
-.cardInfo{
-    text-align: center;
-    padding: 10px;
-    font-size: 1.3rem;
-    color: #ffffff;
-    height: 70px;
-    width: 200px;
-    border-radius: 15px;
-    background-color: #fafafa20;
-}
-
-.cardInfo h3{
-    font-size: 0.9rem;
-    color: #fafafa60;
-    font-weight: 400;
-    text-align: left;
-}
-
-.numProjects{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.numProjects svg{
-    width: 20px;
-}
-
-.numProjects img{
-    width: 20px;
-    height: 22px;
-}
-
-.numProjects p{
-    font-size: 1rem;
-}
-.redondaStado{
-    width: 10px;
-    height: 10px;
-    border-radius: 50px;
-    background-color: #2bff00;
-}
-
-/*-------DIV para mostrar projectos------------*/
 
 
 #abajo{
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     gap: 20px;
     height: 510px;
-
+    color: #fafafa;
+    padding: 1rem;
 }
 
-/*-------DIV para mostrar projectos------------*/
+.navSettings{
+    width: 600px;
+    background-color: #fafafa20;
+    border-radius: 40px;
+    border: 0;
+    padding: 0.4rem 1rem;
+}
 
-#divProjects{
-    width: 250px;
-    height: 510px;
+.navSettings ul{
+    list-style: none;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    padding: 10px 15px 10px 15px !important;
-    color: #ffffff;
 }
 
-#titulo{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-}
-
-#titulo h1{
-    width: 100%;
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-.listadoProjects{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-}
-
-.listadoProjects button{
-    display: flex;
-    flex-direction: row;
-    width: 200px;
-    padding: 7px;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff10;
-    border: 0px;
-    gap: 10px;
-    border-radius: 15px;
-    font-size: 1rem;
-    font-weight: 300;
-    transition: all 0.3s ease;
-}
-
-
-.listadoProjects button svg{
-    width: 20px;
-    color: #ffffff;
-}
-
-.listadoProjects button p{
-    color: #ffffff;
-}
-
-.listadoProjects button:hover{
-    background-color: #ffffff20;
-}
-
-#botonesProjects{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-#botonesProjects button{
-    display: flex;
-    flex-direction: row;
-    width: 100px;
-    padding: 8px;
-    justify-content: center;
-    align-items: center;
-    border: 0px;
-    border-radius: 15px;
-    font-weight: 400;
+.navSettings button{
+    background-color: #fafafa00;
+    color: #fafafa;
+    border: 0;
+    border-radius: 40px;
+    width: 140px;
     font-size: 0.9rem;
-    transition: all 0.3s ease;
+    padding: 0.4rem 0rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
 }
 
-.displayRow{
+.navSettings button:hover{
+    background-color: #fafafa90;
+}
+
+.activeN{
+    background-color: #fafafa90 !important;
+    color: #000 !important;
+}
+
+.activeN:hover{
+    background-color: #fafafa !important;
+}
+
+/*-----DIV GENERAL SETTINGS----*/
+
+.divGeneral{
+    width: 600px;
+    padding: 0.5rem;
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 40px !important;
 }
 
-.addProject{
-    background-color: #A600FF;
-    
-}
-
-.addProject:hover{
-    background-color: #ba42ff;
-}
-
-
-.deleteProject{
-    background-color: #FFFFFF30;
-    color: #fafafa;
-}
-
-.deleteProject:hover{
-    background-color: #FFFFFF40;
-    color: #fafafa;
-}
-
-
-
-.openProject{
+.changeImg{
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.changeImg img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 0;
+    border-radius: 100px;  
+}
+
+.changeImg form{
+    width: 300px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+/* Ocultar el input original */
+input[type="file"] {
+    display: none;
+}
+
+/* Estilo para el label que simula el botón del input */
+.custom-file-upload {
+    width: 200px;
+    border: 0;
+    border-radius: 15px;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
+    background-color: #ffffff60;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #fafafa;
+}
+
+/* Estilo para los botones */
+.changeImg form button {
+    width: 200px;
+    border: 0;
+    border-radius: 15px;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
     background-color: #E2FF32;
 }
 
-/*---------DIV de abajo del contenido-------------*/
 
-
-
-#estadisticaAlumnos{
-    height: 510px;
+.inputGeneral{
     width: 100%;
-    padding: 10px 15px;
-    color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    gap: 20px;
+    
 }
 
-#estadisticaAlumnos h1{
-    font-size: 1.2rem;
+.inputGeneral p{
+    font-size: 1rem;
     font-weight: 400;
 }
 
+.showText{
+    width: 400px;
+    background-color: #fafafa55;
+    padding: 0.4rem 1rem;
+    border-radius: 15px;
+    margin-right: 1rem;
+}
 
+/*-----DIV GENERAL SETTINGS----*/
+
+.divSecurity{
+    width: 600px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 40px !important;
+}
+
+.divSecurity form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+}
+
+.divSecurity form input{
+    width: 150px;
+}

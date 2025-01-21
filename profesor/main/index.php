@@ -142,10 +142,16 @@
                         <div id="tituloProject">
                             <div class="firsttitle">
                                 <h1>Last project</h1>
-                                <button>All ></button>
+                                <button onclick="goCursos()">All ></button>
                             </div>
                             <div class="secondtitle">
-                                <button>MICRO02-DAW -></button>
+                                <?php
+                                $selectLastProject = "SELECT titulo, created_at FROM proyectos ORDER BY created_at DESC LIMIT 1";
+                                $result = mysqli_query($conn, $selectLastProject);
+                                $row = mysqli_fetch_assoc($result);
+                                ?>
+                                <h2><?php echo $row['titulo']; ?></h2>
+                                <p><?php echo $row['created_at']; ?></p>
                             </div>
                         </div>
                         <img src="../../imagenes/project.jpg" alt="" style="width: 300px;">
@@ -162,22 +168,31 @@
 
                 <div id="lastActivities">
                     <h1>Last Activities</h1>
+                    <?php
+                    $select = "SELECT id, titulo, due_date FROM actividades ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC";
+                    $resultado = mysqli_query($conn, $select);
+                    ?>
                     <div id="cards-activities">
-                        <div class="lastActivity">
-                            <h2>Create DB</h2>
-                            <p>8-12-2024</p>
-                            <p>10:00</p>
-                        </div>
-                        <div class="lastActivity">
-                            <h2>Create DB</h2>
-                            <p>8-12-2024</p>
-                            <p>10:00</p>
-                        </div>
-                        <div class="lastActivity">
-                            <h2>Create DB</h2>
-                            <p>8-12-2024</p>
-                            <p>10:00</p>
-                        </div>
+                        <?php 
+                        if (mysqli_num_rows($resultado)) {
+                            $contador = 1;
+                            while ($fila = mysqli_fetch_assoc($resultado)) {
+                                if ($contador <= 3) {
+                                    ?>
+                                    <div class="lastActivity">
+                                        <h2><?php echo $fila['titulo']; ?></h2>
+                                        <p><?php echo $fila['due_date']; ?></p>
+                                    </div>
+                                    <?php
+                                    $contador++;
+                                }
+                            }
+                        } else {
+                            ?>
+                            <div class="noActivities">
+                                <h2>No activities</h2>
+                            </div>
+                  <?php } ?>
                     </div>
                 </div>
 
