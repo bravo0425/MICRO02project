@@ -65,8 +65,8 @@ function mostrarItems($conn, $idActivity){
             echo '<div class="itemImage">';
             echo mostrarIcon($conn, $idItem); 
             echo '</div>';
-            echo '<p><strong class="itemLabel">Título:</strong> ' . $titulo . '</p>';
-            echo '<p><strong class="itemLabel">Valor:</strong> ' . $valor . '%</p>';
+            echo '<p class="itemLabel">' . $titulo . '</p>';
+            echo '<p class="itemLabel">' . $valor . '%</p>';
             echo '</div>';
         }
     } else {
@@ -131,6 +131,49 @@ function eliminarItem($conn, $idItem){
     mysqli_query($conn, $query);
 }
 
-function updateItems($conn, $idActivity){
-    
+function updateItems($conn, $idActivity) {
+    if (!empty($_POST['titulo']) && !empty($_POST['valor'])) {
+        $titulos = $_POST['titulo'];
+        $valores = $_POST['valor'];
+        $files = $_FILES['iconItem'] ?? null;
+
+        // Comprobar si la suma de valores es 100
+        $totalValor = array_sum($valores);
+        if ($totalValor != 100) {
+            echo "<p>Error: La suma de los valores debe ser igual a 100. La suma actual es $totalValor.</p>";
+            return;
+        }
+
+        // Si la suma es correcta, proceder con la actualización
+        foreach ($titulos as $idItem => $titulo) {
+            $valor = $valores[$idItem] ?? null;
+
+            if ($valor !== null) {
+                $titulo = mysqli_real_escape_string($conn, $titulo);
+                $valor = mysqli_real_escape_string($conn, $valor);
+
+                $updateQuery = "UPDATE items SET titulo = '$titulo', valor = '$valor'";
+
+                if (!empty($files['tmp_name'][$idItem]) && is_uploaded_file($files['tmp_name'][$idItem])) {
+                    $iconFile = $files['tmp_name'][$idItem];
+                    $iconData = file_get_contents($iconFile);
+                    $iconData = mysqli_real_escape_string($conn, $iconData);
+                    $updateQuery .= ", icon = '$iconData'";
+                }
+
+                $updateQuery .= " WHERE id = $idItem AND activity_id = $idActivity";
+
+                $result = mysqli_query($conn, $updateQuery);
+
+                if (!$result) {
+                    echo "<p>Error al actualizar el ítem con ID $idItem: " . mysqli_error($conn) . "</p>";
+                }
+            }
+        }
+
+        echo "<p>Ítems actualizados correctamente.</p>";
+    } else {
+        echo "<p>No se enviaron datos para actualizar.</p>";
+    }
 }
+

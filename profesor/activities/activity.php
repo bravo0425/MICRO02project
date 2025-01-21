@@ -236,7 +236,7 @@ if(!empty($_POST['confirmarCambios'])){
                             <h2>Items</h2>
                         </div>
                         <div id="divItems">
-                            <form action="" method="post" class="fromItemsEdit">
+                            <form action="" method="post" class="fromItemsEdit" enctype="multipart/form-data">
                                 <?php mostrarItemsEditar($conn, $idActivity); ?>
                                 <div class="optionsItemsEdit">
                                     <button type="submit" name="confirmarCambios" value="confirmUpdate" class="confirmButton">Confirmar</button>
