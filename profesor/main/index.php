@@ -1,46 +1,50 @@
 <?php
-    include "../../conexion.php";
-    include "functionsMain.php";
+include "../../conexion.php";
+include "functionsMain.php";
 
-    session_start();
+session_start();
 
-    if(isset($_SESSION['nombreUser'])){
-        $usuarioLog = $_SESSION['nombreUser'];
-        $nom = $_SESSION['nombre'];
-        $apellido = $_SESSION['apellido'];
-    }else{
-        header('Location: ../../login/login.php');
-        exit();
-    }
+if (isset($_SESSION['nombreUser'])) {
+    $usuarioLog = $_SESSION['nombreUser'];
+    $nom = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+    $idCurso = $_SESSION['idCurso'];
+} else {
+    header('Location: ../../login/login.php');
+    exit();
+}
 
-    if (!empty($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        header('Location: ../../login/login.php');
-        exit();
-    }
+if (!empty($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: ../../login/login.php');
+    exit();
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumnos</title>
     <link rel="stylesheet" href="main.css">
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
+
 <body>
 
-<!--Container general-->
-    <div class="container">     
-        <!-- menu izquierda--> 
+    <!--Container general-->
+    <div class="container">
+        <!-- menu izquierda-->
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <?php mostrarImg($conn); ?>                    
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
@@ -53,7 +57,7 @@
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-                        
+
                     </button>
                     <button onclick="goCursos()" class="menu">
                         <div class="positionButton">
@@ -132,7 +136,7 @@
                         </div>
                         <a href="" class="svgArrow">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
                             </svg>
                         </a>
                     </div>
@@ -154,7 +158,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
 
@@ -162,29 +166,50 @@
 
                 <div id="lastActivities">
                     <h1>Last Activities</h1>
+                    <?php
+                    $select = "SELECT id, titulo, due_date FROM actividades ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC";
+                    $resultado = mysqli_query($conn, $select);
+                    ?>
                     <div id="cards-activities">
-                        <div class="lastActivity">
-                            <h2>Create DB</h2>
-                            <p>8-12-2024</p>
-                            <p>10:00</p>
-                        </div>
-                        <div class="lastActivity">
-                            <h2>Create DB</h2>
-                            <p>8-12-2024</p>
-                            <p>10:00</p>
-                        </div>
-                        <div class="lastActivity">
-                            <h2>Create DB</h2>
-                            <p>8-12-2024</p>
-                            <p>10:00</p>
-                        </div>
+                        <?php
+                        if (mysqli_num_rows($resultado)) {
+                            $contador = 1;
+                            while ($fila = mysqli_fetch_assoc($resultado)) {
+                                if ($contador <= 3) {
+                        ?>
+                                    <div class="lastActivity">
+                                        <h2><?php echo $fila['titulo']; ?></h2>
+                                        <p><?php echo $fila['due_date']; ?></p>
+                                    </div>
+                            <?php
+                                    $contador++;
+                                }
+                            }
+                        } else {
+                            ?>
+                            <div class="noActivities">
+                                <h2>No activities</h2>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
 
                 <div id="estadisticaAlumnos" class="card">
                     <h1>Students Scores</h1>
                     <div id="grafica">
-
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>name</th>
+                                    <th>Course Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                mostrarTablaAlumnos($conn, $idCurso);
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -192,12 +217,13 @@
                     <button class="yellowbtn">Estadisticas</button>
                     <button class="lilabtn">Ranking</button>
                 </div>
-                
+
             </div>
 
         </div>
     </div>
-        
+
     <script src="main.js"></script>
 </body>
+
 </html>

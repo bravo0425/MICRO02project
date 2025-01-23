@@ -1,101 +1,108 @@
 <?php
-    include "../../conexion.php";
-    include "functions.php";
-    session_start();
-    
-
-    if(isset($_SESSION['nombreUser'])){
-        $usuarioLog = $_SESSION['nombreUser'];
-        $nom = $_SESSION['nombre'];
-        $apellido = $_SESSION['apellido'];
-    }else{
-        header('Location: ../../login/login.php');
-        exit();
-    }
-
-    if (!empty($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        header('Location: ../../login/login.php');
-        exit();
-    }
+include "../../conexion.php";
+include "functions.php";
+session_start();
 
 
-    if (isset($_POST['idProyecto']) && !empty($_POST['idProyecto'])) {
-        $_SESSION['idProyecto'] = intval($_POST['idProyecto']);
-    }
-    
-    if (isset($_SESSION['idProyecto'])) {
-        $idProject = $_SESSION['idProyecto'];
-        
-        // Consulta para obtener los detalles del proyecto
-        $queryProjects = "SELECT * FROM proyectos WHERE id = $idProject";
-        $result = mysqli_query($conn, $queryProjects);
-        
-        if (mysqli_num_rows($result) > 0) {
-            $project = mysqli_fetch_assoc($result);
-            $titulo = $project['titulo'];
-            $descripcion = $project['descripcion'];
-        } else {
-            $titulo = "Proyecto no encontrado";
-            $descripcion = "No hay detalles disponibles para este proyecto.";
-        }
-        
-        // Consulta para obtener las actividades relacionadas con el proyecto
-        $queryActividades = "SELECT * FROM actividades WHERE project_id = $idProject";
-        $resultActividades = mysqli_query($conn, $queryActividades);
-        
-        $actividades = [];
-        if (mysqli_num_rows($resultActividades) > 0) {
-            while ($actividad = mysqli_fetch_assoc($resultActividades)) {
-                $actividades[] = $actividad;
-            }
-        }
+if (isset($_SESSION['nombreUser'])) {
+    $usuarioLog = $_SESSION['nombreUser'];
+    $nom = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+} else {
+    header('Location: ../../login/login.php');
+    exit();
+}
+
+if (!empty($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: ../../login/login.php');
+    exit();
+}
+
+
+if (isset($_POST['idProyecto']) && !empty($_POST['idProyecto'])) {
+    $_SESSION['idProyecto'] = intval($_POST['idProyecto']);
+}
+
+if (isset($_SESSION['idProyecto'])) {
+    $idProject = $_SESSION['idProyecto'];
+
+    // Consulta para obtener los detalles del proyecto
+    $queryProjects = "SELECT * FROM proyectos WHERE id = $idProject";
+    $result = mysqli_query($conn, $queryProjects);
+
+    if (mysqli_num_rows($result) > 0) {
+        $project = mysqli_fetch_assoc($result);
+        $titulo = $project['titulo'];
+        $descripcion = $project['descripcion'];
     } else {
-        // Si no hay ID de proyecto en la sesión, mostrar un mensaje de error
-        $titulo = "Error";
-        $descripcion = "No se seleccionó un proyecto.";
-        $actividades = [];
+        $titulo = "Proyecto no encontrado";
+        $descripcion = "No hay detalles disponibles para este proyecto.";
     }
 
+    // Consulta para obtener las actividades relacionadas con el proyecto
+    $queryActividades = "SELECT * FROM actividades WHERE project_id = $idProject";
+    $resultActividades = mysqli_query($conn, $queryActividades);
 
-    if(!empty($_POST['añadir'])) {
-        crearActividad($conn);
+    $actividades = [];
+    if (mysqli_num_rows($resultActividades) > 0) {
+        while ($actividad = mysqli_fetch_assoc($resultActividades)) {
+            $actividades[] = $actividad;
+        }
     }
+} else {
+    // Si no hay ID de proyecto en la sesión, mostrar un mensaje de error
+    $titulo = "Error";
+    $descripcion = "No se seleccionó un proyecto.";
+    $actividades = [];
+}
 
-    if(!empty($_POST['editar'])){
-        editarProyecto($conn);
-    }
 
-    if(!empty($_POST['anadir'])){
-        crearActividad($conn);
-    }
+if (!empty($_POST['añadir'])) {
+    crearActividad($conn);
+}
 
-    if(!empty($_POST['seeActivity'])){
-        $activityId = intval($_POST['seeActivity']);
-        $_SESSION['idActividad'] = $activityId;
-        header('Location: ../activities/activity.php');
-        exit();
-    }
+if (!empty($_POST['editar'])) {
+    editarProyecto($conn);
+}
 
-   
+if (!empty($_POST['anadir'])) {
+    crearActividad($conn);
+}
+
+if (!empty($_POST['seeActivity'])) {
+    $activityId = intval($_POST['seeActivity']);
+    $_SESSION['idActividad'] = $activityId;
+    header('Location: ../activities/activity.php');
+    exit();
+}
+
+if (!empty($_POST['deleteActivity'])) {
+    eliminarActividad($conn, $_POST['deleteActivity']);
+}
+
+
+
 
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumnos</title>
     <link rel="stylesheet" href="project.css">
 </head>
+
 <body>
 
-<!--Container general-->
-    <div class="container">     
-        <!-- menu izquierda--> 
+    <!--Container general-->
+    <div class="container">
+        <!-- menu izquierda-->
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
@@ -115,7 +122,7 @@
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-                        
+
                     </button>
                     <button onclick="goCursos()" class="menu active">
                         <div class="positionButton">
@@ -211,45 +218,87 @@
                         <p><?php echo htmlspecialchars($descripcion); ?></p>
                     </div>
                 </div>
-                
+
             </div>
 
 
             <div id="abajo" class="card">
                 <div id="verTabla">
-                    <div id="tabla">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th id="borderLeft">Activities</th>
-                                    <th>Due_Date</th>
-                                    <th>Status</th>
-                                    <th id="borderRight">Options</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (!empty($actividades)) {
-                                    foreach ($actividades as $actividad) {
-                                        $_SESSION['idActividad'] = $actividad['id'];
-                                        echo "<tr>";
-                                        echo "<td>" . htmlspecialchars($actividad['titulo']) . "</td>";
-                                        echo "<td>" . htmlspecialchars($actividad['due_date']) . "</td>";
-                                        echo "<td>" . $actividad['active'] = (intval($actividad['active']) == 1) ? 'Active' : 'Inactive' ."</td>";
-                                        echo "<td>
+                    <?php
+                    if (!empty($_POST['editActivity'])) {
+                        $activityId = intval($_POST['editActivity']);
+                        $query = "SELECT * FROM actividades WHERE id = $activityId";
+                        $result = mysqli_query($conn, $query);
+
+                        if ($activity = mysqli_fetch_assoc($result)) {
+                            $_SESSION['edit_activity'] = $activity;
+
+                            // Asegúrate de imprimir el HTML correctamente
+                            echo "<div id='editarActivity'>
+                                    <h2 class='tituloForms'>Editar Actividad</h2>
+                                    <form action='' method='POST' id='formEditarActivity' class='forms'>
+                                        <input type='hidden' name='editActivityId' value='" . $_SESSION['edit_activity']['id'] . "'>
+                                        <div class='column'>
+                                            <label for='editActivityTitle'>Título</label>
+                                            <input type='text' name='editActivityTitle' id='editActivityTitle' value='" . htmlspecialchars($_SESSION['edit_activity']['titulo']) . "'>
+                                        </div>
+                                        <div class='column'>
+                                            <label for='editActivityDesc'>Descripción</label>
+                                            <textarea name='editActivityDesc' id='editActivityDesc'> " . htmlspecialchars($_SESSION['edit_activity']['descripcion']) . " </textarea>
+                                        </div>
+                                        <div class='column'>
+                                            <label for='editActivityDueDate'>Fecha de vencimiento</label>
+                                            <input type='date' name='editActivityDueDate' id='editActivityDueDate' value='" . htmlspecialchars($_SESSION['edit_activity']['due_date']) . "'>
+                                        </div>
+                                        <div class='column'>
+                                            <label for='editActivityStatus'>Estado</label>
+                                            <select name='editActivityStatus' id='editActivityStatus'>
+                                                <option value='1'" . (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 1 ? ' selected' : '') . ">Activa</option>
+                                                <option value='0'" . (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 0 ? ' selected' : '') . ">Inactiva</option>
+                                            </select>
+                                        </div>
+                                        <div class='buttonsEditar'>
+                                            <input type='submit' class='agre' name='editarActividad' value='Editar'>
+                                            <input type='submit' class='dele' name='cancelar' value='Cancelar'>
+                                        </div>
+                                    </form>
+                                </div>";
+                        }
+                    } else {
+                    ?>
+                        <div id="tabla">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th id="borderLeft">Activities</th>
+                                        <th>Due_Date</th>
+                                        <th>Status</th>
+                                        <th id="borderRight">Options</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if (!empty($actividades)) {
+                                        foreach ($actividades as $actividad) {
+                                            $_SESSION['idActividad'] = $actividad['id'];
+                                            echo "<tr>";
+                                            echo "<td>" . htmlspecialchars($actividad['titulo']) . "</td>";
+                                            echo "<td>" . htmlspecialchars($actividad['due_date']) . "</td>";
+                                            echo "<td>" . $actividad['active'] = (intval($actividad['active']) == 1) ? 'Active' : 'Inactive' . "</td>";
+                                            echo "<td>
                                                 <form method='POST' action=''>
-                                                    <button type='sumbit' name='seeActivity' value='" . $actividad['id'] ."'>
+                                                    <button type='sumbit' name='seeActivity' value='" . $actividad['id'] . "'>
                                                         <svg xmlns='http://www.w3.org/2000/svg' fill='none' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
                                                             <path stroke-linecap='round' stroke-linejoin='round' d='M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z' />
                                                             <path stroke-linecap='round' stroke-linejoin='round' d='M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z' />
                                                         </svg>
                                                     </button>
-                                                    <button type='submit' name='editActivity' class='edit-activity-btn' value='" . $actividad['id'] ."'>
+                                                    <button type='submit' name='editActivity' class='edit-activity-btn' value='" . $actividad['id'] . "'>
                                                         <svg xmlns='http://www.w3.org/2000/svg' fill='none' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
                                                             <path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
                                                         </svg>
                                                     </button>
-                                                    <button type='sumbit' name='deleteActivity' value='" . $actividad['id'] ."'>
+                                                    <button type='sumbit' name='deleteActivity' value='" . $actividad['id'] . "'>
                                                         <svg xmlns='http://www.w3.org/2000/svg' fill='none' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
                                                             <path stroke-linecap='round' stroke-linejoin='round' d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0' />
                                                         </svg>
@@ -257,21 +306,21 @@
                                                 </form>
                                             </td>";
 
-                                        echo "</tr>";
+                                            echo "</tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='4'>No se encontraron actividades para este proyecto.</td></tr>";
                                     }
-                                } else {
-                                    echo "<tr><td colspan='4'>No se encontraron actividades para este proyecto.</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div id="buttonsTabla">
-                        <button class="addCard" onclick="addActivity()">+ Add new Activity</button>
-                    </div>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="buttonsTabla">
+                            <button class="addCard" onclick="addActivity()">+ Add new Activity</button>
+                        </div>
+                    <?php } ?>
                 </div>
-                
+
                 <div id="insertarActividad">
                     <h2 class="tituloForms">Crear una nueva Actividad</h2>
                     <form action="" method="POST" id="formInsert" class="forms">
@@ -294,7 +343,7 @@
                                 <option value="0">Inactiva</option>
                             </select>
                         </div>
-                        
+
                         <div class="buttonsInsert">
                             <input type="submit" class="agre" name="anadir" value="anadir">
                             <input type="submit" class="dele" name="cancelar" value="cancel">
@@ -302,17 +351,17 @@
                     </form>
                 </div>
 
-                
+
                 <div id="editarProyecto">
                     <h2 class="tituloForms">Editar Proyecto</h2>
                     <form action="" method="POST" id="formEditarProyect" class="forms">
                         <div class="column">
                             <label for="editTitle">titulo</label>
-                            <input type="text" name="editTitle" id="editTitle" placeholder="<?php echo htmlspecialchars($titulo); ?>">
+                            <input type="text" name="editTitle" id="editTitle" value="<?php echo htmlspecialchars($titulo); ?>">
                         </div>
                         <div class="column">
                             <label for="editDesc">descripcion</label>
-                            <textarea type="text" name="editDesc" id="editDesc" placeholder="<?php echo htmlspecialchars($descripcion); ?>"></textarea>
+                            <textarea type="text" name="editDesc" id="editDesc"><?php echo htmlspecialchars($descripcion); ?></textarea>
                         </div>
                         <div class="buttonsEditar">
                             <input type="submit" class="agre" name="editar" value="editar">
@@ -321,55 +370,14 @@
                     </form>
                 </div>
 
-                <?php
-                    if (!empty($_POST['editActivity'])) {
-                        $activityId = intval($_POST['editActivity']);
-                        $query = "SELECT * FROM actividades WHERE id = $activityId";
-                        $result = mysqli_query($conn, $query);
-
-                        if ($activity = mysqli_fetch_assoc($result)) {
-                        $_SESSION['edit_activity'] = $activity;
-
-                        // Asegúrate de imprimir el HTML correctamente
-                        echo "<div id='editarActivity'>
-                                <h2 class='tituloForms'>Editar Actividad</h2>
-                                <form action='' method='POST' id='formEditarActivity' class='forms'>
-                                    <input type='hidden' name='editActivityId' value='" . $_SESSION['edit_activity']['id'] . "'>
-                                    <div class='column'>
-                                        <label for='editActivityTitle'>Título</label>
-                                        <input type='text' name='editActivityTitle' id='editActivityTitle' placeholder='" . htmlspecialchars($_SESSION['edit_activity']['titulo'], ENT_QUOTES) . "'>
-                                    </div>
-                                    <div class='column'>
-                                        <label for='editActivityDesc'>Descripción</label>
-                                        <textarea name='editActivityDesc' id='editActivityDesc' placeholder='" . htmlspecialchars($_SESSION['edit_activity']['descripcion'], ENT_QUOTES) . "'></textarea>
-                                    </div>
-                                    <div class='column'>
-                                        <label for='editActivityDueDate'>Fecha de vencimiento</label>
-                                        <input type='date' name='editActivityDueDate' id='editActivityDueDate' value='" . htmlspecialchars($_SESSION['edit_activity']['due_date'], ENT_QUOTES) . "'>
-                                    </div>
-                                    <div class='column'>
-                                        <label for='editActivityStatus'>Estado</label>
-                                        <select name='editActivityStatus' id='editActivityStatus'>
-                                            <option value='1'" . (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 1 ? ' selected' : '') . ">Activa</option>
-                                            <option value='0'" . (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 0 ? ' selected' : '') . ">Inactiva</option>
-                                        </select>
-                                    </div>
-                                    <div class='buttonsEditar'>
-                                        <input type='submit' class='agre' name='editarActividad' value='Editar'>
-                                        <input type='submit' class='dele' name='cancelar' value='Cancelar'>
-                                    </div>
-                                </form>
-                            </div>";
-                        }
-                    }
-                ?>
 
             </div>
 
         </div>
     </div>
-        
+
     <?php mysqli_close($conn); ?>
     <script src="project.js"></script>
 </body>
+
 </html>

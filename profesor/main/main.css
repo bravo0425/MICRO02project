@@ -373,6 +373,7 @@ a svg{
     background-color: #fafafa20;
     color: #ffffff;
     width: 205px;
+    height: 90px;
 }
 
 .lastActivity h2{
@@ -458,19 +459,19 @@ a svg{
 }
 
 
-.secondtitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #E2FF32;
-    transition: all 0.3s ease;
-    padding: 3px;
+.secondtitle {
+    background-color: #fafafa20;
+    padding: 10px;
+    border-radius: 15px;
 }
 
-.secondtitle button:hover{
-    background-color: #00000030;
-    border-radius: 10px;
+.secondtitle h2 {
+    background-color: #00000000;
+    border: 0px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #E2FF32;
+    padding: 3px;
 }
 
 #tituloProject h1{

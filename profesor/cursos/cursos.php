@@ -271,6 +271,21 @@
                         <h1>Students Scores</h1>
                         <div id="grafica">
                             <p>Gráfica de estudiantes</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>name</th>
+                                        <th>Project Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
+                                    mostrarTablaAlumnos($conn, $idProyectoSeleccionado); 
+                                    ?>
+                                </tbody>
+                            </table>
+                            
                         </div>
                     <?php else: ?>
                         <h1>Add a New Project</h1>

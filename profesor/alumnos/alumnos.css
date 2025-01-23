@@ -79,14 +79,6 @@ body {
     font-weight: 400;
 }
 
-.usuario img{
-    object-fit: cover;
-    width: 30px;
-    height: 30px;
-    border-radius: 50px;
-    border: 0;
-}
-
 /* opciones del navBar*/
 
 .navbar {
@@ -447,3 +439,85 @@ body {
     border-radius: 20px;
     border: 0;
 }
+
+#show_popup {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 0;
+    border-radius: 15px;
+    font-size: 1rem;
+    color: #fafafa;
+}
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    position: relative;
+    width: 800px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.popup-content form{
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.close-btn{
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border: 0;
+    border-radius: 30px;
+}
+
+.buttonsPopup{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.buttonsPopup input{
+    display: none;
+}
+
+.buttonsPopup label{
+    display: flex;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    background-color: #E2FF32;
+    border-radius: 15px;
+}
+
+.buttonsPopup button{
+    display: flex;
+    width: 200px;
+    height: 30px;
+    background-color: #A600FF;
+    border: 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-size: 1rem;
+}
+

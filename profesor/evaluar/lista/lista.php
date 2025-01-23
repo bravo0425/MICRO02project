@@ -51,6 +51,36 @@
         exit;
     }
 
+    // Obtener todos los alumnos que tienen ítems relacionados con la actividad
+    $alumnosQuery = "SELECT DISTINCT alumnos_items.id_alumno FROM alumnos_items JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity";
+    $rAlumnos = mysqli_query($conn, $alumnosQuery);
+
+    if ($rAlumnos && mysqli_num_rows($rAlumnos) > 0) {
+        while ($alumno = mysqli_fetch_assoc($rAlumnos)) {
+            $idAlumno = $alumno['id_alumno'];
+
+            // Obtener todos los ítems relacionados con la actividad para el alumno actual
+            $allItems = "SELECT alumnos_items.id_item, alumnos_items.notaItem FROM alumnos_items JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity AND alumnos_items.id_alumno = $idAlumno";
+            $rAllItems = mysqli_query($conn, $allItems);
+
+            $todosEvaluados = true;
+
+            if ($rAllItems && mysqli_num_rows($rAllItems) > 0) {
+                while ($row = mysqli_fetch_assoc($rAllItems)) {
+                    // Si algún ítem no tiene nota, marcamos $todosEvaluados como falso
+                    if ($row['notaItem'] === null || $row['notaItem'] === '') {
+                        $todosEvaluados = false;
+                        break;
+                    }
+                }
+                // Si todos los ítems tienen nota, marcar la actividad como evaluada
+                if ($todosEvaluados) {
+                    $updateActivity = "UPDATE alumnos_actividades SET evaluado = 1 WHERE id_alumno = $idAlumno AND id_actividad = $idActivity";
+                    mysqli_query($conn, $updateActivity);
+                }
+            }
+        }
+    }
 
 ?>
 <!DOCTYPE html>
@@ -204,7 +234,7 @@
 
                         <tbody>
                             <?php
-                                $queryStudents = " SELECT alumnos.name AS alumno_name, alumnos.last_name, alumnos_actividades.id_alumno, alumnos_actividades.notas, alumnos_actividades.id_actividad, alumnos_actividades.evaluado, alumnos_actividades.entregado FROM alumnos_actividades JOIN alumnos ON alumnos_actividades.id_alumno = alumnos.id WHERE alumnos_actividades.id_actividad = $idActivity ";
+                                $queryStudents = " SELECT alumnos.name AS alumno_name, alumnos.last_name, alumnos_actividades.id_alumno, alumnos_actividades.id_actividad, alumnos_actividades.evaluado, alumnos_actividades.entregado FROM alumnos_actividades JOIN alumnos ON alumnos_actividades.id_alumno = alumnos.id WHERE alumnos_actividades.id_actividad = $idActivity ";
 
                                 $resultStudents = mysqli_query($conn, $queryStudents);
 
@@ -231,6 +261,7 @@
                                             echo "<td><button type='submit' name='enviarIdAlumno' value='" . $fila['id_alumno'] . "' class='noEva'>Evaluar</button></td>";
                                         }
                                     ?>
+                                    
                                     </tr>
                                 </form>
                             <?php } ?>

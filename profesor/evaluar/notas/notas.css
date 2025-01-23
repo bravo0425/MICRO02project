@@ -324,15 +324,39 @@ body {
 }
 
 #description h1{
-    font-size: 1.2rem;
-    font-weight: 500;
-}
-
-#text p{
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 400;
 }
 
+
+/*---------DIV de info-------------*/
+
+#info{
+    width: 470px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.info-options{
+    width: 100%;
+    display: flex;
+}
+
+.info-options h4{
+    width: 100%;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #fafafa80;
+}
+
+#info p{
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: #fafafa;
+}
 
 
 /*---------DIV de ABAJO-------------*/
@@ -367,22 +391,23 @@ body {
 #file{
     width: 470px;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
 }
 
-/*---------DIV de info-------------*/
-
-#info{
-    width: 470px;
-    padding: 10px;
+#file button{
+    width: 200px;
+    height: 40px;
+    border: 1px solid #6a00a3;
+    border-radius: 10px;
+    background-color: #A600FF;
 }
 
 
-/*---------DIV de info-------------*/
 
-#info{
-    width: 470px;
-    padding: 10px;
-}
 
 /*---------DIV de info-------------*/
 
@@ -419,11 +444,12 @@ body {
 }
 
 #formItems .inputs input{
-    width: 250px;
-    height: 30px;
-    border: 1px solid #fafafa40;
-    background-color: #fafafa10;
+    width: 100px;
+    border: 1px solid #fafafa60;
+    background-color: #fafafa30;
     border-radius: 10px;
+    padding: 0.2rem 1rem;
+    color: #fafafa;
 }
 
 .buttonDiv{

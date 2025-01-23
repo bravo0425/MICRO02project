@@ -1,7 +1,6 @@
 <?php
 
-function mostrarImg($conn)
-{
+function mostrarImg($conn){
     $idProfe = $_SESSION['idProfe'];
 
     $queryName = 'SELECT img, tipus FROM profesores WHERE id = ' . $idProfe;
@@ -14,8 +13,7 @@ function mostrarImg($conn)
     }
 }
 
-function mostrarIcon($conn, $idItem)
-{
+function mostrarIcon($conn, $idItem){
     $query = "SELECT icon, tipus FROM items WHERE id = $idItem";
     $result = mysqli_query($conn, $query);
 
@@ -32,8 +30,7 @@ function mostrarIcon($conn, $idItem)
     }
 }
 
-function añadirItem($conn, $idActivity)
-{
+function añadirItem($conn, $idActivity){
     $titulo = $_POST['tituloNewItem'];
     $valor = $_POST['valorNewItem'];
     $icono = $_FILES['imgIcon'];
@@ -45,6 +42,15 @@ function añadirItem($conn, $idActivity)
     $insertQuery = "INSERT INTO items (activity_id, titulo, valor, icon, tipus) 
                     VALUES ('$idActivity', '$titulo', '$valor', '$imgData', '$tipus')";
     mysqli_query($conn, $insertQuery);
+
+    $idultimaItem = mysqli_insert_id($conn);
+    $selectItems = "SELECT id_alumno FROM alumnos_actividades WHERE id_actividad = $idActivity";
+    $r = mysqli_query($conn, $selectItems);
+    while ($row = mysqli_fetch_assoc($r)) {
+        $idAlumno = $row['id_alumno'];
+        $insertarAlumnos = "INSERT INTO alumnos_items (id_alumno, id_item) VALUES ('$idAlumno', '$idultimaItem')";
+        mysqli_query($conn, $insertarAlumnos);
+    }
 
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
@@ -176,4 +182,39 @@ function updateItems($conn, $idActivity) {
         echo "<p>No se enviaron datos para actualizar.</p>";
     }
 }
+
+function getScoreItem($conn, $idAlumno, $idItem) {
+    $sqlItem = "SELECT * FROM alumnos_items WHERE id_alumno = $idAlumno and id_item = $idItem";
+    $r = mysqli_query($conn, $sqlItem);
+    if (mysqli_num_rows($r) > 0) {
+        $row = mysqli_fetch_assoc($r);
+        return $row['notaItem'];
+    } else {
+        return null;
+    }
+}
+
+function notaActividad($conn, $idAlumno, $idActivity) {
+    $sqlItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+    $result = mysqli_query($conn, $sqlItems);
+    $nota = 0;
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            // Obtener la puntuación del ítem
+            $itemsScore = getScoreItem($conn, $idAlumno, $row['id']);
+            // Verificar si no se obtuvo puntuación
+            if ($itemsScore === null) {
+                return null;  // Si algún ítem no tiene puntuación, retorna null
+            }
+            // Sumar la puntuación ponderada
+            $nota += intval($itemsScore) * (intval($row['valor']) / 100);
+        }
+    } else {
+        return null;  // Si no hay items para la actividad, retornar null
+    }
+
+    return $nota;
+}
+
 
