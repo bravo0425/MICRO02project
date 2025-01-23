@@ -1,62 +1,62 @@
 <?php
-    include "../../conexion.php";
-    include "funciones.php";
+include "../../conexion.php";
+include "funciones.php";
 
-    session_start();
+session_start();
 
-    if(isset($_SESSION['nombreUser'])){
-        $usuarioLog = $_SESSION['nombreUser'];
-        $idProfe = $_SESSION['idProfe'];
-        $nom = $_SESSION['nombre'];
-        $apellido = $_SESSION['apellido'];
-        $idCurso = $_SESSION['idCurso'];
-        
-    }else{
-        header('Location: ../../login/login.php');
-        exit();
-    }
+if (isset($_SESSION['nombreUser'])) {
+    $usuarioLog = $_SESSION['nombreUser'];
+    $idProfe = $_SESSION['idProfe'];
+    $nom = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+    $idCurso = $_SESSION['idCurso'];
+} else {
+    header('Location: ../../login/login.php');
+    exit();
+}
 
-    if (!empty($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        header('Location: ../../login/login.php');
-        exit();
-    }
+if (!empty($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: ../../login/login.php');
+    exit();
+}
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProyecto'])) {
-        $_SESSION['idProyectoSeleccionado'] = $_POST['idProyecto'];
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProyecto'])) {
+    $_SESSION['idProyectoSeleccionado'] = $_POST['idProyecto'];
+}
 
+$mostrarFormulario = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addProject'])) {
+    $mostrarFormulario = true;
+}
+
+// Manejar el caso cuando el usuario cancela agregar un proyecto
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelAddProject'])) {
     $mostrarFormulario = false;
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addProject'])) {
-        $mostrarFormulario = true;
-    }
+}
 
-    // Manejar el caso cuando el usuario cancela agregar un proyecto
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelAddProject'])) {
-        $mostrarFormulario = false;
-    }
+if (!empty($_POST["safeAddProject"])) {
+    insertarProject($conn);
+}
 
-    if(!empty($_POST["safeAddProject"])){
-        insertarProject($conn);
-    }
+if (!empty($_POST['deleteProject'])) {
+    eliminarProyecto($conn);
+}
 
-    if(!empty($_POST['deleteProject'])){
-        eliminarProyecto($conn);
-    }
+$queryContarProyectos = "SELECT COUNT(*) AS total_proyectos FROM proyectos WHERE curso_id = $idCurso";
+$resultadoContarProyectos = mysqli_query($conn, $queryContarProyectos);
 
-    $queryContarProyectos = "SELECT COUNT(*) AS total_proyectos FROM proyectos WHERE curso_id = $idCurso";
-    $resultadoContarProyectos = mysqli_query($conn, $queryContarProyectos);
-
-    // Obtén el número total de proyectos
-    $totalProyectos = 0;
-    if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
-        $totalProyectos = $fila['total_proyectos'];
-    }
+// Obtén el número total de proyectos
+$totalProyectos = 0;
+if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
+    $totalProyectos = $fila['total_proyectos'];
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,20 +64,21 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="cursos.css">
 </head>
+
 <body>
 
-<!--Container general-->
-    <div class="container">     
+    <!--Container general-->
+    <div class="container">
 
-        <!-- menu--> 
+        <!-- menu-->
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                <?php mostrarImg($conn); ?>
-                <h3><?php echo $nom ?></h3>
+                    <?php mostrarImg($conn); ?>
+                    <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
                     <button onclick="goDasboard()" class="menu">
@@ -89,7 +90,7 @@
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-                        
+
                     </button>
                     <button onclick="goCursos()" class="menu active">
                         <div class="positionButton">
@@ -175,14 +176,14 @@
                 <div id="infoCurso">
                     <div class="tituloCurso">
                         <?php
-                            $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
-                            $r = mysqli_query($conn, $selectCurso);
+                        $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
+                        $r = mysqli_query($conn, $selectCurso);
 
-                            if(mysqli_num_rows($r) > 0){
-                                while($fila = mysqli_fetch_assoc($r)) {
-                                    echo "<h1>". $fila['nombre'] ."</h1>";
-                                }
+                        if (mysqli_num_rows($r) > 0) {
+                            while ($fila = mysqli_fetch_assoc($r)) {
+                                echo "<h1>" . $fila['nombre'] . "</h1>";
                             }
+                        }
                         ?>
                     </div>
                     <div id="estadisticasCurso">
@@ -212,7 +213,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
             <!-- abajo -->
@@ -223,38 +224,38 @@
                             <h1>Projects</h1>
                             <div class="listadoProjects">
                                 <?php
-                                    $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
-                                    $r = mysqli_query($conn, $selectProject);
+                                $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
+                                $r = mysqli_query($conn, $selectProject);
 
-                                    if (mysqli_num_rows($r) > 0) {
-                                        while ($fila = mysqli_fetch_assoc($r)) {
-                                            $style = '';
-                                            if (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']) {
-                                                $style = "style='background-color: #fafafa40; border: 0px; color: #ffffff; font-weight: 300;'";
-                                            }
-                                            
-                                            echo "<form method='POST' action=''>
+                                if (mysqli_num_rows($r) > 0) {
+                                    while ($fila = mysqli_fetch_assoc($r)) {
+                                        $style = '';
+                                        if (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']) {
+                                            $style = "style='background-color: #fafafa40; border: 0px; color: #ffffff; font-weight: 300;'";
+                                        }
+
+                                        echo "<form method='POST' action=''>
                                                     <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
                                                     <button type='submit' class='project-button' $style>
                                                         <p>" . htmlspecialchars($fila['titulo']) . "</p>
                                                     </button>
                                                 </form>";
-                                        }
-                                    } else {
-                                        echo "<p>No hay proyectos disponibles.</p>";
                                     }
+                                } else {
+                                    echo "<p>No hay proyectos disponibles.</p>";
+                                }
                                 ?>
                             </div>
                         </div>
                         <div id="botonesProjects">
                             <?php
-                                if (isset($_SESSION['idProyectoSeleccionado'])) {
-                                    $idProyecto = $_SESSION['idProyectoSeleccionado'];
-                                    echo "<form method='POST' action='../projects/project.php'>
+                            if (isset($_SESSION['idProyectoSeleccionado'])) {
+                                $idProyecto = $_SESSION['idProyectoSeleccionado'];
+                                echo "<form method='POST' action='../projects/project.php'>
                                             <input type='hidden' name='idProyecto' value='" . $idProyecto . "'>
                                             <button class='openProject'>Open</button>
                                         </form>";
-                                }
+                            }
                             ?>
                             <div class="displayRow">
                                 <form method="POST" action="">
@@ -274,18 +275,22 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>Project Score</th>
+                                        <th id="borderLeft">Name</th>
+                                        <th id="borderRight">Project Score</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php 
-                                    $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
-                                    mostrarTablaAlumnos($conn, $idProyectoSeleccionado); 
+                                    <?php
+                                    if (empty($_SESSION['idProyectoSeleccionado'])) {
+                                        echo '<p>Selecciona un proyecto</p>';
+                                    } else {
+                                        $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
+                                        mostrarTablaAlumnos($conn, $idProyectoSeleccionado);
+                                    }
                                     ?>
                                 </tbody>
                             </table>
-                            
+
                         </div>
                     <?php else: ?>
                         <h1>Add a New Project</h1>
@@ -295,12 +300,12 @@
                                     <label for="tituloProyecto">Título del Proyecto:</label>
                                     <input type="text" id="tituloProyecto" name="tituloProyecto">
                                 </div>
-                                
+
                                 <div class="inputsForm">
                                     <label for="descripcionProyecto">Descripción:</label>
                                     <textarea id="descripcionProyecto" name="descripcionProyecto"></textarea>
                                 </div>
-                                
+
                                 <div class="botonesFormulario">
                                     <form method="POST" action="">
                                         <button type="submit" name="safeAddProject" value="true" class="guardarProyecto">Crear Proyecto</button>
@@ -317,7 +322,8 @@
     </div><!--Container-->
 
     <?php mysqli_close($conn); ?>
-        
+
     <script src="cursos.js"></script>
 </body>
+
 </html>

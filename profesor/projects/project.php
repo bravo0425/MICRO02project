@@ -247,7 +247,7 @@ if (!empty($_POST['deleteActivity'])) {
                                             <textarea name='editActivityDesc' id='editActivityDesc'> " . htmlspecialchars($_SESSION['edit_activity']['descripcion']) . " </textarea>
                                         </div>
                                         <div class='column'>
-                                            <label for='editActivityDueDate'>Fecha de vencimiento</label>
+                                            <label for='editActivityDueDate'>Due_date</label>
                                             <input type='date' name='editActivityDueDate' id='editActivityDueDate' value='" . htmlspecialchars($_SESSION['edit_activity']['due_date']) . "'>
                                         </div>
                                         <div class='column'>
@@ -258,7 +258,7 @@ if (!empty($_POST['deleteActivity'])) {
                                             </select>
                                         </div>
                                         <div class='buttonsEditar'>
-                                            <input type='submit' class='agre' name='editarActividad' value='Editar'>
+                                            <input type='submit' class='agre' name='editarActividad' value='Aceptar'>
                                             <input type='submit' class='dele' name='cancelar' value='Cancelar'>
                                         </div>
                                     </form>
@@ -325,15 +325,15 @@ if (!empty($_POST['deleteActivity'])) {
                     <h2 class="tituloForms">Crear una nueva Actividad</h2>
                     <form action="" method="POST" id="formInsert" class="forms">
                         <div class="column">
-                            <label for="tituloActNew">titulo</label>
+                            <label for="tituloActNew">Titulo</label>
                             <input type="text" name="tituloActNew" id="">
                         </div>
                         <div class="column">
-                            <label for="descriptionActNew">descripcion</label>
+                            <label for="descriptionActNew">Descripcion</label>
                             <textarea type="text" name="descriptionActNew" id=""></textarea>
                         </div>
                         <div class="column">
-                            <label for="dueDateActNew">due_date</label>
+                            <label for="dueDateActNew">Due_date</label>
                             <input type="date" name="dueDateActNew" id="">
                         </div>
                         <div class="column">
@@ -345,7 +345,7 @@ if (!empty($_POST['deleteActivity'])) {
                         </div>
 
                         <div class="buttonsInsert">
-                            <input type="submit" class="agre" name="anadir" value="anadir">
+                            <input type="submit" class="agre" name="anadir" value="Aceptar">
                             <input type="submit" class="dele" name="cancelar" value="cancel">
                         </div>
                     </form>
@@ -356,16 +356,16 @@ if (!empty($_POST['deleteActivity'])) {
                     <h2 class="tituloForms">Editar Proyecto</h2>
                     <form action="" method="POST" id="formEditarProyect" class="forms">
                         <div class="column">
-                            <label for="editTitle">titulo</label>
+                            <label for="editTitle">Titulo</label>
                             <input type="text" name="editTitle" id="editTitle" value="<?php echo htmlspecialchars($titulo); ?>">
                         </div>
                         <div class="column">
-                            <label for="editDesc">descripcion</label>
+                            <label for="editDesc">Descripcion</label>
                             <textarea type="text" name="editDesc" id="editDesc"><?php echo htmlspecialchars($descripcion); ?></textarea>
                         </div>
                         <div class="buttonsEditar">
-                            <input type="submit" class="agre" name="editar" value="editar">
-                            <input type="submit" class="dele" name="cancelar" value="cancel">
+                            <input type="submit" class="agre" name="editar" value="Aceptar">
+                            <input type="submit" class="dele" name="cancelar" value="Cancelar">
                         </div>
                     </form>
                 </div>

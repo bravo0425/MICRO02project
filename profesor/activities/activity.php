@@ -71,9 +71,7 @@ if (isset($_POST['añadirItem'])) {
     añadirItem($conn, $idActivity);
 }
 
-if (!empty($_POST['confirmarCambios'])) {
-    updateItems($conn, $idActivity);
-}
+
 
 ?>
 
@@ -212,8 +210,12 @@ if (!empty($_POST['confirmarCambios'])) {
 
 
             <div id="abajo">
-
-                <?php if ($modoEdicion) { ?>
+                <?php
+                if (!empty($_POST['confirmarCambios'])) {
+                    updateItems($conn, $idActivity);
+                }
+                if ($modoEdicion) {
+                ?>
                     <div id="itemsEdit" class="card">
                         <div class="titleItems">
                             <h2>Items</h2>
@@ -301,88 +303,9 @@ if (!empty($_POST['confirmarCambios'])) {
                         <h2>Notas alumnos</h2>
                         <div class="tbln">
                             <table>
-                                <thead>
-                                    <tr>
-                                        <th id='borderLeft'>Nom</th>
-                                        <?php
-                                        // Definir e inicializar el array $itemIds
-                                        $itemIds = [];
-
-                                        // Consultamos todos los ítems para la actividad
-                                        $queryItems = "SELECT * FROM items WHERE activity_id = $idActivity";
-                                        $resultItems = mysqli_query($conn, $queryItems);
-
-                                        // Generamos una columna para cada ítem y guardamos los IDs
-                                        if (mysqli_num_rows($resultItems) > 0) {
-                                            while ($item = mysqli_fetch_assoc($resultItems)) {
-                                                $itemIds[] = $item['id']; // Guardamos los IDs de los ítems
-                                                echo "<th>" . htmlspecialchars($item['titulo'] ?? '') . "</th>"; // Evitar null
-                                            }
-                                        }
-                                        ?>
-                                        <th id='borderRight'>Nota final</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Consultamos todos los alumnos y sus notas para la actividad
-                                    $queryAlumnos = "SELECT 
-                                                        alumnos.id AS alumno_id,
-                                                        alumnos.name AS alumno_name
-                                                        FROM 
-                                                        alumnos
-                                                        WHERE alumnos.id IN (
-                                                        SELECT id_alumno FROM alumnos_items WHERE id_item IN (
-                                                            SELECT id FROM items WHERE activity_id = $idActivity
-                                                        )
-                                                        )
-                                                        ";
-                                    $resultAlumnos = mysqli_query($conn, $queryAlumnos);
-
-                                    // Inicializamos variables para estructurar los datos
-                                    $currentAlumnoId = null;
-                                    $notasAlumno = []; // Guardará las notas de cada alumno por ítem
-                                    $notaFinal = 0;
-
-                                    while ($fila = mysqli_fetch_assoc($resultAlumnos)) {
-                                        if ($currentAlumnoId !== $fila['alumno_id']) {
-                                            // Cerramos la fila anterior, si existe
-                                            if ($currentAlumnoId !== null) {
-                                                // Mostrar las notas de los ítems y la nota final
-                                                foreach ($itemIds as $itemId) {
-                                                    echo "<td>" . htmlspecialchars(getScoreItem($conn, $currentAlumnoId, $itemId) ?? '0') . "</td>";
-                                                }
-                                                echo "<td>" . htmlspecialchars(notaActividad($conn, $currentAlumnoId, $idActivity) ?? '0') . "</td>";
-                                                echo "</tr>";
-                                            }
-
-                                            // Reiniciamos para el nuevo alumno
-                                            $currentAlumnoId = $fila['alumno_id'];
-                                            $notasAlumno = array_fill_keys($itemIds, 0); // Inicializamos las notas en 0
-                                            $notaFinal = 0;
-
-                                            // Iniciamos una nueva fila para el alumno
-                                            echo "<tr>";
-                                            echo "<td>" . htmlspecialchars($fila['alumno_name'] ?? '') . "</td>";
-                                        }
-
-                                        // Guardamos la nota para el ítem actual
-                                        foreach ($itemIds as $itemId) {
-                                            $notaItem = getScoreItem($conn, $currentAlumnoId, $itemId);
-                                            $notasAlumno[$itemId] = $notaItem !== null ? $notaItem : 0;
-                                        }
-                                    }
-
-                                    // Imprimimos la última fila
-                                    if ($currentAlumnoId !== null) {
-                                        foreach ($itemIds as $itemId) {
-                                            echo "<td>" . htmlspecialchars($notasAlumno[$itemId] ?? '0') . "</td>";
-                                        }
-                                        echo "<td>" . htmlspecialchars(notaActividad($conn, $currentAlumnoId, $idActivity) ?? '0') . "</td>";
-                                        echo "</tr>";
-                                    }
-                                    ?>
-                                </tbody>
+                                <?php
+                                    echo generarTablaAlumnosNotas($conn, $idActivity);
+                                ?>
                             </table>
                         </div>
                     </div>
@@ -394,4 +317,5 @@ if (!empty($_POST['confirmarCambios'])) {
 
     <script src="activity.js"></script>
 </body>
+
 </html>

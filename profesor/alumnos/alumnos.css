@@ -79,6 +79,14 @@ body {
     font-weight: 400;
 }
 
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
 /* opciones del navBar*/
 
 .navbar {
@@ -242,6 +250,56 @@ body {
     overflow: hidden;
 }
 
+
+/*-------DIV amarillo Curso-------------*/
+
+
+#infoApp{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E2FF32;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px !important;
+    border-radius: 15px;
+}
+
+#infoApp h2{
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+    gap: 10px;
+}
+
+#infoApp h2 svg{
+    width: 25px;
+}
+
+#infoApp button{
+    display: flex;
+    gap: 5px;
+    background-color: #fafafa00;
+    border: 0px;
+    cursor: pointer;
+}
+#infoApp button a{
+    border: 1px solid #000;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+#infoApp button svg{
+    width: 15px;
+
+}
+
 .div-arriba-derecha {
     display: flex;
     gap: 20px;
@@ -263,7 +321,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 600px;
+    width: 640px;
     height: 140px;
     background-color: #FFFFFF20;
     border-radius: 15px;
@@ -304,33 +362,62 @@ body {
 }
 
 .tablaMostrarStudents{
+    width: 100%;
+    height: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    width: 100%;
+    overflow: auto;
     color: #FFFFFF;
-    font-size: 1rem;
 }
 
 #tableee{
-    height: 200px;
+    color: #fafafa;
+    width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
 }
 
 #listaAlumnos thead {
-    background-color: #FCFCFC10;
+    padding: 1rem;
+    background-color: #fafafa20;
 }
 
 #listaAlumnos th {
-    padding: 10px;
-    text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #FFFFFF;
+    position: sticky; /* Fijar el encabezado */
+    top: 0; 
+    z-index: 1;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-align: center;
+    color: #ffffff;
+    background-color: #fafafa20;
+    backdrop-filter: blur(10px); 
+}
+
+#borderLeft{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#borderRight{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+#listaAlumnos tbody{
+    color: #fafafa;
 }
 
 /* Filas de la tabla */
 #listaAlumnos tbody tr {
-    transition: background-color 0.3s;
+    height: 50px;
+    background-color: #fafafa00;
+    transition: all 0.4s ease;
 }
 
 #listaAlumnos tbody tr:hover {
@@ -338,9 +425,21 @@ body {
 }
 
 #listaAlumnos td {
-    padding: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: left;
+    padding: 0 0 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+#listaAlumnos tbody tr:nth-child(odd) {
+    background-color: #ffffff00; /* Fondo para las filas impares */
+}
+
+#listaAlumnos tbody tr:nth-child(even) {
+    background-color: #ffffff08; /* Fondo para las filas pares */
+}
+
+#listaAlumnos tbody tr:hover {
+    background-color: #fafafa20;
 }
 
 #listaAlumnos input[type="checkbox"] {
@@ -355,12 +454,12 @@ body {
 }
 
 .botones-alumnos button {
-    width: 250px;
-    height: 80px;
-    border-radius: 15px;
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
     border: 0;
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
 .botones-alumnos #eliminarAlumnos {
@@ -521,3 +620,76 @@ body {
     font-size: 1rem;
 }
 
+/* General styling for the form */
+#modificarAl {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Form heading */
+#modificarAl h2 {
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #fafafa;
+}
+
+/* Form columns */
+#modificarAl .column {
+width: 400px;
+}
+
+/* Labels */
+#modificarAl label {
+    font-weight: 400;
+    color: #fafafa;
+}
+
+/* Inputs and Select */
+#modificarAl input[type="text"],
+#modificarAl input[type="password"],
+#modificarAl select {
+    padding: 0.5rem 1rem;
+    width: 400px;
+    border-radius: 5px;
+    border: 0.5px solid #fafafa;
+    background-color: #fafafa30;
+    color: #fafafa;
+    margin: 0;
+}
+
+/* Buttons */
+#modificarAl .botones-crearA button {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 200px;
+}
+
+#BModificarAlumno {
+    background-color: #E2FF32 !important;
+    color: #000 !important;
+    padding: 0.5rem 0rem !important;
+    width: 120px !important;
+    border-radius: 13px !important;
+    border: 0 !important;
+    font-weight: 400 !important;
+    font-size: 0.8rem !important;
+    height: auto !important;
+}
+
+#back {
+    background-color: #FFFFFF20 !important;
+    color: #FFFFFF !important;
+    padding: 0.5rem 0rem !important;
+    width: 120px !important;
+    border-radius: 13px !important;
+    border: 0 !important;
+    font-weight: 400 !important;
+    font-size: 0.8rem !important;
+    height: auto !important;
+}
