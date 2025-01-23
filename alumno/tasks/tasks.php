@@ -1,5 +1,6 @@
 <?php
     include "../../conexion.php";
+    include "functions.php";
 
     session_start();
 
@@ -8,6 +9,7 @@
         $nom = $_SESSION['nombre'];
         $apellido = $_SESSION['apellido'];
         $idAlumno = $_SESSION['idAlumno'];
+        $idCurso = $_SESSION['idCurso'];
     }else{
         header('Location: ../../login/login.php');
         exit();
@@ -18,6 +20,15 @@
         session_destroy();
         header('Location: ../../login/login.php');
         exit();
+    }
+    
+    if (!empty($_POST['show_popup'])) {
+        $idActividadTemp = $_POST['show_popup'];
+        $_SESSION['idActividadTemp'] = $idActividadTemp;
+    }
+
+    if(!empty($_POST['importar'])) {
+        entregarActividad($conn);
     }
 
 ?>
@@ -45,7 +56,7 @@
                         <img src="../../imagenes/dashboard.png" width="27px">
                         <h2>Dashboard</h2>
                     </button>
-                    <button onclick="goTasks()" class="menu activo">
+                    <button onclick="goTasks()" class="menu active">
                         <img src="../../imagenes/cursos.png" width="27px">
                         <h2>Tasks</h2>
                     </button>
@@ -78,13 +89,94 @@
                 </button>
             </form>
         </div>
-        <div id="arriba">
-            <div id="arriba-izquierda">
-
+        <div class="contenido">
+            <div id="arriba">
+                <div id="infoApp" class="card">
+                    <h2>Tasks</h2>
+                    <form method="POST" action="../main/main.php">
+                        <button type="submit">
+                            <a href="">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                </svg>
+                            </a>
+                            <p>back to dashboard</p>
+                        </button>
+                    </form>
+                </div>
+                <div class="tituloCurso">
+                    <?php
+                        $selectCurso = "SELECT * FROM cursos WHERE id = $idCurso";
+                        $r = mysqli_query($conn, $selectCurso);
+        
+                        if(mysqli_num_rows($r) > 0){
+                            while($fila = mysqli_fetch_assoc($r)) {
+                                echo "<h1>". $fila['nombre'] ."</h1>";
+                            }
+                        }
+                    ?>
+                </div>
             </div>
-            <div id="arriba-derecha">
-                <h1>Last Activities</h1>
-
+            <div id="abajo" class="card">
+                <?php if (!empty($_POST['show_popup'])) {
+                    ?>
+                <div id="popup">
+                    <div class="popup-content card">
+                        <form method="POST" action="" enctype="multipart/form-data">
+                            <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
+                            <div class="buttonsPopup">
+                                <label for="file">Add you file</label>
+                                <input type="file" name="file" id="file">
+                                <button type="submit" name="importar" value="importar">Importar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <?php
+                }else {
+                    ?>
+                <form action="" method="POST" id="listaActividades">
+                    <div id="mostrarActivities">
+                        <table border="0" id="tablaActividades">
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Created At</th>
+                                    <th colspan="2">Due Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $select = "SELECT * FROM alumnos_actividades WHERE id_alumno = $idAlumno";
+                                $result = mysqli_query($conn, $select);
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($fila = mysqli_fetch_assoc($result)) {
+                                        $idActividad = $fila['id_actividad'];
+                                        $entregado = $fila['entregado'];
+                                        $selectActividad = "SELECT * FROM actividades WHERE id = $idActividad AND active = 1";
+                                        $resultado = mysqli_query($conn, $selectActividad);
+                                        if (mysqli_num_rows($resultado) > 0) {
+                                            while ($row = mysqli_fetch_assoc($resultado)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row['titulo'] . "</td>";
+                                                echo "<td>" . $row['created_at'] . "</td>";
+                                                echo "<td>" . $row['due_date'] . "</td>";
+                                                if ($entregado == 1) {
+                                                    echo "<td class='entregado'><p >Entregado</td>";
+                                                } else {
+                                                    echo "<td><button type='submit' name='show_popup' id='show_popup' value='" . $idActividad . "'>Entregar</button></td>";
+                                                }
+                                                echo "</tr>";
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <?php } ?>
             </div>
         </div>
     </div>

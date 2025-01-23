@@ -234,20 +234,217 @@ body {
 
 /* CONTENIDO */
 
-.arriba{
+.contenido {
+    width: 960px;
+    height: 690px;
     display: flex;
-    height: 130px;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
 }
 
-.arriba-izquierda {
+.card{
+    background-color: #fafafa20;
+    border-radius: 15px;
+}
+
+#arriba{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    height: 160px;
+}
+
+#infoApp{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E2FF32;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px !important;
+    height: 160px;
+}
+
+#infoApp h2{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+#infoApp button{
+    display: flex;
+    gap: 5px;
+    background-color: #fafafa00;
+    border: 0px;
+}
+#infoApp button a{
+    border: 1px solid #000;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+#infoApp button svg{
+    width: 15px;
+
+}
+
+/*  INFORMAR DEL CURSO  */
+
+#infoCurso{
+    width: 640px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tituloCurso{
+    width: 100%;
+    border-radius: 15px;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa20;
+}
+
+.tituloCurso h1{
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* CONTENIDO ABAJO */
+
+#abajo {
+    height: 520px;
+}
+
+#listaActividades {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+#mostrarActivities {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    color: #FFFFFF;
+    font-size: 1rem;
+}
+
+#tablaActividades {
+    height: 200px;
+    padding: 20px;
+}
+
+#tablaActividades thead {
+    background-color: #FCFCFC10;
+}
+
+#tablaActividades th{
+    padding: 10px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    border-radius: 10px;
+}
+
+#tablaActividades tbody tr{
+    transition: background-color 0.3s;
+}
+
+#tablaActividades tbody tr:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#tablaActividades td{
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.evaluado {
+    color: #8b8b8b;
+}
+
+/* POP UP */
+
+#show_popup {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: 0;
+    border-radius: 15px;
+    font-size: 1rem;
+    color: #fafafa;
+    text-align: left;
+}
+
+#popup {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.arriba-derecha {
+.popup-content {
+    background-color: #fafafa20;
+    padding: 50px;
+}
+
+.buttonsPopup input{
+    display: none;
+}
+
+.buttonsPopup{
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: 130px;
+    gap: 20px;
+}
+
+.buttonsPopup label{
+    display: flex;
+    width: 200px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    background-color: #E2FF32;
+    border-radius: 15px;
+}
+
+.buttonsPopup button{
+    display: flex;
+    width: 200px;
+    height: 30px;
+    background-color: #A600FF;
+    border: 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-size: 1rem;
+}
+
+.close-btn{
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border: 0;
+    border-radius: 30px;
+    margin-bottom: 50px;
 }
