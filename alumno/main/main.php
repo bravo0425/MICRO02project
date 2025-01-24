@@ -114,27 +114,30 @@
                             $idActividad = $fila['id_actividad'];
                             $array_id_actividades[] = $idActividad;
                         }
-                    }    
-                    $selectActividad = "SELECT id, titulo, due_date FROM actividades WHERE id IN (".implode(',', $array_id_actividades).") ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC";
-                    $resultadoActividad = mysqli_query($conn, $selectActividad);
-                    ?>
-                    <div id="cards-activities">
-                    <?php
-                    
-                    if (mysqli_num_rows($resultadoActividad) > 0) {
-                        $contador_act = 1;
-                        while ($fila = mysqli_fetch_assoc($resultadoActividad)) {
-                            if($contador_act <= 3){
-                                ?>
-                                <div class="lastActivity">
-                                    <h2><?php echo $fila['titulo']; ?></h2>
-                                    <p><?php echo $fila['due_date']; ?></p>
-                                </div>
-                                <?php
-                                $contador_act++;
-                            } 
+                        $selectActividad = "SELECT id, titulo, due_date FROM actividades WHERE id IN (".implode(',', $array_id_actividades).") ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC";
+                        $resultadoActividad = mysqli_query($conn, $selectActividad);
+                        ?>
+                        <div id="cards-activities">
+                        <?php
+                        
+                        if (mysqli_num_rows($resultadoActividad) > 0) {
+                            $contador_act = 1;
+                            while ($fila = mysqli_fetch_assoc($resultadoActividad)) {
+                                if($contador_act <= 3){
+                                    ?>
+                                    <div class="lastActivity">
+                                        <h2><?php echo $fila['titulo']; ?></h2>
+                                        <p><?php echo $fila['due_date']; ?></p>
+                                    </div>
+                                    <?php
+                                    $contador_act++;
+                                } 
+                            }
+                            ?>
+                            </div>
+                            <?php
                         }
-                    } else {
+                    } else {   
                         ?>
                         <div class="noActivities">
                             <h2>No activities</h2>
@@ -142,7 +145,6 @@
                         <?php
                     }
                     ?> 
-                    </div>
                 </div>
             </div>
             <div id="abajo">

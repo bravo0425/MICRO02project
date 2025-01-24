@@ -1,0 +1,501 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins';
+    background-image: url(../../imagenes/fondo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.container {
+    height: 690px;
+    width: 1250px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+/*MENU LATERAL*/
+
+
+.contenedor-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav {
+    background-color: #FFFFFF20;
+    width: 250px;
+    height: 450px;
+    border-radius: 15px;
+    padding: 5px;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.titulo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.titulo h1 {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.nav .usuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0px;
+    border-radius: 15px;
+    background-color: #ffffff50;
+    width: 200px;
+}
+
+.usuario h3{
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
+
+/* opciones del navBar*/
+
+.navbar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    border: 0px;
+    cursor: pointer;
+    gap: 10px;
+    background-color: #ffffff00;
+    color: #ffffff;
+    transition: all 0.3s;
+}
+
+.positionButton{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    width: 130px;
+}
+
+.imgNav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+}
+
+.h2Nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.menu h2 {
+    font-size: 0.9rem;
+    font-weight: 300 !important;
+    color: #fafafa75;
+}
+
+.menu:hover {
+    background-color: #ffffff19;
+    border-radius: 15px;
+}
+
+.active {
+    background-color: #ffffff40;
+    border-radius: 15px;
+    color: #fafafa !important;
+}
+
+.active:hover {
+    background-color: #ffffff30;
+}
+
+.active h2{
+    color: #fafafa !important;
+}
+
+
+/*Update version*/
+
+.update {
+    width: 250px;
+    height: 150px;
+    background-color: #FFFFFF20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    gap: 10px;
+    padding: 5px;
+}
+
+.update h4 {
+    font-size: 1.1rem;
+    color: #FFFFFF;
+}
+
+.update p {
+    font-size: 0.8rem;
+    color: #C1C1C1;
+    font-weight: 300;
+}
+
+.botones-update #update {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #E2FF32;
+    font-weight: 500;
+}
+
+.botones-update #more {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    border: 0;
+    background-color: #D9D9D9;
+    font-weight: 500;
+}
+
+/*LogOut*/
+
+.log-out {
+    width: 250px;
+    height: 50px;
+    background-color: #FFFFFF20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #C2C2C2;
+    border-radius: 15px;
+    border: 0;
+    transition: all 0.3s;
+}
+
+.iconLogout{
+    width: 20px;
+}
+
+.log-out h2 {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.log-out:hover {
+    background-color: #FFFFFF40;
+}
+
+
+/*Fin de menu lateral*/
+
+
+/*CONTENIDO*/
+
+
+.contenido {
+    width: 960px;
+    height: 690px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card{
+    background-color: #fafafa20;
+    border-radius: 15px;
+}
+
+#arriba{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    height: 160px;
+}
+
+/*-------DIV amarillo Curso-------------*/
+
+
+#infoApp{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #E2FF32;
+    align-items: flex-start;
+    padding: 10px 10px 10px 15px !important;
+    
+}
+
+.tituloInfo{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 5px;
+}
+
+.tituloInfo h2{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.tituloInfo svg{
+    width: 25px;
+}
+
+
+#infoApp button{
+    display: flex;
+    gap: 5px;
+    background-color: #fafafa00;
+    border: 0px;
+}
+#infoApp button a{
+    border: 1px solid #000;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+}
+
+#infoApp button svg{
+    width: 15px;
+
+}
+
+/*-------DIV PARA INFORMAR DEL CURSO-------------*/
+
+#infoCurso{
+    width: 640px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+#abajo{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    height: 510px;
+    color: #fafafa;
+    padding: 1rem;
+}
+
+.navSettings{
+    width: 600px;
+    background-color: #fafafa20;
+    border-radius: 40px;
+    border: 0;
+    padding: 0.4rem 1rem;
+}
+
+.navSettings ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navSettings button{
+    background-color: #fafafa00;
+    color: #fafafa;
+    border: 0;
+    border-radius: 40px;
+    width: 140px;
+    font-size: 0.9rem;
+    padding: 0.4rem 0rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.navSettings button:hover{
+    background-color: #fafafa90;
+}
+
+.activeN{
+    background-color: #fafafa90 !important;
+    color: #000 !important;
+}
+
+.activeN:hover{
+    background-color: #fafafa !important;
+}
+
+/*-----DIV GENERAL SETTINGS----*/
+
+.divGeneral{
+    width: 600px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 40px !important;
+}
+
+.changeImg{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.changeImg img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 0;
+    border-radius: 100px;  
+}
+
+.changeImg form{
+    width: 300px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+/* Ocultar el input original */
+input[type="file"] {
+    display: none;
+}
+
+/* Estilo para el label que simula el botón del input */
+.custom-file-upload {
+    width: 200px;
+    border: 0;
+    border-radius: 15px;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
+    background-color: #ffffff60;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #fafafa;
+}
+
+/* Estilo para los botones */
+.changeImg form button {
+    width: 200px;
+    border: 0;
+    border-radius: 15px;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
+    background-color: #E2FF32;
+}
+
+
+.inputGeneral{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    gap: 20px;
+    
+}
+
+.inputGeneral p{
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.showText{
+    width: 400px;
+    background-color: #fafafa55;
+    padding: 0.4rem 1rem;
+    border-radius: 15px;
+    margin-right: 1rem;
+}
+
+/*-----DIV GENERAL SETTINGS----*/
+
+.divSecurity{
+    width: 600px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 40px !important;
+}
+
+.divSecurity form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+}
+
+.divSecurity form input{
+    width: 150px;
+}

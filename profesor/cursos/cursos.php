@@ -97,7 +97,7 @@
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Subjects</h2>
                             </div>
                         </div>
                     </button>
@@ -159,7 +159,7 @@
             <div id="arriba">
 
                 <div id="infoApp" class="card">
-                    <h2>Cursos</h2>
+                    <h2>Subjects</h2>
                     <form method="POST" action="../main/index.php">
                         <button type="submit">
                             <a href="">
@@ -187,7 +187,7 @@
                     </div>
                     <div id="estadisticasCurso">
                         <div class="cardInfo">
-                            <h3>Proyectos</h3>
+                            <h3>Projects</h3>
                             <div class="numProjects">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />

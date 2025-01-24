@@ -61,7 +61,7 @@
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Subjects</h2>
                             </div>
                         </div>
                     </button>
@@ -169,12 +169,12 @@
                 <div id="lastActivities">
                     <h1>Last Activities</h1>
                     <?php
-                    $select = "SELECT id, titulo, due_date FROM actividades ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC";
+                    $select = "SELECT actividades.id, actividades.titulo, actividades.due_date FROM actividades  JOIN proyectos ON actividades.project_id = proyectos.id  ORDER BY ABS(DATEDIFF(actividades.due_date, CURDATE())) ASC";
                     $resultado = mysqli_query($conn, $select);
                     ?>
                     <div id="cards-activities">
                         <?php 
-                        if (mysqli_num_rows($resultado)) {
+                        if (mysqli_num_rows($resultado) > 0) {
                             $contador = 1;
                             while ($fila = mysqli_fetch_assoc($resultado)) {
                                 if ($contador <= 3) {
@@ -204,7 +204,7 @@
                 </div>
 
                 <div id="hardmode" class="card">
-                    <button class="yellowbtn">Estadisticas</button>
+                    <button class="yellowbtn">Stats</button>
                     <button class="lilabtn">Ranking</button>
                 </div>
                 
