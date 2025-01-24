@@ -17,7 +17,7 @@ if (!empty($_POST['insertarAlumno'])) {
     crearAlumno($conn);
 }
 
-if (!empty($_POST['eliminarAlumnos'])) {
+if (!empty($_POST['eliminarAlumnos']) && !empty($_POST['radioSeleccionada'])) {
     eliminarAlumno($conn);
 }
 
@@ -32,8 +32,11 @@ if (!empty($_POST['logout'])) {
     exit();
 }
 
+
 $query = "SELECT * FROM alumnos";
 $resultado = mysqli_query($conn, $query);
+
+
 
 ?>
 <!DOCTYPE html>
@@ -157,7 +160,7 @@ $resultado = mysqli_query($conn, $query);
                         <form method="POST" action="importar_alumnos.php" enctype="multipart/form-data">
                             <button type="submit" id="close_popup" name="close_popup" class="close-btn" value="close_popup">X</button>
                             <div class="buttonsPopup">
-                                <label for="csv_file">Add you file</label>
+                                <label for="csv_file">Add you csv</label>
                                 <input type="file" name="csv_file" id="csv_file" accept=".csv">
                                 <button type="submit" name="importar" value="importar">Importar</button>
                             </div>
@@ -167,7 +170,7 @@ $resultado = mysqli_query($conn, $query);
             </div>
             <div class="tabla">
                 <?php
-                if (!empty($_POST['modificarA'])) {
+                if (!empty($_POST['modificarA']) && !empty($_POST['radioSeleccionada'])) {
                     if (!empty($_POST['alumno_id'])) {
                         $radioSeleccionada = $_POST['alumno_id'];
 
@@ -202,7 +205,7 @@ $resultado = mysqli_query($conn, $query);
                     }
 
                 ?>
-                    <form action="" method="post" id="modificarAl">
+                    <form action="" method="post" class="formAlumnos">
                         <h2>Modify student</h2>
                         <div class="column">
                             <input type="hidden" name="alumno_id" value="<?php echo $radioSeleccionada; ?>">
@@ -222,10 +225,10 @@ $resultado = mysqli_query($conn, $query);
                             <input type="password" name="contrasenyaM" id="contrasenyaM" value="<?php echo $password; ?>"><br>
                         </div>
                         <div class="column">
-                            <label for="contrasenya2M">Password</label>
+                            <label for="contrasenya2M">Repeat password</label>
                             <input type="password" name="contrasenya2M" id="contrasenya2M" value="<?php echo $password; ?>"><br>
                         </div>
-                        <div class="column">
+                        <div class="column-se">
                             <label for="Curso">Curso</label>
                             <select name="cursosM" id="cursosM">
                                 <?php
@@ -248,9 +251,48 @@ $resultado = mysqli_query($conn, $query);
                         </div>
                     </form>
                 <?php
-                } else {
-
+                } else if(!empty($_POST['crearAlumnos'])){
                 ?>
+                <form action="" method="post" class="formAlumnos">
+                    <h2>Insert new student</h2>
+                    <div class="column">
+                        <label for="nombre">Name</label>
+                        <input type="text" name="nombre" id="nombre"><br>
+                    </div>
+                    <div class="column">
+                        <label for="apellido">Last Name</label>
+                        <input type="text" name="apellido" id="apellido"><br>
+                    </div>
+                    <div class="column">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username"><br>
+                    </div>
+                    <div class="column">
+                        <label for="contrasenya">Password</label>
+                        <input type="password" name="contrasenya" id="contrasenya"><br>
+                    </div>
+                    <div class="column">
+                        <label for="contrasenya2">Password</label>
+                        <input type="password" name="contrasenya2" id="contrasenya2"><br>
+                    </div>
+                    <div class="column-se">
+                        <label for="Curso">Id Curso</label>
+                        <select name="cursos" id="cursos">
+                            <?php
+                            $select = "SELECT * FROM cursos";
+                            $resCurso = mysqli_query($conn, $select);
+                            while ($fila = mysqli_fetch_assoc($resCurso)) {
+                                echo "<option required value='" . $fila['id'] . "'>" . $fila['nombre'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="botones-crearA">
+                        <button type="submit" id="insert" name="insertarAlumno" value="insertarAlumno">Insert</button>
+                        <button type="submit" name="cancel" value="cancel" class="back">Back</button>
+                    </div>
+                </form>
+                <?php } else{ ?>
                     <form method="POST" action="" id="listaAlumnos">
                         <input type="hidden" id="hiddenField" name="selectedRadio" value="">
                         <div class="tablaMostrarStudents">
@@ -286,7 +328,7 @@ $resultado = mysqli_query($conn, $query);
                             </table>
                         </div>
                         <div class="botones-alumnos">
-                            <button type="button" value="crearAlumnos" onclick="mostrarFormularioA()" name="crearAlumnos" id="crearAlumnos">+ Add new Student</button>
+                            <button type="submit" value="crearAlumnos" name="crearAlumnos" id="crearAlumnos">+ Add new Student</button>
                             <button type="submit" value="modificar" name="modificarA" id="modificarA">Modify Student</button>
                             <button type="submit" value="eliminarAlumnos" name="eliminarAlumnos" id="eliminarAlumnos">Delete Student</button>
                         </div>
@@ -294,45 +336,6 @@ $resultado = mysqli_query($conn, $query);
                 <?php
                 }
                 ?>
-                <form action="" method="post" id="crearAlumno" hidden>
-                    <h2>Insert new student</h2>
-                    <div class="column">
-                        <label for="nombre">Name</label>
-                        <input type="text" name="nombre" id="nombre"><br>
-                    </div>
-                    <div class="column">
-                        <label for="apellido">Last Name</label>
-                        <input type="text" name="apellido" id="apellido"><br>
-                    </div>
-                    <div class="column">
-                        <label for="username">Username</label>
-                        <input type="text" name="username" id="username"><br>
-                    </div>
-                    <div class="column">
-                        <label for="contrasenya">Password</label>
-                        <input type="password" name="contrasenya" id="contrasenya"><br>
-                    </div>
-                    <div class="column">
-                        <label for="contrasenya2">Password</label>
-                        <input type="password" name="contrasenya2" id="contrasenya2"><br>
-                    </div>
-                    <div class="column">
-                        <label for="Curso">Id Curso</label>
-                        <select name="cursos" id="cursos">
-                            <?php
-                            $select = "SELECT * FROM cursos";
-                            $resCurso = mysqli_query($conn, $select);
-                            while ($fila = mysqli_fetch_assoc($resCurso)) {
-                                echo "<option required value='" . $fila['id'] . "'>" . $fila['nombre'] . "</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="botones-crearA">
-                        <button type="submit" id="insert" name="insertarAlumno" value="insertarAlumno">Insert</button>
-                        <button type="button" onclick="mostrarTabla()" class="back">Back</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

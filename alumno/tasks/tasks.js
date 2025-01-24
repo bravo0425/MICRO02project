@@ -1,13 +1,20 @@
-
 function goDasboard() {
-    window.location.href = '../main/index.php';
+    window.location.href = '../main/main.php';
 }
 
-function goCursos(){
-    window.location.href = '../cursos/cursos.php';
+function goTasks() {
+    window.location.href = 'tasks.php';
 }
 
-function goSettings(){
+function goProjects() {
+    window.location.href = '../projects/projects.php';
+}
+
+function goChat() {
+    window.location.href = '../chat/chat.php';
+}
+
+function goSettings() {
     window.location.href = '../settings/settings.php';
 }
 

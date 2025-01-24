@@ -374,16 +374,54 @@ a svg{
     color: #ffffff;
     width: 205px;
     height: 90px;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.leftContent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rigthContent{
+    width: 15px;
 }
 
 .lastActivity h2{
     font-size: 1rem;
+    font-weight: 400;
 }
 
 .lastActivity p{
-    font-size: 0.9rem;
+    display: flex;
+    font-size: 0.8rem;
+    color: #fafafa80;
+    gap: 5px;
+    justify-content: left;
+    align-items: center;
 }
 
+.lastActivity p svg{
+    width: 18px;
+}
+
+
+.statusActive{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: #E2FF32;
+}
+
+.statusInactive{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: #A600FF;
+}
 
 
 /*--------Container para abajo--------*/
@@ -529,7 +567,16 @@ a svg{
     width: 200px;
     padding: 10px;
     border-radius: 15px;
-    border: 0px
+    border: 0px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    font-size: 1rem;
+}
+
+#hardmode button svg{
+    width: 20px;
 }
 
 .yellowbtn{

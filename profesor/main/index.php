@@ -149,7 +149,13 @@ if (!empty($_POST['logout'])) {
                                 <button>All ></button>
                             </div>
                             <div class="secondtitle">
-                                <button>MICRO02-DAW -></button>
+                                <?php
+                                $selectLastProject = "SELECT titulo, created_at FROM proyectos ORDER BY created_at DESC LIMIT 1";
+                                $result = mysqli_query($conn, $selectLastProject);
+                                $row = mysqli_fetch_assoc($result);
+                                ?>
+                                <h2><?php echo $row['titulo']; ?></h2>
+                                <p><?php echo $row['created_at']; ?></p>
                             </div>
                         </div>
                         <img src="../../imagenes/project.jpg" alt="" style="width: 300px;">
@@ -167,19 +173,35 @@ if (!empty($_POST['logout'])) {
                 <div id="lastActivities">
                     <h1>Last Activities</h1>
                     <?php
-                    $select = "SELECT id, titulo, due_date FROM actividades ORDER BY ABS(DATEDIFF(due_date, CURDATE())) ASC";
+                    $select = "SELECT actividades.* FROM actividades  JOIN proyectos ON actividades.project_id = proyectos.id  ORDER BY ABS(DATEDIFF(actividades.due_date, CURDATE())) ASC";
                     $resultado = mysqli_query($conn, $select);
                     ?>
                     <div id="cards-activities">
                         <?php
-                        if (mysqli_num_rows($resultado)) {
+                        if (mysqli_num_rows($resultado) > 0) {
                             $contador = 1;
                             while ($fila = mysqli_fetch_assoc($resultado)) {
                                 if ($contador <= 3) {
                         ?>
                                     <div class="lastActivity">
-                                        <h2><?php echo $fila['titulo']; ?></h2>
-                                        <p><?php echo $fila['due_date']; ?></p>
+                                        <div class="leftContent">
+                                            <h2><?php echo $fila['titulo']; ?></h2>
+                                            <p>
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                                </svg>
+                                                <?php echo $fila['due_date']; ?>
+                                            </p>
+                                        </div>
+                                        <div class="rigthContent">
+                                            <?php
+                                            if ($fila['active'] == 1) {
+                                                echo "<div class='statusActive'></div>";
+                                            } else {
+                                                echo "<div class='statusInactive'></div>";
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
                             <?php
                                     $contador++;
@@ -214,7 +236,12 @@ if (!empty($_POST['logout'])) {
                 </div>
 
                 <div id="hardmode" class="card">
-                    <button class="yellowbtn">Estadisticas</button>
+                    <button class="yellowbtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+                        </svg>
+                        <p>Estadisticas</p>
+                    </button>
                     <button class="lilabtn">Ranking</button>
                 </div>
 

@@ -80,7 +80,7 @@ body {
     width: 200px;
 }
 
-.usuario h3{
+.usuario h3 {
     font-size: 1rem;
     font-weight: 400;
 }
@@ -109,7 +109,7 @@ body {
     transition: all 0.3s;
 }
 
-.positionButton{
+.positionButton {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -117,14 +117,14 @@ body {
     width: 130px;
 }
 
-.imgNav{
+.imgNav {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 50px;
 }
 
-.h2Nav{
+.h2Nav {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -152,7 +152,7 @@ body {
     background-color: #ffffff30;
 }
 
-.active h2{
+.active h2 {
     color: #fafafa !important;
 }
 
@@ -217,7 +217,7 @@ body {
     transition: all 0.3s;
 }
 
-.iconLogout{
+.iconLogout {
     width: 20px;
 }
 
@@ -230,28 +230,32 @@ body {
     background-color: #FFFFFF40;
 }
 
+/* FINAL NAVBAR */
 
-/*Fin de menu lateral*/
-
-
-/*CONTENIDO*/
-
+/* CONTENIDO */
 
 .contenido {
     width: 960px;
     height: 690px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.card{
+.card {
     background-color: #fafafa20;
     border-radius: 15px;
 }
 
+#arriba {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    height: 160px;
+}
 
-/*--------Container para mobil--------*/
-
-
-#mobileApp{
+#infoApp {
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -259,273 +263,213 @@ body {
     background-color: #E2FF32;
     align-items: flex-start;
     padding: 10px 10px 10px 15px !important;
-    height: 130px;
+
 }
 
-.titulosMobile h2{
+#infoApp h2 {
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-.redesSociales{
+#infoApp button {
     display: flex;
-    justify-content: space-around;
-    gap: 160px;
+    gap: 5px;
+    background-color: #fafafa00;
+    border: 0px;
 }
 
-.centLeft{
-    display: flex;
-
-}
-
-.svgG{
+#infoApp button a {
     border: 1px solid #000;
-    background-color: #000;
+    width: 20px;
+    height: 20px;
     border-radius: 50px;
-    width: 30px;
-    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    color: #fafafa;
-}
-
-.svgApple{
-    border: 1px solid #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #fafafa;
-}
-
-.svgApple img{
-    width: 16px;
-}
-
-.svgArrow{
-    border: 1px solid #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-a svg{
     color: #000;
+}
+
+#infoApp button svg {
+    width: 15px;
+
+}
+
+/*  INFORMAR DEL CURSO  */
+
+#infoCurso {
+    width: 640px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tituloCurso {
+    width: 100%;
+    border-radius: 15px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa20;
+}
+
+.tituloCurso h1 {
+    font-size: 1.1rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+#estadisticasCurso {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    height: 70px;
+}
+
+
+.cardInfo {
+    text-align: center;
+    padding: 10px;
+    font-size: 1.3rem;
+    color: #ffffff;
+    height: 70px;
+    width: 200px;
+    border-radius: 15px;
+    background-color: #fafafa20;
+}
+
+.cardInfo h3 {
+    font-size: 0.9rem;
+    color: #fafafa60;
+    font-weight: 400;
+    text-align: left;
+}
+
+.numProjects {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.numProjects svg {
     width: 20px;
 }
 
-
-
-/*--------Container para ultimas actividades--------*/
-
-#arriba {
-    display: flex;
-    gap: 30px;
+.numProjects img {
+    width: 20px;
+    height: 22px;
 }
 
-
-#lastActivities{
-    width: 640px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    height: 130px;
-}
-
-#lastActivities h1{
-    padding-top: 5px;
-    font-size: 1.1rem;
-    color: #ffffff;
-    font-weight: 400;
-}
-
-#cards-activities{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.lastActivity{
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #fafafa20;
-    color: #ffffff;
-    width: 205px;
-    height: 90px;
-}
-
-.lastActivity h2{
+.numProjects p {
     font-size: 1rem;
-    font-weight: 600;
 }
 
-.lastActivity p{
-    font-size: 0.9rem;
+.redondaStado {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background-color: #2bff00;
 }
 
-.noActivities {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    background-color: #fafafa20;
+/* CONTENIDO ABAJO DERECHA */
+
+.proyectos {
+    display: grid;
+    gap: 20px;
+    padding: 1rem;
+    overflow: auto;
+    height: 510px;
+}
+
+.cardProyecto {
+    padding: 20px;
+    border: 0;
     border-radius: 15px;
-    height: 90px;
-}
-
-.noActivities h2 {
-    font-size: 1.1rem;
-    font-weight: 400;
-}
-
-
-/*--------Container para abajo--------*/
-
-#abajo {
+    height: 150px;
     display: flex;
-    flex-direction: row;
-    gap: 30px;
-    padding-top: 50px;
-    width: 960px;
     justify-content: space-around;
+    align-items: center;
 }
 
-#tasks {
-    width: 400px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border: 0;
-    background-color: #A600FF;
-    font-size: 1.4rem;
-    font-weight: 600;
+.cardProyecto:nth-child(odd) {
+    background-color: #8500CD;
+    /* Fondo para las filas impares */
+    color: #ffffff;
 }
 
-#projects {
-    width: 400px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border: 0;
+.cardProyecto:nth-child(even) {
     background-color: #E2FF32;
-    font-size: 1.4rem;
-    font-weight: 600;
+    /* Fondo para las filas pares */
+    color: #000;
 }
 
-
-
-/*--------Container para ultimo proyecto--------*/
-
-
-#lastProject{
-    width: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fafafa;
+.cardProyecto p {
+    font-size: 16px;
 }
 
-.contProject{
-   width: 260px; 
-   height: 460px;
-   overflow: hidden;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
+.cardProyecto p span{
+    font-size: 17px;
+    font-weight: 700;
 }
 
-.contProject img{
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
+/* CONTENIDO DENTRO DE UN PROYECTO */
 
-#tituloProject{
+#listaActividades {
     display: flex;
     flex-direction: column;
-    gap: 17px;
-}
-
-.firsttitle{
-    display: flex;
     justify-content: space-between;
-}
-
-.firsttitle h1{
-    font-size: 1.2rem;
-    font-weight: 400;
     align-items: center;
-}
-
-.firsttitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #fafafa;
-    padding: 3px 5px 3px 5px;
-    transition: all 0.3s;
-}
-
-.firsttitle button:hover{
-    background-color: #00000040;
-    border-radius: 10px;
-}
-
-
-.secondtitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #E2FF32;
-    transition: all 0.3s ease;
-    padding: 3px;
-}
-
-.secondtitle button:hover{
-    background-color: #00000030;
-    border-radius: 10px;
-}
-
-#tituloProject h1{
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-.inputFind{
+    gap: 20px;
     width: 100%;
 }
 
-.inputFind input{
-    border: 1px solid #fafafa60;
-    border-radius: 15px;
+#mostrarActivities {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
+    color: #FFFFFF;
+    font-size: 1rem;
+}
+
+#tablaActividades {
+    height: 200px;
+    padding: 20px;
+}
+
+#tablaActividades thead {
+    background-color: #FCFCFC10;
+}
+
+#tablaActividades th{
     padding: 10px;
-    background-color: #fafafa20;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    border-radius: 10px;
 }
 
-/*--------Container para estadisticas alumnos--------*/
-
-#estadisticaAlumnos{
-    height: 570px;
-    padding: 10px 15px;
-    color: #ffffff;
+#tablaActividades tbody tr{
+    transition: background-color 0.3s;
 }
 
-#estadisticaAlumnos h1{
-   font-size: 1.2rem;
-   font-weight: 500;
+#tablaActividades tbody tr:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#tablaActividades td{
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.evaluado {
+    color: #8b8b8b;
 }

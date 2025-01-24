@@ -27,11 +27,17 @@
         
                 fclose($open);
                 echo "Importación completada exitosamente.";
+                mysqli_close($conn);
+                header ('Location: alumnos.php');
             } else {
                 echo "Error al abrir el archivo.";
+                mysqli_close($conn);
+                 header ('Location: alumnos.php');
             }
         } else {
             echo "No se ha enviado ningún archivo.";
+            mysqli_close($conn);
+            header ('Location: alumnos.php');
         }
         
         // Cierra la conexión

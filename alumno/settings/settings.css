@@ -7,6 +7,10 @@
     font-family: 'Poppins';
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Poppins';
     background-image: url(../../imagenes/fondo.jpg);
@@ -22,8 +26,8 @@ body {
 }
 
 .container {
-    height: 700px;
-    width: 1250px;
+    height: 690px;
+    width: 1250px !important;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -32,6 +36,7 @@ body {
 }
 
 /*MENU LATERAL*/
+
 
 .contenedor-nav {
     display: flex;
@@ -84,6 +89,15 @@ body {
     font-size: 1rem;
     font-weight: 400;
 }
+
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
 
 /* opciones del navBar*/
 
@@ -240,6 +254,9 @@ body {
 .contenido {
     width: 960px;
     height: 690px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .card{
@@ -247,11 +264,18 @@ body {
     border-radius: 15px;
 }
 
+#arriba{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    height: 160px;
+}
 
-/*--------Container para mobil--------*/
+/*-------DIV amarillo Curso-------------*/
 
 
-#mobileApp{
+#infoApp{
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -259,273 +283,219 @@ body {
     background-color: #E2FF32;
     align-items: flex-start;
     padding: 10px 10px 10px 15px !important;
-    height: 130px;
+    
 }
 
-.titulosMobile h2{
+.tituloInfo{
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 5px;
+}
+
+.tituloInfo h2{
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-.redesSociales{
-    display: flex;
-    justify-content: space-around;
-    gap: 160px;
+.tituloInfo svg{
+    width: 25px;
 }
 
-.centLeft{
+
+#infoApp button{
     display: flex;
-
+    gap: 5px;
+    background-color: #fafafa00;
+    border: 0px;
 }
-
-.svgG{
+#infoApp button a{
     border: 1px solid #000;
-    background-color: #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #fafafa;
-}
-
-.svgApple{
-    border: 1px solid #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #fafafa;
-}
-
-.svgApple img{
-    width: 16px;
-}
-
-.svgArrow{
-    border: 1px solid #000;
-    border-radius: 50px;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-a svg{
-    color: #000;
     width: 20px;
-}
-
-
-
-/*--------Container para ultimas actividades--------*/
-
-#arriba {
+    height: 20px;
+    border-radius: 50px;
     display: flex;
-    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
 }
 
+#infoApp button svg{
+    width: 15px;
 
-#lastActivities{
+}
+
+/*-------DIV PARA INFORMAR DEL CURSO-------------*/
+
+#infoCurso{
     width: 640px;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    height: 130px;
-}
-
-#lastActivities h1{
-    padding-top: 5px;
-    font-size: 1.1rem;
-    color: #ffffff;
-    font-weight: 400;
-}
-
-#cards-activities{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.lastActivity{
-    padding: 10px;
-    border-radius: 15px;
-    background-color: #fafafa20;
-    color: #ffffff;
-    width: 205px;
-    height: 90px;
-}
-
-.lastActivity h2{
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.lastActivity p{
-    font-size: 0.9rem;
-}
-
-.noActivities {
-    display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    color: #ffffff;
-    background-color: #fafafa20;
-    border-radius: 15px;
-    height: 90px;
-}
-
-.noActivities h2 {
-    font-size: 1.1rem;
-    font-weight: 400;
-}
-
-
-/*--------Container para abajo--------*/
-
-#abajo {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    padding-top: 50px;
-    width: 960px;
-    justify-content: space-around;
-}
-
-#tasks {
-    width: 400px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border: 0;
-    background-color: #A600FF;
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
-#projects {
-    width: 400px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border: 0;
-    background-color: #E2FF32;
-    font-size: 1.4rem;
-    font-weight: 600;
 }
 
 
 
-/*--------Container para ultimo proyecto--------*/
-
-
-#lastProject{
-    width: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fafafa;
-}
-
-.contProject{
-   width: 260px; 
-   height: 460px;
-   overflow: hidden;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-}
-
-.contProject img{
+#abajo{
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-#tituloProject{
     display: flex;
     flex-direction: column;
-    gap: 17px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    height: 510px;
+    color: #fafafa;
+    padding: 1rem;
 }
 
-.firsttitle{
+.navSettings{
+    width: 600px;
+    background-color: #fafafa20;
+    border-radius: 40px;
+    border: 0;
+    padding: 0.4rem 1rem;
+}
+
+.navSettings ul{
+    list-style: none;
     display: flex;
     justify-content: space-between;
 }
 
-.firsttitle h1{
-    font-size: 1.2rem;
-    font-weight: 400;
+.navSettings button{
+    background-color: #fafafa00;
+    color: #fafafa;
+    border: 0;
+    border-radius: 40px;
+    width: 140px;
+    font-size: 0.9rem;
+    padding: 0.4rem 0rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.navSettings button:hover{
+    background-color: #fafafa90;
+}
+
+.activeN{
+    background-color: #fafafa90 !important;
+    color: #000 !important;
+}
+
+.activeN:hover{
+    background-color: #fafafa !important;
+}
+
+/*-----DIV GENERAL SETTINGS----*/
+
+.divGeneral{
+    width: 600px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 40px !important;
+}
+
+.changeImg{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
 }
 
-.firsttitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #fafafa;
-    padding: 3px 5px 3px 5px;
-    transition: all 0.3s;
+.changeImg img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 0;
+    border-radius: 100px;  
 }
 
-.firsttitle button:hover{
-    background-color: #00000040;
-    border-radius: 10px;
+.changeImg form{
+    width: 300px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
-
-.secondtitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #E2FF32;
-    transition: all 0.3s ease;
-    padding: 3px;
+/* Ocultar el input original */
+input[type="file"] {
+    display: none;
 }
 
-.secondtitle button:hover{
-    background-color: #00000030;
-    border-radius: 10px;
-}
-
-#tituloProject h1{
-    font-size: 1.2rem;
-    font-weight: 400;
-}
-
-.inputFind{
-    width: 100%;
-}
-
-.inputFind input{
-    border: 1px solid #fafafa60;
+/* Estilo para el label que simula el botón del input */
+.custom-file-upload {
+    width: 200px;
+    border: 0;
     border-radius: 15px;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
+    background-color: #ffffff60;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #fafafa;
+}
+
+/* Estilo para los botones */
+.changeImg form button {
+    width: 200px;
+    border: 0;
+    border-radius: 15px;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
+    background-color: #E2FF32;
+}
+
+
+.inputGeneral{
     width: 100%;
-    padding: 10px;
-    background-color: #fafafa20;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    gap: 20px;
+    
 }
 
-/*--------Container para estadisticas alumnos--------*/
-
-#estadisticaAlumnos{
-    height: 570px;
-    padding: 10px 15px;
-    color: #ffffff;
+.inputGeneral p{
+    font-size: 1rem;
+    font-weight: 400;
 }
 
-#estadisticaAlumnos h1{
-   font-size: 1.2rem;
-   font-weight: 500;
+.showText{
+    width: 400px;
+    background-color: #fafafa55;
+    padding: 0.4rem 1rem;
+    border-radius: 15px;
+    margin-right: 1rem;
+}
+
+/*-----DIV GENERAL SETTINGS----*/
+
+.divSecurity{
+    width: 600px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 40px !important;
+}
+
+.divSecurity form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+}
+
+.divSecurity form input{
+    width: 150px;
 }

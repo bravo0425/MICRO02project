@@ -64,12 +64,7 @@ function mostrarImg($conn){
 
 function encontrarNotaProyecto($conn, $idAlumno, $idProyecto) {
     // 1. Obtener todas las actividades relacionadas con el proyecto
-    $actividadesQuery = "SELECT actividades.id AS id_actividad 
-                         FROM actividades 
-                         JOIN alumnos_actividades ON actividades.id = alumnos_actividades.id_actividad 
-                         WHERE actividades.project_id = $idProyecto 
-                         AND alumnos_actividades.id_alumno = $idAlumno";
-    
+    $actividadesQuery = "SELECT actividades.id AS id_actividad FROM actividades JOIN alumnos_actividades ON actividades.id = alumnos_actividades.id_actividad  WHERE actividades.project_id = $idProyecto AND alumnos_actividades.id_alumno = $idAlumno";
     $rActividades = mysqli_query($conn, $actividadesQuery);
     
     if ($rActividades && mysqli_num_rows($rActividades) > 0) {
@@ -78,31 +73,25 @@ function encontrarNotaProyecto($conn, $idAlumno, $idProyecto) {
 
         while ($actividad = mysqli_fetch_assoc($rActividades)) {
             $idActividad = $actividad['id_actividad'];
-
-            // 2. Calcular la media ponderada de los ítems para la actividad
-            $itemsQuery = "SELECT alumnos_items.notaItem, items.valor 
-                           FROM alumnos_items 
-                           JOIN items ON alumnos_items.id_item = items.id 
-                           WHERE items.activity_id = $idActividad 
-                           AND alumnos_items.id_alumno = $idAlumno";
-
+            //Calcular la media de los ítems para la actividad
+            $itemsQuery = "SELECT alumnos_items.notaItem, items.valor  FROM alumnos_items JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActividad AND alumnos_items.id_alumno = $idAlumno";
             $rItems = mysqli_query($conn, $itemsQuery);
 
             if ($rItems && mysqli_num_rows($rItems) > 0) {
                 $sumaNotas = 0;
-                $sumaPesos = 0;
+                $sumaValor = 0;
 
                 while ($item = mysqli_fetch_assoc($rItems)) {
                     $notaItem = $item['notaItem'];
-                    $peso = $item['valor'];
+                    $valor = $item['valor'];
 
-                    $sumaNotas += $notaItem * $peso;
-                    $sumaPesos += $peso;
+                    $sumaNotas += $notaItem * $valor;
+                    $sumaValor += $valor;
                 }
 
                 // Media ponderada de los ítems para la actividad
-                if ($sumaPesos > 0) {
-                    $notaActividad = $sumaNotas / $sumaPesos;
+                if ($sumaValor > 0) {
+                    $notaActividad = $sumaNotas / $sumaValor;
                     $notaProyecto += $notaActividad;
                     $totalActividades++;
                 }
@@ -111,40 +100,64 @@ function encontrarNotaProyecto($conn, $idAlumno, $idProyecto) {
 
         // Media de las actividades para el proyecto
         if ($totalActividades > 0) {
-            return $notaProyecto / $totalActividades;
+            return $notaProyecto / $totalActividades ;
         }
     }
-
     // Si no hay actividades o ítems evaluados, retornar 0
     return 0;
 }
 
+$allProjectsScores = [];
 
 function mostrarTablaAlumnos($conn, $idProyecto) {
     // Obtener los alumnos relacionados con el proyecto
-    $selectAlumnosProjects = "SELECT alumnos.id AS id_alumno, alumnos.name 
-                              FROM alumnos_proyectos 
-                              JOIN alumnos ON alumnos_proyectos.id_alumno = alumnos.id 
-                              WHERE alumnos_proyectos.id_proyecto = $idProyecto";
-
+    $selectAlumnosProjects = "SELECT alumnos.id AS id_alumno, alumnos.name, alumnos.last_name FROM alumnos_proyectos JOIN alumnos ON alumnos_proyectos.id_alumno = alumnos.id WHERE alumnos_proyectos.id_proyecto = $idProyecto";
     $resultsql = mysqli_query($conn, $selectAlumnosProjects);
 
     if ($resultsql && mysqli_num_rows($resultsql) > 0) {
+
         while ($row = mysqli_fetch_assoc($resultsql)) {
             $idAlumno = $row['id_alumno'];
             $nameAlumno = $row['name'];
+            $apellido = $row['last_name'];
 
             // Calcular la nota del proyecto para el alumno
             $notaProyecto = encontrarNotaProyecto($conn, $idAlumno, $idProyecto);
 
             echo '<tr>';
-            echo '<td>' . $nameAlumno . '</td>';
+            echo '<td>' . $nameAlumno . ' ' . $apellido . '</td>';
             echo '<td>' . number_format($notaProyecto, 1) . '</td>'; // Mostrar la nota con 2 decimales
             echo '</tr>';
         }
+
     } else {
         echo '<tr><td colspan="2">No hay alumnos asignados a este proyecto.</td></tr>';
     }
 }
 
+function mostrarMediaProyectos($conn, $idProyecto){
+    $selectAlumnosProjects = "SELECT alumnos.id AS id_alumno, alumnos.name FROM alumnos_proyectos JOIN alumnos ON alumnos_proyectos.id_alumno = alumnos.id WHERE alumnos_proyectos.id_proyecto = $idProyecto";
+    $resultsql = mysqli_query($conn, $selectAlumnosProjects);
+    $totalNotas = 0;
+    $totalAlumnos = 0;
+    $media = 0;
 
+    if ($resultsql && mysqli_num_rows($resultsql) > 0) {
+
+        while ($row = mysqli_fetch_assoc($resultsql)) {
+            $idAlumno = $row['id_alumno'];
+
+            $notaAlumno = encontrarNotaProyecto($conn, $idAlumno, $idProyecto);
+            $totalNotas += $notaAlumno;
+            $totalAlumnos ++;
+        }
+        if($totalAlumnos > 0){
+            $media = $totalNotas / $totalAlumnos;
+            echo '<p> '.number_format($media, 1).'</p>';
+        }
+        
+
+    } else {
+        echo '<p>-</p>';
+    }
+}

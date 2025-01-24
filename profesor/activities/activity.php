@@ -204,7 +204,16 @@ if (isset($_POST['añadirItem'])) {
 
                 <form action="" method="POST" id="estadoActividad" class="card">
                     <p>Estado</p>
-                    <input type="submit" class="statusAct" name="estadoAct" value="<?php echo $estado; ?>" id="">
+                    <?php
+                    $selectEstado = "SELECT * FROM actividades WHERE id = $idActivity";
+                    $resultSelectEstado = mysqli_query($conn, $selectEstado);
+                    $row = mysqli_fetch_assoc($resultSelectEstado);
+                    if($row['active'] == 1){
+                        echo '<input type="submit" class="statusActive" name="estadoAct" value="'.$estado.'" id="">';
+                    }else{
+                        echo "<input type='submit' class='statusInactive' name='estadoAct' value='$estado' id=''>";
+                    }
+                    ?>
                 </form>
             </div>
 

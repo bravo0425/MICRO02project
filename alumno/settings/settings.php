@@ -6,9 +6,9 @@
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];
-        $idProfe = $_SESSION['idProfe'];
         $nom = $_SESSION['nombre'];
         $apellido = $_SESSION['apellido'];
+        $idAlumno = $_SESSION['idAlumno'];
         $idCurso = $_SESSION['idCurso'];
     }else{
         header('Location: ../../login/login.php');
@@ -67,23 +67,23 @@
                         </div>
                         
                     </button>
-                    <button onclick="goCursos()" class="menu">
+                    <button onclick="goTasks()" class="menu">
                         <div class="positionButton">
                             <div class="imgNav">
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Tasks</h2>
                             </div>
                         </div>
                     </button>
-                    <button onclick="goStudents()" class="menu">
+                    <button onclick="goProjects()" class="menu">
                         <div class="positionButton">
                             <div class="imgNav">
                                 <img src="../../imagenes/students.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Students</h2>
+                                <h2>Projects</h2>
                             </div>
                         </div>
                     </button>
@@ -185,12 +185,6 @@
                         <p><?php mostrarUsername($conn); ?></p>
                     </div>
                 </div>
-                <div class="inputGeneral">
-                    <p>Email</p>
-                    <div class="showText">
-                        <p><?php mostrarMail($conn); ?></p>
-                    </div>
-                </div>
             </section>
 
             <section class="divSecurity" style="display: none;">
@@ -203,15 +197,15 @@
                 <form action="" method="POST">
                     <div class="inputGeneral">
                         <label for="oldpass">Your Password</label>
-                        <input type="password" name="oldpass" id="oldpass">
+                        <input type="text" name="oldpass" id="oldpass">
                     </div>
                     <div class="inputGeneral">
                         <label for="newpass">New Password</label>
-                        <input type="password" name="newpass" id="newpass">
+                        <input type="text" name="newpass" id="newpass">
                     </div>
                     <div class="inputGeneral">
                         <label for="newpass2">Repeat New Password</label>
-                        <input type="password" name="newpass2" id="newpass2">
+                        <input type="text" name="newpass2" id="newpass2">
                     </div>
                     <input type="submit" name="cambiar" value="Confirm" id="changePass">
                 </form>
