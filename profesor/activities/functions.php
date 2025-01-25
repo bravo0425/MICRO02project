@@ -56,7 +56,6 @@ function añadirItem($conn, $idActivity){
     exit();
 }
 
-
 function mostrarItems($conn, $idActivity){
     $serachItems = "SELECT * FROM items WHERE activity_id = $idActivity";
     $rI = mysqli_query($conn, $serachItems);
@@ -78,7 +77,6 @@ function mostrarItems($conn, $idActivity){
     }
     echo "</div>";
 }
-
 
 function mostrarItemsEditar($conn, $idActivity){
     $serachItems = "SELECT * FROM items WHERE activity_id = $idActivity";
@@ -124,7 +122,6 @@ function mostrarItemsEditar($conn, $idActivity){
     echo "</div>";
 }
 
-
 function eliminarItem($conn, $idItem){
     $idItem = intval($idItem);
 
@@ -141,11 +138,10 @@ function updateItems($conn, $idActivity) {
         // Comprobar si la suma de valores es 100
         $totalValor = array_sum($valores);
         if ($totalValor != 100) {
-            echo "<p>Error: La suma de los valores debe ser igual a 100. La suma actual es $totalValor.</p>";
+            echo "<script>alert('Error: La suma de los valores debe ser igual a 100. La suma actual es $totalValor.');</script>";
             return;
         }
-
-        // Si la suma es correcta, proceder con la actualización
+        // Si la suma es 100 hace el update
         foreach ($titulos as $idItem => $titulo) {
             $valor = $valores[$idItem] ?? null;
 
@@ -163,18 +159,13 @@ function updateItems($conn, $idActivity) {
                 }
 
                 $updateQuery .= " WHERE id = $idItem AND activity_id = $idActivity";
-
-                $result = mysqli_query($conn, $updateQuery);
-
-                if (!$result) {
-                    echo "<p>Error al actualizar el ítem con ID $idItem: " . mysqli_error($conn) . "</p>";
-                }
+                mysqli_query($conn, $updateQuery);
             }
         }
 
-        echo "<p>Ítems actualizados correctamente.</p>";
+        echo "<script>alert('Items actualizados correctamente');</script>";
     } else {
-        echo "<p>No se enviaron datos para actualizar.</p>";
+        echo "<script>alert('No se enviaron datos para actualizar');</script>";
     }
 }
 
@@ -228,34 +219,22 @@ function generarTablaAlumnosNotas($conn, $idActivity) {
     $tabla = "<table>
                 <thead>
                     <tr>
-                        <th id='borderLeft'>Nom</th>";
+                        <th id='borderLeft'>Name</th>";
 
-    // Agregar las columnas de ítems
-    foreach ($itemIds as $itemId) {
-        $queryTitulo = "SELECT titulo FROM items WHERE id = $itemId";
-        $resultTitulo = mysqli_query($conn, $queryTitulo);
-        $titulo = mysqli_fetch_assoc($resultTitulo)['titulo'] ?? 'Item';
-        $tabla .= "<th>" . htmlspecialchars($titulo) . "</th>";
-    }
+                        foreach ($itemIds as $itemId) {
+                            $queryTitulo = "SELECT titulo FROM items WHERE id = $itemId";
+                            $resultTitulo = mysqli_query($conn, $queryTitulo);
+                            $titulo = mysqli_fetch_assoc($resultTitulo)['titulo'] ?? 'Item';
+                            $tabla .= "<th>" . htmlspecialchars($titulo) . "</th>";
+                        }
 
-    $tabla .= "<th id='borderRight'>Nota final</th>
+    $tabla .= "         <th id='borderRight'>Nota final</th>
                     </tr>
                 </thead>
                 <tbody>";
 
     // Consultar alumnos relacionados con la actividad
-    $queryAlumnos = "
-        SELECT 
-            alumnos.id AS alumno_id,
-            alumnos.name AS alumno_name
-        FROM 
-            alumnos
-        WHERE alumnos.id IN (
-            SELECT id_alumno FROM alumnos_items WHERE id_item IN (
-                SELECT id FROM items WHERE activity_id = $idActivity
-            )
-        )
-    ";
+    $queryAlumnos = "SELECT alumnos.id AS alumno_id, alumnos.name AS alumno_name FROM alumnos WHERE alumnos.id IN (SELECT id_alumno FROM alumnos_items WHERE id_item IN (SELECT id FROM items WHERE activity_id = $idActivity))";
     $resultAlumnos = mysqli_query($conn, $queryAlumnos);
 
     // Variables para estructurar los datos

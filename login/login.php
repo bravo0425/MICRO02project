@@ -30,8 +30,9 @@ if (isset($_POST["entrar"])) {
             $_SESSION['idAlumno'] = $fila['id'];
             $_SESSION['nombre'] = $fila['name'];
             $_SESSION['apellido'] = $fila['last_name'];
+            $_SESSION['idCurso'] = $fila['curso_id'];
 
-            header('Location: ../alumno/main/index.php');
+            header('Location: ../alumno/main/main.php');
             exit();
         }else{
             $consultaP = "SELECT * FROM profesores WHERE username = '$nom' AND pass = '$password'";

@@ -24,3 +24,18 @@ function abrirEditorProject(){
     document.querySelector("#insertarActividad").style = "display: none;";
     document.querySelector("#verTabla").style = "display: none;";
 }
+
+var popupOverlay = document.querySelector('.error-pop');
+var popupCloseButton = document.querySelector('.popup-close');
+
+// Mostrar el pop-up
+if (popupOverlay) {
+    popupOverlay.style.display = 'flex';
+}
+
+// Cerrar el pop-up
+if (popupCloseButton) {
+    popupCloseButton.addEventListener('click', function() {
+        popupOverlay.style.display = 'none';
+    });
+}

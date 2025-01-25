@@ -116,7 +116,7 @@ if (isset($_POST['añadirItem'])) {
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Subjects</h2>
                             </div>
                         </div>
                     </button>
@@ -185,7 +185,7 @@ if (isset($_POST['añadirItem'])) {
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to projects</p>
+                            <p>Back to projects</p>
                         </button>
                     </form>
                 </div>
@@ -203,7 +203,7 @@ if (isset($_POST['añadirItem'])) {
                 </div>
 
                 <form action="" method="POST" id="estadoActividad" class="card">
-                    <p>Estado</p>
+                    <p>Status</p>
                     <?php
                     $selectEstado = "SELECT * FROM actividades WHERE id = $idActivity";
                     $resultSelectEstado = mysqli_query($conn, $selectEstado);
@@ -247,9 +247,11 @@ if (isset($_POST['añadirItem'])) {
                                 <?php if ($itemCount < 5): ?>
                                     <button type="button" name="show_popup" class="addbtn" id="addbtn">+ Add Items</button>
                                 <?php endif; ?>
-                                <form action="" method="post" class="formEditItems">
-                                    <button type="submit" name="modo" value="editar" class="editItems">Editar</button>
-                                </form>
+                                <?php if ($itemCount != 0): ?>
+                                    <form action="" method="post" class="formEditItems">
+                                        <button type="submit" name="modo" value="editar" class="editItems">Edit</button>
+                                    </form>
+                                <?php endif; ?>
                             </div>
                             <div id="popUp">
                                 <div class="popup-content">
@@ -301,7 +303,7 @@ if (isset($_POST['añadirItem'])) {
 
                     <form method="POST" action="../evaluar/lista/lista.php">
                         <button type="submit" id="evaluarAlumnos">
-                            <p>Evalua a tus alumnos</p>
+                            <p>Evaluate your students</p>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                             </svg>
@@ -309,7 +311,7 @@ if (isset($_POST['añadirItem'])) {
                     </form>
 
                     <div id="tablaNotas" class="card">
-                        <h2>Notas alumnos</h2>
+                        <h2>Students Scores</h2>
                         <div class="tbln">
                             <table>
                                 <?php

@@ -215,11 +215,11 @@ if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
                             <div class="numProjects">
                                 <div class="redondaStado"></div>
                                 <?php
-                                    if (empty($_SESSION['idProyectoSeleccionado'])) {
-                                        echo '<p>Selecciona un proyecto</p>';
-                                    } else {
+                                    if (!empty($_SESSION['idProyectoSeleccionado'])) {
                                         $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
                                         mostrarMediaProyectos($conn, $idProyectoSeleccionado);
+                                    } else {
+                                        echo '<p>-</p>';
                                     }
                                     ?>
                             </div>
@@ -284,7 +284,6 @@ if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
                     <?php if (!$mostrarFormulario): ?>
                         <h1>Students Scores</h1>
                         <div id="grafica">
-                            <p>Students statistics</p>
                             <table>
                                 <thead>
                                     <tr>
@@ -295,7 +294,7 @@ if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
                                 <tbody>
                                     <?php
                                     if (empty($_SESSION['idProyectoSeleccionado'])) {
-                                        echo '<p>Selecciona un proyecto</p>';
+                                        echo '<td colspan="2">Selecciona un proyecto</td>';
                                     } else {
                                         $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
                                         mostrarTablaAlumnos($conn, $idProyectoSeleccionado);

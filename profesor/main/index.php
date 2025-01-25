@@ -65,7 +65,7 @@ if (!empty($_POST['logout'])) {
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Subjects</h2>
                             </div>
                         </div>
                     </button>
@@ -144,18 +144,28 @@ if (!empty($_POST['logout'])) {
                 <div id="lastProject" class="card">
                     <div class="contProject">
                         <div id="tituloProject">
-                            <div class="firsttitle">
+                            <form method="post" action="../cursos/cursos.php" class="firsttitle">
                                 <h1>Last project</h1>
-                                <button>All ></button>
-                            </div>
+                                <button type="submit">All ></button>
+                            </form>
                             <div class="secondtitle">
                                 <?php
-                                $selectLastProject = "SELECT titulo, created_at FROM proyectos ORDER BY created_at DESC LIMIT 1";
+                                $selectLastProject = "SELECT * FROM proyectos ORDER BY created_at DESC LIMIT 1";
                                 $result = mysqli_query($conn, $selectLastProject);
                                 $row = mysqli_fetch_assoc($result);
+                                $idCurso = $row['curso_id'];
                                 ?>
                                 <h2><?php echo $row['titulo']; ?></h2>
-                                <p><?php echo $row['created_at']; ?></p>
+                                <p><?php if($idCurso == 502){
+                                    echo 'SMIX';
+                                }else if($idCurso == 501){
+                                    echo 'DAW';
+                                }else if($idCurso == 503){
+                                    echo 'ASIX';
+                                }else{
+                                    echo 'None';
+                                }
+                                ?></p>
                             </div>
                         </div>
                         <img src="../../imagenes/project.jpg" alt="" style="width: 300px;">

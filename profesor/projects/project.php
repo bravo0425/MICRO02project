@@ -58,17 +58,17 @@ if (isset($_SESSION['idProyecto'])) {
     $actividades = [];
 }
 
-
-if (!empty($_POST['añadir'])) {
-    crearActividad($conn);
-}
-
 if (!empty($_POST['editar'])) {
     editarProyecto($conn);
 }
 
 if (!empty($_POST['anadir'])) {
     crearActividad($conn);
+}
+
+if (isset($_POST['cancelarAdd'])) {
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 if (!empty($_POST['seeActivity'])) {
@@ -82,6 +82,10 @@ if (!empty($_POST['deleteActivity'])) {
     eliminarActividad($conn, $_POST['deleteActivity']);
 }
 
+if (!empty($_POST['editarActividad']) && !empty($_POST['editActivityId'])) {
+    echo 'asasas';
+    editarActividad($conn, intval($_POST['editActivityId']));
+}
 
 
 
@@ -130,7 +134,7 @@ if (!empty($_POST['deleteActivity'])) {
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Subjects</h2>
                             </div>
                         </div>
                     </button>
@@ -199,7 +203,7 @@ if (!empty($_POST['deleteActivity'])) {
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to courses</p>
+                            <p>Back to courses</p>
                         </button>
                     </form>
                 </div>
@@ -232,40 +236,39 @@ if (!empty($_POST['deleteActivity'])) {
 
                         if ($activity = mysqli_fetch_assoc($result)) {
                             $_SESSION['edit_activity'] = $activity;
-
-                            // Asegúrate de imprimir el HTML correctamente
-                            echo "<div id='editarActivity'>
-                                    <h2 class='tituloForms'>Editar Actividad</h2>
-                                    <form action='' method='POST' id='formEditarActivity' class='forms'>
-                                        <input type='hidden' name='editActivityId' value='" . $_SESSION['edit_activity']['id'] . "'>
-                                        <div class='column'>
-                                            <label for='editActivityTitle'>Título</label>
-                                            <input type='text' name='editActivityTitle' id='editActivityTitle' value='" . htmlspecialchars($_SESSION['edit_activity']['titulo']) . "'>
-                                        </div>
-                                        <div class='column'>
-                                            <label for='editActivityDesc'>Descripción</label>
-                                            <textarea name='editActivityDesc' id='editActivityDesc'> " . htmlspecialchars($_SESSION['edit_activity']['descripcion']) . " </textarea>
-                                        </div>
-                                        <div class='column'>
-                                            <label for='editActivityDueDate'>Due_date</label>
-                                            <input type='date' name='editActivityDueDate' id='editActivityDueDate' value='" . htmlspecialchars($_SESSION['edit_activity']['due_date']) . "'>
-                                        </div>
-                                        <div class='column'>
-                                            <label for='editActivityStatus'>Estado</label>
-                                            <select name='editActivityStatus' id='editActivityStatus'>
-                                                <option value='1'" . (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 1 ? ' selected' : '') . ">Activa</option>
-                                                <option value='0'" . (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 0 ? ' selected' : '') . ">Inactiva</option>
-                                            </select>
-                                        </div>
-                                        <div class='buttonsEditar'>
-                                            <input type='submit' class='agre' name='editarActividad' value='Aceptar'>
-                                            <input type='submit' class='dele' name='cancelar' value='Cancelar'>
-                                        </div>
-                                    </form>
-                                </div>";
-                        }
-                    } else {
                     ?>
+                            <div id='editarActivity'>
+                                <h2 class='tituloForms'>Edit Activity</h2>
+                                <form action='' method='POST' id='formEditarActivity' class='forms'>
+                                    <input type="hidden" name="editActivityId" value="<?php echo $_SESSION['edit_activity']['id']; ?>">
+                                    <div class='column'>
+                                        <label for='editActivityTitle'>Title</label>
+                                        <input type="text" name="editActivityTitle" id="editActivityTitle" value="<?php echo htmlspecialchars($_SESSION['edit_activity']['titulo']); ?>">
+                                    </div>
+                                    <div class='column'>
+                                        <label for='editActivityDesc'>Description</label>
+                                        <textarea name='editActivityDesc' id='editActivityDesc'> <?php echo htmlspecialchars($_SESSION['edit_activity']['descripcion']) ?> </textarea>
+                                    </div>
+                                    <div class='column'>
+                                        <label for='editActivityDueDate'>Due_date</label>
+                                        <input type='date' name='editActivityDueDate' id='editActivityDueDate' value='<?php echo htmlspecialchars($_SESSION['edit_activity']['due_date']) ?>'>
+                                    </div>
+                                    <div class='column'>
+                                        <label for='editActivityStatus'>Status</label>
+                                        <select name='editActivityStatus' id='editActivityStatus'>
+                                            <option value='1' <?php echo (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 1 ? ' selected' : '') ?>>Activa</option>
+                                            <option value='0' <?php echo (isset($_SESSION['edit_activity']) && $_SESSION['edit_activity']['active'] == 0 ? ' selected' : '') ?>>Inactiva</option>
+                                        </select>
+                                    </div>
+                                    <div class='buttonsEditar'>
+                                        <input type='submit' class='agre' name='editarActividad' value='Accept'>
+                                        <input type='submit' class='dele' name='cancelar' value='Cancel'>
+                                    </div>
+                                </form>
+                            </div>
+                        <?php }
+                    } else {
+                        ?>
                         <div id="tabla">
                             <table>
                                 <thead>
@@ -309,7 +312,7 @@ if (!empty($_POST['deleteActivity'])) {
                                             echo "</tr>";
                                         }
                                     } else {
-                                        echo "<tr><td colspan='4'>No se encontraron actividades para este proyecto.</td></tr>";
+                                        echo "<tr><td colspan='4'>No activities were found for this project.</td></tr>";
                                     }
                                     ?>
                                 </tbody>
@@ -322,14 +325,14 @@ if (!empty($_POST['deleteActivity'])) {
                 </div>
 
                 <div id="insertarActividad">
-                    <h2 class="tituloForms">Crear una nueva Actividad</h2>
+                    <h2 class="tituloForms">Create new Activity</h2>
                     <form action="" method="POST" id="formInsert" class="forms">
                         <div class="column">
-                            <label for="tituloActNew">Titulo</label>
+                            <label for="tituloActNew">Title</label>
                             <input type="text" name="tituloActNew" id="">
                         </div>
                         <div class="column">
-                            <label for="descriptionActNew">Descripcion</label>
+                            <label for="descriptionActNew">Description</label>
                             <textarea type="text" name="descriptionActNew" id=""></textarea>
                         </div>
                         <div class="column">
@@ -337,35 +340,35 @@ if (!empty($_POST['deleteActivity'])) {
                             <input type="date" name="dueDateActNew" id="">
                         </div>
                         <div class="column">
-                            <label for="estadoActNew">Estado</label>
+                            <label for="estadoActNew">Status</label>
                             <select name="estadoActNew" id="">
-                                <option value="1">Activa</option>
-                                <option value="0">Inactiva</option>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
                             </select>
                         </div>
 
                         <div class="buttonsInsert">
-                            <input type="submit" class="agre" name="anadir" value="Aceptar">
-                            <input type="submit" class="dele" name="cancelar" value="cancel">
+                            <input type="submit" class="agre" name="anadir" value="Accept">
+                            <input type="submit" class="dele" name="cancelarAdd" value="Cancel">
                         </div>
                     </form>
                 </div>
 
 
                 <div id="editarProyecto">
-                    <h2 class="tituloForms">Editar Proyecto</h2>
+                    <h2 class="tituloForms">Edit Project</h2>
                     <form action="" method="POST" id="formEditarProyect" class="forms">
                         <div class="column">
-                            <label for="editTitle">Titulo</label>
+                            <label for="editTitle">Title</label>
                             <input type="text" name="editTitle" id="editTitle" value="<?php echo htmlspecialchars($titulo); ?>">
                         </div>
                         <div class="column">
-                            <label for="editDesc">Descripcion</label>
+                            <label for="editDesc">Description</label>
                             <textarea type="text" name="editDesc" id="editDesc"><?php echo htmlspecialchars($descripcion); ?></textarea>
                         </div>
                         <div class="buttonsEditar">
-                            <input type="submit" class="agre" name="editar" value="Aceptar">
-                            <input type="submit" class="dele" name="cancelar" value="Cancelar">
+                            <input type="submit" class="agre" name="editar" value="Accept">
+                            <input type="submit" class="dele" name="cancelar" value="Cancel">
                         </div>
                     </form>
                 </div>

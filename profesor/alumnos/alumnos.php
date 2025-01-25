@@ -70,7 +70,6 @@ $resultado = mysqli_query($conn, $query);
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-
                     </button>
                     <button onclick="goCursos()" class="menu">
                         <div class="positionButton">
@@ -78,7 +77,7 @@ $resultado = mysqli_query($conn, $query);
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Subjects</h2>
                             </div>
                         </div>
                     </button>
@@ -148,7 +147,7 @@ $resultado = mysqli_query($conn, $query);
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to dashboard</p>
+                            <p>Back to dashboard</p>
                         </button>
                     </form>
                 </div>
