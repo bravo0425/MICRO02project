@@ -32,7 +32,7 @@ function insertarProject($conn){
         }
         mostrarSuccesPopup("Project created successfully");
     } else {
-        mostrarErrorPopup("Error creating project");
+        
     }
 }
 

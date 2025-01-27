@@ -33,7 +33,11 @@ function updateImg($conn) {
 
     $sql = "UPDATE profesores SET img = '$imgData', tipus = '$tipus' WHERE id = $idProfe";
 
-    mysqli_query($conn, $sql);
+    if(mysqli_query($conn, $sql)) {
+        mostrarSuccesPopup("Image updated");
+    } else {
+        mostrarErrorPopup("Error updating image");
+    }
 }
 
 function mostrarImg($conn){
@@ -73,21 +77,72 @@ function cambiarPass($conn) {
 
     // Compara la contraseña ingresada con la de la base de datos
     if ($oldpass !== $correctOldPass) {
-        echo "<p>No coinciden la contraseña antigua</p>";
+        mostrarErrorPopup("The old password does not match");
     } elseif ($newpass !== $newpass2) {
         // Verifica si las nuevas contraseñas coinciden
-        echo "<p>No coinciden las contraseñas</p>";
+        mostrarErrorPopup("The passwords do not match");
     } else {
         // Actualiza la contraseña en la base de datos
         $updateQuery = "UPDATE profesores SET pass = '$newpass' WHERE id = $idProfe";
         if (mysqli_query($conn, $updateQuery)) {
-            echo "<p>Contraseña actualizada</p>";
+            mostrarSuccesPopup("Password updated successfully");
         } else {
-            echo "<p>Error al actualizar la contraseña</p>";
+            mostrarErrorPopup("Error updating password");
         }
     }
 }
 
+// Función para mostrar popups de error
+function mostrarErrorPopup($mensaje) {
+    echo "
+    <div class='error-pop'>
+        <div class='error-container'>
+            <div class='redondaError'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Oooops !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='popup-close'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('error-pop').classList.add('show');
+        const popupClose = document.querySelector('.popup-close');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.error-pop').classList.remove('show');
+            window.location.href = '" . $_SERVER['PHP_SELF'] . "';
+        });
+    </script>";
+}
 
+function mostrarSuccesPopup($mensaje) {
+    echo "
+    <div class='succes-pop'>
+        <div class='succes-container'>
+            <div class='redonda'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='m4.5 12.75 6 6 9-13.5' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Succsesful !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='close-Succes'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('succes-pop').classList.add('show');
+        const popupClose = document.querySelector('.close-Succes');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.succes-pop').classList.remove('show');
+            window.location.href = '" . $_SERVER['PHP_SELF'] . "';
+        });
+    </script>";
+}
 ?>
 
