@@ -307,26 +307,30 @@ body {
 
 /*  INFORMAR DEL CURSO  */
 
-#infoCurso{
-    width: 640px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .tituloCurso{
-    width: 100%;
+    width: 640px;
     border-radius: 15px;
     height: 160px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     background-color: #fafafa20;
+    padding: 1rem;
+    gap: 30px;
+}
+
+.tituloCurso h2{
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #ffffff50;
+    font-weight: 400;
 }
 
 .tituloCurso h1{
+    width: 100%;
+    text-align: center;
     font-size: 1.1rem;
     color: #ffffff;
     font-weight: 500;
@@ -345,65 +349,118 @@ body {
     align-items: center;
     gap: 20px;
     width: 100%;
+    height: 100%;
 }
+
+/*--DIV general donde contiene tabla y titulo---*/
 
 #mostrarActivities {
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
+    height: 100%;
     color: #FFFFFF;
     font-size: 1rem;
+    gap: 20px;
 }
 
-#tablaActividades {
-    height: 200px;
-    padding: 20px;
+
+#mostrarActivities h1{
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+/*--TABLA---*/
+
+#tablaActividades{
+    border: 0;
+    color: #fafafa;
+    width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
 }
 
 #tablaActividades thead {
-    background-color: #FCFCFC10;
+    padding: 1rem;
+    background-color: #fafafa20;
 }
 
 #tablaActividades th{
-    padding: 10px;
-    text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    border-radius: 10px;
+    position: sticky;
+    top: 0; 
+    z-index: 1;
+    padding: 0.7rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-align: center;
+    color: #ffffff;
+    background-color: #fafafa20;
+    backdrop-filter: blur(10px); 
+}
+
+#borderLeft{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#borderRight{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 0;
+}
+
+#tablaActividades tbody{
+    color: #fafafa;
 }
 
 #tablaActividades tbody tr{
-    transition: background-color 0.3s;
+    height: 50px;
+    background-color: #fafafa00;
+    transition: all 0.4s ease;
 }
 
 #tablaActividades tbody tr:hover{
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #ffffff1a;
 }
 
 #tablaActividades td{
-    padding: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: left;
+    padding: 0 0 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+#tablaActividades tbody tr:nth-child(odd) {
+    background-color: #ffffff00; /* Fondo para las filas impares */
+}
+
+#tablaActividades tbody tr:nth-child(even) {
+    background-color: #ffffff08; /* Fondo para las filas pares */
+}
+
+#tablaActividades tbody tr:hover {
+    background-color: #fafafa20;
 }
 
 .entregado {
     color: #8b8b8b;
 }
 
-/* POP UP */
-
-#show_popup {
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
+#show_popup{
+    background-color: #8500CD;
+    color: #ffffff;
     border: 0;
     border-radius: 15px;
-    font-size: 1rem;
-    color: #fafafa;
-    text-align: left;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
 }
+
+/* POP UP */
+
 
 #popup {
     width: 100%;

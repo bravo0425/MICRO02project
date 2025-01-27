@@ -88,7 +88,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Evaluar Activity</title>
+    <title>Evaluate List</title>
     <link rel="stylesheet" href="lista.css">
 </head>
 <body>
@@ -195,7 +195,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to activities</p>
+                            <p>Back to activities</p>
                         </button>
                     </form>
                 </div>

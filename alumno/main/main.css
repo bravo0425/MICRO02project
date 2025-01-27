@@ -344,10 +344,16 @@ a svg{
     width: 20px;
 }
 
+/*--------Fast links--------*/
+
+
 #fastlinks{
     width: 100%;
-    padding: 0.5rem;
+    padding: 1rem;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 #fastlinks h1{
@@ -362,22 +368,40 @@ a svg{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 
-#fastlinks button{
-    width: 70%;
+.FastBtn{
+    width: 75%;
+    height: 40px;
+    border: 0;
+    border-radius: 10px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     gap: 10px;
+    font-size: 0.9rem;
+    background-color: #fafafa20;
+    color: #fafafa90;
+    padding-left: 35px;
+    transition: all 0.4s ease;
 }
 
 
-#fastlinks button svg{
-    width: 20px;
+.FastBtn svg{
+    width: 25px;
+    color: #fafafa90;
+}
+
+.FastBtn:hover{
+    background-color: #fafafa40;
+    color: #fafafa;
+}
+
+.FastBtn:hover svg{ 
+    color: #fafafa;
 }
 
 

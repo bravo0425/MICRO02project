@@ -37,7 +37,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tasks</title>
     <link rel="stylesheet" href="tasks.css">
 </head>
 <body>
@@ -137,11 +137,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to dashboard</p>
+                            <p>Back to dashboard</p>
                         </button>
                     </form>
                 </div>
                 <div class="tituloCurso">
+                    <h2>Course</h2>
                     <?php
                         $selectCurso = "SELECT * FROM cursos WHERE id = $idCurso";
                         $r = mysqli_query($conn, $selectCurso);
@@ -174,12 +175,14 @@
                     ?>
                 <form action="" method="POST" id="listaActividades">
                     <div id="mostrarActivities">
-                        <table border="0" id="tablaActividades">
+                        <h1>Pending Tasks</h1>
+                        <table id="tablaActividades">
                             <thead>
                                 <tr>
-                                    <th>Activity</th>
-                                    <th>Created At</th>
-                                    <th colspan="2">Due Date</th>
+                                    <th id="borderLeft">Activity</th>
+                                    <th>Created</th>
+                                    <th>Due Date</th>
+                                    <th id="borderRight">Submitted</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -374,6 +374,7 @@ body {
 }
 
 #tableee{
+    border: 0;
     color: #fafafa;
     width: 100%;
     overflow: auto;

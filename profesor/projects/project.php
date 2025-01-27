@@ -98,7 +98,7 @@ if (!empty($_POST['editarActividad']) && !empty($_POST['editActivityId'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumnos</title>
+    <title>Projects</title>
     <link rel="stylesheet" href="project.css">
 </head>
 
