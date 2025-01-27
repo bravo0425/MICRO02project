@@ -88,7 +88,6 @@ if (!empty($_POST['editarActividad']) && !empty($_POST['editActivityId'])) {
 }
 
 
-
 ?>
 
 

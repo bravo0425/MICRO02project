@@ -8,10 +8,9 @@ function insertarProject($conn){
 
     // Validar si los campos no están vacíos
     if (empty($titulo) || empty($descripcion)) {
-        echo "Todos los campos son obligatorios.";
+        mostrarErrorPopup("All fields are required");
         return;
     }
-
     // Escapar las entradas para evitar inyecciones SQL
     $titulo = mysqli_real_escape_string($conn, $titulo);
     $descripcion = mysqli_real_escape_string($conn, $descripcion);
@@ -21,49 +20,50 @@ function insertarProject($conn){
     // Consulta para insertar el proyecto en la base de datos
     $insertar = "INSERT INTO proyectos (titulo, descripcion, curso_id, profe_id) VALUES ('$titulo', '$descripcion', '$idCurso', '$idProfe')";
 
-    mysqli_query($conn, $insertar);
-    
-    $idProject = mysqli_insert_id($conn);
-    $select = "SELECT id FROM alumnos WHERE curso_id = $idCurso";
-    $r = mysqli_query($conn, $select);
-    while ($row = mysqli_fetch_assoc($r)) {
-        $idAlumno = $row['id'];
-        $insert = "INSERT INTO alumnos_proyectos (id_alumno, id_proyecto) VALUES ('$idAlumno', '$idProject')";
-        mysqli_query($conn, $insert);
+    if (mysqli_query($conn, $insertar)) {
+        $idProject = mysqli_insert_id($conn);
+        $select = "SELECT id FROM alumnos WHERE curso_id = $idCurso";
+        $r = mysqli_query($conn, $select);
+        while ($row = mysqli_fetch_assoc($r)) {
+            $idAlumno = $row['id'];
+            $insert = "INSERT INTO alumnos_proyectos (id_alumno, id_proyecto) VALUES ('$idAlumno', '$idProject')";
+            mysqli_query($conn, $insert);
+        }
+        mostrarSuccesPopup("Project created successfully");
+    } else {
+        
     }
 }
 
 function eliminarProyecto($conn){
     $idProyecto = $_SESSION['idProyectoSeleccionado'];
 
+    if(empty($idProyecto)) {
+        header ('Location: cursos.php');
+    }
+
     $eliminarProject = "DELETE FROM proyectos WHERE id = $idProyecto";
 
     if (mysqli_query($conn, $eliminarProject)) {
-        echo "<script>alert('Proyecto eliminado correctamente');</script>";
         unset($_SESSION['idProyectoSeleccionado']);
     } else {
-        echo "<script>alert('Error al eliminar el proyecto: " . mysqli_error($conn) . "');</script>";
+        mostrarErrorPopup("Error deleting project");
     }
+    mostrarSuccesPopup("Project deleted succesfuly");
 }
 
-function mostrarImg($conn) {
+function mostrarImg($conn){
     $idProfe = $_SESSION['idProfe'];
     $queryName = 'SELECT img, tipus FROM profesores WHERE id = ' . $idProfe;
     $r = mysqli_query($conn, $queryName);
     if ($r && mysqli_num_rows($r) > 0) {
         $fila = mysqli_fetch_assoc($r);
-        if (!empty($fila['img'])) {
-            echo "<img src='data:" . $fila['tipus'] . ";base64," . base64_encode($fila['img']) . "' >";
-        } else {
-            echo "<img src='../../imagenes/usuario.png' alt='Imagen por defecto'>";
-        }
-    } else {
-        echo "<img src='../../imagenes/usuario.png' alt='Imagen por defecto'>";
+        echo "<img src='data:" . $fila['tipus'] . ";base64," . base64_encode($fila['img']) . "' >";
     }
 }
 
 function encontrarNotaProyecto($conn, $idAlumno, $idProyecto) {
-    // 1. Obtener todas las actividades relacionadas con el proyecto
+    //Obtener todas las actividades relacionadas con el proyecto
     $actividadesQuery = "SELECT actividades.id AS id_actividad FROM actividades JOIN alumnos_actividades ON actividades.id = alumnos_actividades.id_actividad  WHERE actividades.project_id = $idProyecto AND alumnos_actividades.id_alumno = $idAlumno";
     $rActividades = mysqli_query($conn, $actividadesQuery);
     
@@ -80,7 +80,6 @@ function encontrarNotaProyecto($conn, $idAlumno, $idProyecto) {
             if ($rItems && mysqli_num_rows($rItems) > 0) {
                 $sumaNotas = 0;
                 $sumaValor = 0;
-
                 while ($item = mysqli_fetch_assoc($rItems)) {
                     $notaItem = $item['notaItem'];
                     $valor = $item['valor'];
@@ -88,7 +87,6 @@ function encontrarNotaProyecto($conn, $idAlumno, $idProyecto) {
                     $sumaNotas += $notaItem * $valor;
                     $sumaValor += $valor;
                 }
-
                 // Media ponderada de los ítems para la actividad
                 if ($sumaValor > 0) {
                     $notaActividad = $sumaNotas / $sumaValor;
@@ -97,13 +95,11 @@ function encontrarNotaProyecto($conn, $idAlumno, $idProyecto) {
                 }
             }
         }
-
         // Media de las actividades para el proyecto
         if ($totalActividades > 0) {
             return $notaProyecto / $totalActividades ;
         }
     }
-    // Si no hay actividades o ítems evaluados, retornar 0
     return 0;
 }
 
@@ -129,7 +125,6 @@ function mostrarTablaAlumnos($conn, $idProyecto) {
             echo '<td>' . number_format($notaProyecto, 1) . '</td>'; // Mostrar la nota con 2 decimales
             echo '</tr>';
         }
-
     } else {
         echo '<tr><td colspan="2">There are no students assigned to this project.</td></tr>';
     }
@@ -143,7 +138,6 @@ function mostrarMediaProyectos($conn, $idProyecto){
     $media = 0;
 
     if ($resultsql && mysqli_num_rows($resultsql) > 0) {
-
         while ($row = mysqli_fetch_assoc($resultsql)) {
             $idAlumno = $row['id_alumno'];
 
@@ -155,9 +149,58 @@ function mostrarMediaProyectos($conn, $idProyecto){
             $media = $totalNotas / $totalAlumnos;
             echo '<p> '.number_format($media, 1).'</p>';
         }
-        
-
     } else {
         echo '<p>-</p>';
     }
+}
+
+// Función para mostrar popups de error
+function mostrarErrorPopup($mensaje) {
+    echo "
+    <div class='error-pop'>
+        <div class='error-container'>
+            <div class='redondaError'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Oooops !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='popup-close'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('error-pop').classList.add('show');
+        const popupClose = document.querySelector('.popup-close');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.error-pop').classList.remove('show');
+        });
+    </script>";
+}
+
+function mostrarSuccesPopup($mensaje) {
+    echo "
+    <div class='succes-pop'>
+        <div class='succes-container'>
+            <div class='redonda'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='m4.5 12.75 6 6 9-13.5' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Succsesful !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='close-Succes'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('succes-pop').classList.add('show');
+        const popupClose = document.querySelector('.close-Succes');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.succes-pop').classList.remove('show');
+        });
+    </script>";
 }

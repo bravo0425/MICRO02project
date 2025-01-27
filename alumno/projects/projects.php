@@ -22,6 +22,10 @@
         exit();
     }
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['proyectoDiv'])) {
+        $_SESSION['idProyectoSeleccionado'] = $_POST['proyectoDiv'];
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -241,10 +245,12 @@
                         $resultadoProyectos = mysqli_query($conn, $selectProyectos);
                         if (mysqli_num_rows($resultadoProyectos) > 0){
                             while($fila = mysqli_fetch_assoc($resultadoProyectos)){
+                                $idProyecto = $fila['id'];
                                 ?>
                                 <button type="submit" name="proyectoDiv" value="<?php echo $fila['id']; ?>" class="cardProyecto">
-                                    <p><span><?php echo $fila['titulo']; ?> <br></span><?php echo $fila['descripcion']; ?></p>
-                                </button>                                
+                                    <p><?php echo $fila['titulo']; ?></p>
+                                    <p><?php echo mostrarnotaProyecto($conn, $idProyecto, $idAlumno); ?></p>
+                                </button>
                                 <?php
                             }
                         }

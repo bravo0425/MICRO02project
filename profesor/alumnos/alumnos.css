@@ -374,7 +374,6 @@ body {
 }
 
 #tableee{
-    border: 0;
     color: #fafafa;
     width: 100%;
     overflow: auto;
@@ -755,7 +754,8 @@ body {
 }
 
 .redondaError{
-    top: -35;
+    transform: translateY(-30px);
+    top: 0;
     position: absolute;
     width: 70px;
     height: 70px;
@@ -845,7 +845,8 @@ body {
 }
 
 .redonda{
-    top: -35;
+    transform: translateY(-30px);
+    top: 0;
     position: absolute;
     width: 70px;
     height: 70px;

@@ -21,24 +21,10 @@
             $update = "UPDATE alumnos SET username = '$usernameA', pass = '$contrasenyaA', name = '$nombreA', last_name = '$apellidoA' WHERE id = '$alumno_id'";
             mysqli_query($conn, $update);
 
-            echo "
-            <div class='error-pop' id='error-pop'>
-                <div class='error-container'>
-                    <p>Student updated successfully</p>
-                    <button class='popup-close'>Confirmar</button>
-                </div>
-            </div>
-            ";
-            echo "<script>
-                document.getElementById('error-pop').classList.add('show');
-                const popupClose = document.querySelector('.popup-close');
-                popupClose.addEventListener('click', function() {
-                    document.querySelector('.error-pop').classList.remove('show');
-                });
-            </script>";
+            mostrarSuccesPopup("Student updated successfully");
             return;
         }else{
-            header('Location: alumnos.php');
+            
         }
         exit();
     }
@@ -68,9 +54,8 @@
     
         // Ejecutar consulta y verificar éxito
         if (mysqli_query($conn, $insert)) {
-
-            header('Location: alumnos.php');
-            exit();
+            mostrarSuccesPopup("Student added successfully");
+            return;
         } else {
             mostrarErrorPopup("Error insert student: " . mysqli_error($conn));
         }

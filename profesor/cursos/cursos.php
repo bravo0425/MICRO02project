@@ -61,7 +61,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses</title>
+    <title>Alumnos</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="cursos.css">
 </head>
@@ -203,11 +203,17 @@ session_start();
                             <div class="numProjects">
                                 <img src="../../imagenes/students.png">
                                 <?php
-                                $selectCurso = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
-                                $r = mysqli_query($conn, $selectCurso);
-                                $count = mysqli_num_rows($r);  
-                                echo "<p>" . $count . "</p>";
+                                    $count = 0;
+                                    $selectCurso = "SELECT * FROM alumnos_proyectos JOIN proyectos ON alumnos_proyectos.id_proyecto = proyectos.id WHERE proyectos.curso_id = $idCurso " ;
+                                    $r = mysqli_query($conn, $selectCurso);
+                                    if ($r) {
+                                        while ($fila = mysqli_fetch_assoc($r)) {
+                                            $count++;
+                                        }
+                                        echo "<p>" . $count . "</p>";
+                                    } 
                                 ?>
+
             
                             </div>
                         </div>
@@ -256,7 +262,7 @@ session_start();
                                                 </form>";
                                     }
                                 } else {
-                                    echo "<p>There are no projects available.</p>";
+                                    echo "<p>No hay proyectos disponibles.</p>";
                                 }
                                 ?>
                             </div>
@@ -295,7 +301,7 @@ session_start();
                                 <tbody>
                                     <?php
                                     if (empty($_SESSION['idProyectoSeleccionado'])) {
-                                        echo '<td colspan="2">Select a project.</td>';
+                                        echo '<td colspan="2">Selecciona un proyecto</td>';
                                     } else {
                                         $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
                                         mostrarTablaAlumnos($conn, $idProyectoSeleccionado);

@@ -16,6 +16,7 @@ function mostrarImg($conn) {
     }
 }
 
+
 function mostrarIcon($conn, $idItem){
     $query = "SELECT icon, tipus FROM items WHERE id = $idItem";
     $result = mysqli_query($conn, $query);
@@ -34,21 +35,15 @@ function mostrarIcon($conn, $idItem){
 }
 
 function añadirItem($conn, $idActivity){
-    if (empty($_POST['tituloNewItem']) || empty($_POST['valorNewItem']) || empty($_FILES['imgIcon'])) {
-        echo "
-        <div class='error-pop'>
-            <div class='error-container'>
-                <p>All fields are required</p>
-                <button class='popup-close'>Confirm</button>
-            </div>
-        </div>
-        ";
-        return;
-    }
     $titulo = $_POST['tituloNewItem'];
     $valor = $_POST['valorNewItem'];
     $icono = $_FILES['imgIcon'];
     $tipus = $_FILES['imgIcon']['type'];
+
+    if (empty($_POST['tituloNewItem']) || empty($_POST['valorNewItem']) || empty($_FILES['imgIcon']['name'])) {
+        mostrarErrorPopup("All fields are required");
+        return;
+    }
 
     $imgData = file_get_contents($icono['tmp_name']);
     $imgData = mysqli_real_escape_string($conn, $imgData);
@@ -66,8 +61,8 @@ function añadirItem($conn, $idActivity){
         mysqli_query($conn, $insertarAlumnos);
     }
 
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
+    mostrarSuccesPopup("Skill added succesfully");
+    return;
 }
 
 function mostrarItems($conn, $idActivity){
@@ -122,8 +117,8 @@ function mostrarItemsEditar($conn, $idActivity){
             echo '  <label for="titulo-' . $idItem . '" class="itemTitleLabel">Título:</label>';
             echo '  <input type="text" class="itemTitleInput" id="tituloItems" name="titulo[' . $idItem . ']" value="' . $titulo . '">';
 
-            echo '  <label for="valor-' . $idItem . '" class="selectEditItemLabel">Valor:</label>';
-            echo '  <select name="valor[' . $idItem . ']" id="valorItems" class="selectEditItem">';
+            echo '  <label for="valor-' . $idItem . '" class="itemValueLabel">Valor:</label>';
+            echo '  <select name="valor[' . $idItem . ']" id="valorItems" class="itemValueSelect">';
             for ($i = 10; $i <= 100; $i += 10) {
                 $selected = ($valor == $i) ? 'selected' : '';
                 echo '<option value="' . $i . '" ' . $selected . '>' . $i . '%</option>';
@@ -141,6 +136,7 @@ function eliminarItem($conn, $idItem){
 
     $query = "DELETE FROM items WHERE id = $idItem";
     mysqli_query($conn, $query);
+    mostrarSuccesPopup("Skill deleted successfully");
 }
 
 function updateItems($conn, $idActivity) {
@@ -152,7 +148,7 @@ function updateItems($conn, $idActivity) {
         // Comprobar si la suma de valores es 100
         $totalValor = array_sum($valores);
         if ($totalValor != 100) {
-            echo "<script>alert('Error: La suma de los valores debe ser igual a 100. La suma actual es $totalValor.');</script>";
+            mostrarErrorPopup("Error: La suma de los valores debe ser igual a 100. Y es $totalValor");
             return;
         }
         // Si la suma es 100 hace el update
@@ -177,9 +173,9 @@ function updateItems($conn, $idActivity) {
             }
         }
 
-        echo "<script>alert('Items actualizados correctamente');</script>";
+        mostrarSuccesPopup("Skills updated successfully");
     } else {
-        echo "<script>alert('No se enviaron datos para actualizar');</script>";
+        mostrarErrorPopup("Error updating skills");
     }
 }
 
@@ -213,7 +209,6 @@ function notaActividad($conn, $idAlumno, $idActivity) {
     } else {
         return null;  // Si no hay items para la actividad, retornar null
     }
-
     return $nota;
 }
 
@@ -300,3 +295,55 @@ function generarTablaAlumnosNotas($conn, $idActivity) {
     return $tabla;
 }
 
+// Función para mostrar popups de error
+function mostrarErrorPopup($mensaje) {
+    echo "
+    <div class='error-pop'>
+        <div class='error-container'>
+            <div class='redondaError'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Oooops !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='popup-close'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('error-pop').classList.add('show');
+        const popupClose = document.querySelector('.popup-close');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.error-pop').classList.remove('show');
+            window.location.href = '" . $_SERVER['PHP_SELF'] . "';
+        });
+    </script>";
+}
+
+function mostrarSuccesPopup($mensaje) {
+    echo "
+    <div class='succes-pop'>
+        <div class='succes-container'>
+            <div class='redonda'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='m4.5 12.75 6 6 9-13.5' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Succsesful !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='close-Succes'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('succes-pop').classList.add('show');
+        const popupClose = document.querySelector('.close-Succes');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.succes-pop').classList.remove('show');
+            window.location.href = '" . $_SERVER['PHP_SELF'] . "';
+        });
+    </script>";
+}

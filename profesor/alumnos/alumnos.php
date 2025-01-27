@@ -45,7 +45,7 @@ $resultado = mysqli_query($conn, $query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students</title>
+    <title>Alumnos</title>
     <link rel="stylesheet" href="alumnos.css">
 </head>
 
@@ -347,7 +347,7 @@ $resultado = mysqli_query($conn, $query);
                     <form method="POST" action="" id="listaAlumnos">
                         <input type="hidden" id="hiddenField" name="selectedRadio" value="">
                         <div class="tablaMostrarStudents">
-                            <table id="tableee">
+                            <table border="0" id="tableee">
                                 <thead>
                                     <tr>
                                         <th id="borderLeft"></th>
