@@ -83,7 +83,6 @@ if (!empty($_POST['deleteActivity'])) {
 }
 
 if (!empty($_POST['editarActividad']) && !empty($_POST['editActivityId'])) {
-    echo 'asasas';
     editarActividad($conn, intval($_POST['editActivityId']));
 }
 

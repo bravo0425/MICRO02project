@@ -8,7 +8,7 @@ function insertarProject($conn){
 
     // Validar si los campos no están vacíos
     if (empty($titulo) || empty($descripcion)) {
-        echo "Todos los campos son obligatorios.";
+        mostrarErrorPopup("All fields are required");
         return;
     }
 
@@ -21,29 +21,36 @@ function insertarProject($conn){
     // Consulta para insertar el proyecto en la base de datos
     $insertar = "INSERT INTO proyectos (titulo, descripcion, curso_id, profe_id) VALUES ('$titulo', '$descripcion', '$idCurso', '$idProfe')";
 
-    mysqli_query($conn, $insertar);
-    
-    $idProject = mysqli_insert_id($conn);
-    $select = "SELECT id FROM alumnos WHERE curso_id = $idCurso";
-    $r = mysqli_query($conn, $select);
-    while ($row = mysqli_fetch_assoc($r)) {
-        $idAlumno = $row['id'];
-        $insert = "INSERT INTO alumnos_proyectos (id_alumno, id_proyecto) VALUES ('$idAlumno', '$idProject')";
-        mysqli_query($conn, $insert);
+    if (mysqli_query($conn, $insertar)) {
+        $idProject = mysqli_insert_id($conn);
+        $select = "SELECT id FROM alumnos WHERE curso_id = $idCurso";
+        $r = mysqli_query($conn, $select);
+        while ($row = mysqli_fetch_assoc($r)) {
+            $idAlumno = $row['id'];
+            $insert = "INSERT INTO alumnos_proyectos (id_alumno, id_proyecto) VALUES ('$idAlumno', '$idProject')";
+            mysqli_query($conn, $insert);
+        }
+        mostrarSuccesPopup("Project created successfully");
+    } else {
+        mostrarErrorPopup("Error creating project");
     }
 }
 
 function eliminarProyecto($conn){
     $idProyecto = $_SESSION['idProyectoSeleccionado'];
 
+    if(empty($idProyecto)) {
+        header ('Location: cursos.php');
+    }
+
     $eliminarProject = "DELETE FROM proyectos WHERE id = $idProyecto";
 
     if (mysqli_query($conn, $eliminarProject)) {
-        echo "<script>alert('Proyecto eliminado correctamente');</script>";
         unset($_SESSION['idProyectoSeleccionado']);
     } else {
-        echo "<script>alert('Error al eliminar el proyecto: " . mysqli_error($conn) . "');</script>";
+        mostrarErrorPopup("Error deleting project");
     }
+    mostrarSuccesPopup("Project deleted succesfuly");
 }
 
 function mostrarImg($conn){
@@ -160,4 +167,56 @@ function mostrarMediaProyectos($conn, $idProyecto){
     } else {
         echo '<p>-</p>';
     }
+}
+
+
+// Función para mostrar popups de error
+function mostrarErrorPopup($mensaje) {
+    echo "
+    <div class='error-pop'>
+        <div class='error-container'>
+            <div class='redondaError'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Oooops !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='popup-close'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('error-pop').classList.add('show');
+        const popupClose = document.querySelector('.popup-close');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.error-pop').classList.remove('show');
+        });
+    </script>";
+}
+
+function mostrarSuccesPopup($mensaje) {
+    echo "
+    <div class='succes-pop'>
+        <div class='succes-container'>
+            <div class='redonda'>
+                <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                    <path stroke-linecap='round' stroke-linejoin='round' d='m4.5 12.75 6 6 9-13.5' />
+                </svg>
+            </div>
+            <div class='textPOP'>
+                <h3>Succsesful !!</h3>   
+                <p>$mensaje</p>
+            </div>
+            <button class='close-Succes'>Ok</button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('succes-pop').classList.add('show');
+        const popupClose = document.querySelector('.close-Succes');
+        popupClose.addEventListener('click', function() {
+            document.querySelector('.succes-pop').classList.remove('show');
+        });
+    </script>";
 }

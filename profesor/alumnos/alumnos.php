@@ -214,12 +214,12 @@ $resultado = mysqli_query($conn, $query);
                                 <input type="text" name="usernameM" id="usernameM" value="<?php echo $username; ?>"><br>
                             </div>
                             <div class="column">
-                                <label for="contrasenyaM">Password</label>
-                                <input type="password" name="contrasenyaM" id="contrasenyaM" value="<?php echo $password; ?>"><br>
+                                <label for="contrasenyaM">New Password</label>
+                                <input type="password" name="contrasenyaM" id="contrasenyaM" placeholder="Enter new password"><br>
                             </div>
                             <div class="column">
-                                <label for="contrasenya2M">Repeat password</label>
-                                <input type="password" name="contrasenya2M" id="contrasenya2M" value="<?php echo $password; ?>"><br>
+                                <label for="contrasenya2M">Repeat New Password</label>
+                                <input type="password" name="contrasenya2M" id="contrasenya2M" placeholder="Repeat new password"><br>
                             </div>
                             <div class="column-se">
                                 <label for="Curso">Curso</label>

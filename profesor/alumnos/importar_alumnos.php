@@ -15,31 +15,25 @@
                     $pass = mysqli_real_escape_string($conn, $data[1]);
                     $nombre = mysqli_real_escape_string($conn, $data[2]);
                     $last_name = mysqli_real_escape_string($conn, $data[3]);
-                    $project_id = mysqli_real_escape_string($conn, $data[4]);
-                    $curso_id = mysqli_real_escape_string($conn, $data[5]);
+                    $curso_id = mysqli_real_escape_string($conn, $data[4]);
         
                     // Inserta los datos en la tabla 'alumnos'
-                    $query = "INSERT INTO alumnos (username, pass, name, last_name, project_id, curso_id) VALUES ('$username', '$pass', '$nombre', '$last_name', '$project_id', '$curso_id')";
+                    $query = "INSERT INTO alumnos (username, pass, name, last_name, curso_id) VALUES ('$username', '$pass', '$nombre', '$last_name', '$curso_id')";
                     if (!mysqli_query($conn, $query)) {
                         echo "Error al insertar fila: " . mysqli_error($conn);
                     }
                 }
         
                 fclose($open);
-                echo "Importación completada exitosamente.";
                 mysqli_close($conn);
                 header ('Location: alumnos.php');
             } else {
-                echo "Error al abrir el archivo.";
                 mysqli_close($conn);
                  header ('Location: alumnos.php');
             }
         } else {
             header ('Location: alumnos.php');
-            echo "No se ha enviado ningún archivo.";
         }
-        
-        // Cierra la conexión
         mysqli_close($conn);
         header ('Location: alumnos.php');
 
