@@ -80,9 +80,17 @@ body {
     width: 200px;
 }
 
-.usuario h3 {
+.usuario h3{
     font-size: 1rem;
     font-weight: 400;
+}
+
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
 }
 
 /* opciones del navBar*/
@@ -109,7 +117,7 @@ body {
     transition: all 0.3s;
 }
 
-.positionButton {
+.positionButton{
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -117,14 +125,14 @@ body {
     width: 130px;
 }
 
-.imgNav {
+.imgNav{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 50px;
 }
 
-.h2Nav {
+.h2Nav{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -152,7 +160,7 @@ body {
     background-color: #ffffff30;
 }
 
-.active h2 {
+.active h2{
     color: #fafafa !important;
 }
 
@@ -217,7 +225,7 @@ body {
     transition: all 0.3s;
 }
 
-.iconLogout {
+.iconLogout{
     width: 20px;
 }
 
@@ -230,7 +238,12 @@ body {
     background-color: #FFFFFF40;
 }
 
-/* FINAL NAVBAR */
+
+/*Fin de menu lateral*/
+
+
+
+
 
 /* CONTENIDO */
 

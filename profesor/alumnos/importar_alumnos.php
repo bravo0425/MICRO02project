@@ -2,7 +2,7 @@
     include "../../conexion.php";
     
     if (!empty($_POST['importar'])) {
-        if (!empty($_FILES['csv_file'])) {
+        if (isset($_FILES['csv_file']) && !empty($_FILES['csv_file']['tmp_name'])) {
             $file = $_FILES['csv_file']['tmp_name'];
         
             // Abre el archivo en modo lectura
@@ -27,10 +27,15 @@
         
                 fclose($open);
                 echo "Importación completada exitosamente.";
+                mysqli_close($conn);
+                header ('Location: alumnos.php');
             } else {
                 echo "Error al abrir el archivo.";
+                mysqli_close($conn);
+                 header ('Location: alumnos.php');
             }
         } else {
+            header ('Location: alumnos.php');
             echo "No se ha enviado ningún archivo.";
         }
         

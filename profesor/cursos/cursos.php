@@ -1,17 +1,16 @@
 <?php
-    include "../../conexion.php";
-    include "funciones.php";
+include "../../conexion.php";
+include "funciones.php";
 
-    session_start();
+session_start();
 
-    if(isset($_SESSION['nombreUser'])){
+    if (isset($_SESSION['nombreUser'])) {
         $usuarioLog = $_SESSION['nombreUser'];
         $idProfe = $_SESSION['idProfe'];
         $nom = $_SESSION['nombre'];
         $apellido = $_SESSION['apellido'];
         $idCurso = $_SESSION['idCurso'];
-        
-    }else{
+    } else {
         header('Location: ../../login/login.php');
         exit();
     }
@@ -37,11 +36,11 @@
         $mostrarFormulario = false;
     }
 
-    if(!empty($_POST["safeAddProject"])){
+    if (!empty($_POST["safeAddProject"])) {
         insertarProject($conn);
     }
 
-    if(!empty($_POST['deleteProject'])){
+    if (!empty($_POST['deleteProject'])) {
         eliminarProyecto($conn);
     }
 
@@ -55,8 +54,10 @@
     }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,19 +65,20 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="cursos.css">
 </head>
+
 <body>
 
-<!--Container general-->
-    <div class="container">     
+    <!--Container general-->
+    <div class="container">
 
-        <!-- menu--> 
+        <!-- menu-->
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
@@ -89,7 +91,7 @@
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-                        
+
                     </button>
                     <button onclick="goCursos()" class="menu active">
                         <div class="positionButton">
@@ -97,7 +99,7 @@
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Subjects</h2>
+                                <h2>Courses</h2>
                             </div>
                         </div>
                     </button>
@@ -159,7 +161,7 @@
             <div id="arriba">
 
                 <div id="infoApp" class="card">
-                    <h2>Subjects</h2>
+                    <h2>Courses</h2>
                     <form method="POST" action="../main/index.php">
                         <button type="submit">
                             <a href="">
@@ -167,7 +169,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to dashboard</p>
+                            <p>Back to dashboard</p>
                         </button>
                     </form>
                 </div>
@@ -175,14 +177,14 @@
                 <div id="infoCurso">
                     <div class="tituloCurso">
                         <?php
-                            $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
-                            $r = mysqli_query($conn, $selectCurso);
+                        $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
+                        $r = mysqli_query($conn, $selectCurso);
 
-                            if(mysqli_num_rows($r) > 0){
-                                while($fila = mysqli_fetch_assoc($r)) {
-                                    echo "<h1>". $fila['nombre'] ."</h1>";
-                                }
+                        if (mysqli_num_rows($r) > 0) {
+                            while ($fila = mysqli_fetch_assoc($r)) {
+                                echo "<h1>" . $fila['nombre'] . "</h1>";
                             }
+                        }
                         ?>
                     </div>
                     <div id="estadisticasCurso">
@@ -200,19 +202,32 @@
                             <h3>Students</h3>
                             <div class="numProjects">
                                 <img src="../../imagenes/students.png">
-                                <p>25</p>
+                                <?php
+                                $selectCurso = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
+                                $r = mysqli_query($conn, $selectCurso);
+                                $count = mysqli_num_rows($r);  
+                                echo "<p>" . $count . "</p>";
+                                ?>
+            
                             </div>
                         </div>
                         <div class="cardInfo">
                             <h3>Average Score</h3>
                             <div class="numProjects">
                                 <div class="redondaStado"></div>
-                                <p>7.5</p>
+                                <?php
+                                    if (!empty($_SESSION['idProyectoSeleccionado'])) {
+                                        $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
+                                        mostrarMediaProyectos($conn, $idProyectoSeleccionado);
+                                    } else {
+                                        echo '<p>-</p>';
+                                    }
+                                    ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
 
             <!-- abajo -->
@@ -223,38 +238,38 @@
                             <h1>Projects</h1>
                             <div class="listadoProjects">
                                 <?php
-                                    $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
-                                    $r = mysqli_query($conn, $selectProject);
+                                $selectProject = 'SELECT * FROM proyectos WHERE curso_id = ' . $idCurso;
+                                $r = mysqli_query($conn, $selectProject);
 
-                                    if (mysqli_num_rows($r) > 0) {
-                                        while ($fila = mysqli_fetch_assoc($r)) {
-                                            $style = '';
-                                            if (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']) {
-                                                $style = "style='background-color: #fafafa40; border: 0px; color: #ffffff; font-weight: 300;'";
-                                            }
-                                            
-                                            echo "<form method='POST' action=''>
-                                                <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
-                                                <button type='submit' class='project-button' $style>
-                                                    <p>" . htmlspecialchars($fila['titulo']) . "</p>
-                                                </button>
-                                            </form>";
+                                if (mysqli_num_rows($r) > 0) {
+                                    while ($fila = mysqli_fetch_assoc($r)) {
+                                        $style = '';
+                                        if (isset($_SESSION['idProyectoSeleccionado']) && $_SESSION['idProyectoSeleccionado'] == $fila['id']) {
+                                            $style = "style='background-color: #fafafa40; border: 0px; color: #ffffff; font-weight: 300;'";
                                         }
-                                    } else {
-                                        echo "<p>No hay proyectos disponibles.</p>";
+
+                                        echo "<form method='POST' action=''>
+                                                    <input type='hidden' name='idProyecto' value='" . $fila['id'] . "'>
+                                                    <button type='submit' class='project-button' $style>
+                                                        <p>" . htmlspecialchars($fila['titulo']) . "</p>
+                                                    </button>
+                                                </form>";
                                     }
+                                } else {
+                                    echo "<p>No hay proyectos disponibles.</p>";
+                                }
                                 ?>
                             </div>
                         </div>
                         <div id="botonesProjects">
                             <?php
-                                if (isset($_SESSION['idProyectoSeleccionado'])) {
-                                    $idProyecto = $_SESSION['idProyectoSeleccionado'];
-                                    echo "<form method='POST' action='../projects/project.php'>
+                            if (isset($_SESSION['idProyectoSeleccionado'])) {
+                                $idProyecto = $_SESSION['idProyectoSeleccionado'];
+                                echo "<form method='POST' action='../projects/project.php'>
                                             <input type='hidden' name='idProyecto' value='" . $idProyecto . "'>
                                             <button class='openProject'>Open</button>
                                         </form>";
-                                }
+                            }
                             ?>
                             <div class="displayRow">
                                 <form method="POST" action="">
@@ -270,26 +285,44 @@
                     <?php if (!$mostrarFormulario): ?>
                         <h1>Students Scores</h1>
                         <div id="grafica">
-                            <p>Gráfica de estudiantes</p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th id="borderLeft">Name</th>
+                                        <th id="borderRight">Project Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if (empty($_SESSION['idProyectoSeleccionado'])) {
+                                        echo '<td colspan="2">Selecciona un proyecto</td>';
+                                    } else {
+                                        $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
+                                        mostrarTablaAlumnos($conn, $idProyectoSeleccionado);
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+
                         </div>
                     <?php else: ?>
                         <h1>Add a New Project</h1>
                         <div id="formularioProyecto">
                             <form method="POST" action="">
                                 <div class="inputsForm">
-                                    <label for="tituloProyecto">Título del Proyecto:</label>
+                                    <label for="tituloProyecto">Title:</label>
                                     <input type="text" id="tituloProyecto" name="tituloProyecto">
                                 </div>
-                                
+
                                 <div class="inputsForm">
-                                    <label for="descripcionProyecto">Descripción:</label>
+                                    <label for="descripcionProyecto">Description:</label>
                                     <textarea id="descripcionProyecto" name="descripcionProyecto"></textarea>
                                 </div>
-                                
+
                                 <div class="botonesFormulario">
                                     <form method="POST" action="">
-                                        <button type="submit" name="safeAddProject" value="true" class="guardarProyecto">Crear Proyecto</button>
-                                        <button type="submit" name="cancelAddProject" value="true" class="cancelarProyecto">Cancelar</button>
+                                        <button type="submit" name="safeAddProject" value="true" class="guardarProyecto">Add Project</button>
+                                        <button type="submit" name="cancelAddProject" value="true" class="cancelarProyecto">Cancel</button>
                                     </form>
                                 </div>
                             </form>
@@ -302,7 +335,8 @@
     </div><!--Container-->
 
     <?php mysqli_close($conn); ?>
-        
+
     <script src="cursos.js"></script>
 </body>
+
 </html>

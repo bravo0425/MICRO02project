@@ -85,6 +85,14 @@ body {
     font-weight: 400;
 }
 
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
 /* opciones del navBar*/
 
 .navbar {
@@ -282,6 +290,7 @@ body {
     gap: 5px;
     background-color: #fafafa00;
     border: 0px;
+    cursor: pointer ;
 }
 #infoApp button a{
     border: 1px solid #000;
@@ -306,22 +315,76 @@ body {
     width: 640px;
     display: flex;
     color: white;
-    padding: 10px;
+    padding: 0.7rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+    
 }
 
-#description h1{
+/*---------parte de arriba de la descripcion incluido el button-------------*/
+
+
+.description-action{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.description-action h4{
+    width: 100%;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #fafafa80;
+}
+
+.editProject{
+    background-color: #fafafa00;
+    border: 0;
+    cursor: pointer;
+    display: none;
+}
+
+.editProject svg{
+    width: 18px;
+    height: 18px;
+    color: #fafafa80;
+    transition: all 0.4s ease;
+}
+
+.editProject svg:hover{
+    color: #fafafa;
+}
+
+/*--------- Informaciond de la actividad -------------*/
+
+.descriptionInfo{
+    width: 100%;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: left;
+    gap: 5px;
+    overflow: hidden;
+}
+
+.descriptionInfo h1{
     font-size: 1.2rem;
     font-weight: 500;
 }
 
-#text p{
-    font-size: 0.9rem;
+.descriptionInfo p{
+    font-size: 0.8rem;
     font-weight: 400;
+    color: #fafafa90;
+}
+
+.descriptionInfo p span{
+    color: #fafafa !important;
 }
 
 
@@ -334,9 +397,9 @@ body {
     height: 510px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     overflow: hidden;
-    padding: 10px;
+    padding: 1rem;
 }
 
 
@@ -351,18 +414,104 @@ body {
 
 
 #tablaNotas{
-    padding: 10px;
     width: 100%;
-    color: #fafafa;
-    height: 220px;
+    max-height: 400px !important;
+    border: 0px;
+    overflow-y: auto
 }
 
 table{
+    color: #fafafa;
     width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
 }
 
 thead{
-    background-color: #fafafa30;
+    background-color: #fafafa20;
 }
 
+thead th {
+    position: sticky; /* Fijar el encabezado */
+    top: 0; 
+    z-index: 1;
+    padding: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    color: #ffffff;
+    background-color: #fafafa20;
+    backdrop-filter: blur(10px); 
 
+
+}
+
+#borderLeft{
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#borderRight{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+tbody{
+    color: #fafafa;
+}
+
+tbody td{
+    padding: 0 0 0 0;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.descargarBtn{
+    background-color: #00000000;
+    border: 0;
+    color: #bb48f9;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.descargarBtn:hover{
+    color: #8600cf;
+}
+
+tbody tr {
+    height: 40px;
+    background-color: #fafafa00;
+    transition: all 0.4s ease;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff00; /* Fondo para las filas impares */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #ffffff08; /* Fondo para las filas pares */
+}
+
+tbody tr:hover {
+    background-color: #fafafa20;
+}
+
+.okEva{
+    background-color: #fafafa00;
+    color: #E2FF32;
+    border: 0;
+    cursor: pointer;
+}
+
+.noEva{
+    background-color: #8500CD;
+    color: #ffffff;
+    border: 0;
+    border-radius: 15px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}

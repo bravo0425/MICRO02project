@@ -1,45 +1,92 @@
 <?php
 
-    session_start();
-    include "../../../conexion.php";
+session_start();
+include "../../../conexion.php";
+include "functions.php";
 
-    if(isset($_SESSION['nombreUser'])){
-        $usuarioLog = $_SESSION['nombreUser'];
-        $nom = $_SESSION['nombre'];
-        $apellido = $_SESSION['apellido'];
-    }else{
-        header('Location: ../../../login/login.php');
-        exit();
-    }
+if (isset($_SESSION['nombreUser'])) {
+    $usuarioLog = $_SESSION['nombreUser'];
+    $nom = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+} else {
+    header('Location: ../../../login/login.php');
+    exit();
+}
 
-    if (!empty($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        header('Location: ../../../login/login.php');
-        exit();
+if (!empty($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: ../../../login/login.php');
+    exit();
+}
+
+if (isset($_SESSION['idActividad'])) {
+    $idActivity = intval($_SESSION['idActividad']);
+
+    $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
+    $result = mysqli_query($conn, $queryAct);
+
+    while ($act = mysqli_fetch_assoc($result)) {
+        $titulo = htmlspecialchars($act['titulo']);
+        $descripcion = htmlspecialchars($act['descripcion']);
+        $dueDate = htmlspecialchars($act['due_date']);
+        $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
     }
+}
+
+if (isset($_SESSION['idAlumno'])) {
+    $idAlumno = $_SESSION['idAlumno'];
+
+    $searchAlumno = "SELECT * FROM alumnos WHERE id = $idAlumno";
+    $r = mysqli_query($conn, $searchAlumno);
+
+    while ($alumno = mysqli_fetch_assoc($r)) {
+        $idStudent = $alumno['id'];
+        $nomStudent = $alumno['name'];
+        $cogStudent = $alumno['last_name'];
+    }
+}
+
+$searchItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+$rItems = mysqli_query($conn, $searchItems);
+
+$items = [];
+if (mysqli_num_rows($rItems) > 0) {
+    while ($item = mysqli_fetch_assoc($rItems)) {
+        $items[] = $item;
+    }
+}
+
+if (!empty($_POST['evaluate']) && !empty($_POST['items'])) {
+    añadirNota($conn, $idStudent, $_POST['items']);
+    header('Location: ../lista/lista.php');
+    exit();
+}
+
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activities</title>
     <link rel="stylesheet" href="notas.css">
 </head>
+
 <body>
 
-<!--Container general-->
-    <div class="container">     
-        <!-- menu izquierda--> 
+    <!--Container general-->
+    <div class="container">
+        <!-- menu izquierda-->
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
@@ -52,7 +99,7 @@
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-                        
+
                     </button>
                     <button onclick="goCursos()" class="menu active">
                         <div class="positionButton">
@@ -135,55 +182,73 @@
                 </div>
 
                 <div id="description" class="card">
-                    <h1>Ferran Bravo Chapinal</h1>
+                    <div class="info-options">
+                        <h4>Student</h4>
+                    </div>
+                    <h1><?php echo htmlspecialchars($nomStudent ?? '') . ' ' . htmlspecialchars($cogStudent ?? ''); ?></h1>
                 </div>
             </div>
 
 
             <div id="abajo">
                 <div id="activity">
-                    <div id="file"  class="card">
-                        <p>File</p>
+                    <div id="file" class="card">
+                        <div class="info-options">
+                            <h4>File</h4>
+                        </div>
                         <button>Descarga</button>
                     </div>
-                    <div id="info"  class="card">
-                        <p>Activity</p>
-                        <p>Make a web design</p>
-                        <p>Width Html and CSS make a web beautiful</p>
+                    <div id="info" class="card">
+                        <div class="info-options">
+                            <h4>Activity</h4>
+                        </div>
+                        <p><?php echo htmlspecialchars($titulo) ?></p>
+                        <p><?php echo htmlspecialchars($descripcion) ?></p>
                     </div>
                 </div>
 
                 <div id="formItems" class="card">
-                    <h2>Asign Scores of the Activity</h2>
-                    <form method="POST" action="">
-                        <div class="inputs">
-                            <label for="">Structure</label>
-                            <input type="text" name="" value="">
-                        </div>
-                        <div class="inputs">
-                            <label for="">Contingut</label>
-                            <input type="text" name="" value="">
-                        </div>
-                        <div class="inputs">
-                            <label for="">Actitud</label>
-                            <input type="text" name="" value="">
-                        </div>
-                        <div class="notaFinal">
-                            <p>Nota Final: 7.5</p>
-                        </div>
-                        <div class="buttonDiv">
-                            <input type="submit" id="cancelbtn" name="cancel" value="Cancel">
-                            <input type="submit" id="evaluatebtn" name="evaluate" value="Evaluate">
-                        </div>
-                        
-                    </form>
+                    <h2>Assign Scores of the Activity</h2>
+                    <?php
+                    $queryItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+                    $rItems = mysqli_query($conn, $queryItems);
+
+                    if (mysqli_num_rows($rItems) > 0) { ?>
+                        <form method="POST" action="">
+                            <?php
+                            while ($item = mysqli_fetch_assoc($rItems)) {
+                                $item_id = $item['id'];
+
+                                // Buscar si el item ya tiene una nota asignada
+                                $buscarNotaItem = "SELECT * FROM alumnos_items WHERE id_item = $item_id AND id_alumno = $idStudent";
+                                $nota = mysqli_query($conn, $buscarNotaItem);
+                                $rowItemsNota = mysqli_fetch_assoc($nota);
+
+                                // Mostrar el input para asignar la nota
+                                echo '<div class="inputs">';
+                                echo '<label for="">' . $item['titulo'] . ' (' . $item['valor'] . '%)</label>';
+                                echo '<input type="number" class="inputValue" name="items[' . $item_id . ']" value="' . ($rowItemsNota['notaItem'] ?? '') . '" min="0" max="10" required>';
+                                echo '</div>';
+                            }
+                            ?>
+                            <div class="buttonDiv">
+                                <input type="submit" id="evaluatebtn" name="evaluate" value="Evaluate">
+                            </div>
+                        </form>
+                    <?php } else {
+                        echo '<p>No items assigned to this activity.</p>';
+                    } ?>
                 </div>
+
+
+
 
             </div>
 
         </div>
     </div>
-        
-    <script></script>
+
+    <script src="notas.js"></script>
 </body>
+
 </html>

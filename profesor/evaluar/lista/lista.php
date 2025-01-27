@@ -2,6 +2,7 @@
 
     session_start();
     include "../../../conexion.php";
+    include "functions.php";
 
     if(isset($_SESSION['nombreUser'])){
         $usuarioLog = $_SESSION['nombreUser'];
@@ -19,13 +20,75 @@
         exit();
     }
 
+    if (isset($_SESSION['idActividad'])) {
+        // Asegurarse de que el ID es un número entero para prevenir inyecciones SQL
+        $idActivity = intval($_SESSION['idActividad']);
+        
+        // Consulta para obtener los detalles de la actividad
+        $queryAct = "SELECT * FROM actividades WHERE id = $idActivity";
+        $result = mysqli_query($conn, $queryAct);
+        
+        // Verificar si la consulta devuelve algún resultado
+        if (mysqli_num_rows($result) > 0) {
+            // Si la actividad es encontrada, obtener los detalles
+            $act = mysqli_fetch_assoc($result);
+            $titulo = htmlspecialchars($act['titulo']);
+            $descripcion = htmlspecialchars($act['descripcion']);
+            $dueDate = htmlspecialchars($act['due_date']);
+            $estado = (intval($act['active']) == 1) ? "Active" : "Inactive";
+
+        } else {
+            // Si no se encuentra la actividad, establecer un mensaje por defecto
+            $titulo = "Actividad no encontrada";
+            $descripcion = "No hay detalles disponibles para esta actividad.";
+        }
+
+    }
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviarIdAlumno'])){
+        $_SESSION['idAlumno'] = $_POST['enviarIdAlumno'];
+        header('Location: ../notas/notas.php');
+        exit;
+    }
+
+    // Obtener todos los alumnos que tienen ítems relacionados con la actividad
+    $alumnosQuery = "SELECT DISTINCT alumnos_items.id_alumno FROM alumnos_items JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity";
+    $rAlumnos = mysqli_query($conn, $alumnosQuery);
+
+    if ($rAlumnos && mysqli_num_rows($rAlumnos) > 0) {
+        while ($alumno = mysqli_fetch_assoc($rAlumnos)) {
+            $idAlumno = $alumno['id_alumno'];
+
+            // Obtener todos los ítems relacionados con la actividad para el alumno actual
+            $allItems = "SELECT alumnos_items.id_item, alumnos_items.notaItem FROM alumnos_items JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity AND alumnos_items.id_alumno = $idAlumno";
+            $rAllItems = mysqli_query($conn, $allItems);
+
+            $todosEvaluados = true;
+
+            if ($rAllItems && mysqli_num_rows($rAllItems) > 0) {
+                while ($row = mysqli_fetch_assoc($rAllItems)) {
+                    // Si algún ítem no tiene nota, marcamos $todosEvaluados como falso
+                    if ($row['notaItem'] === null || $row['notaItem'] === '') {
+                        $todosEvaluados = false;
+                        break;
+                    }
+                }
+                // Si todos los ítems tienen nota, marcar la actividad como evaluada
+                if ($todosEvaluados) {
+                    $updateActivity = "UPDATE alumnos_actividades SET evaluado = 1 WHERE id_alumno = $idAlumno AND id_actividad = $idActivity";
+                    mysqli_query($conn, $updateActivity);
+                }
+            }
+        }
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluate Activity</title>
+    <title>Lista Evaluar Activity</title>
     <link rel="stylesheet" href="lista.css">
 </head>
 <body>
@@ -39,7 +102,7 @@
                     <h1>Taskify®</h1>
                 </div>
                 <div class="usuario">
-                    <img src="../../../imagenes/usuario.png" width="23px">
+                    <?php mostrarImg($conn); ?>
                     <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
@@ -138,9 +201,19 @@
                 </div>
 
                 <div id="description" class="card">
-                    <h1>Make a web design</h1>
-                    <p>Width Html and CSS make a web beautiful</p>
-                    <p>Last date: 10-12-2024 10:00</p>
+                    <div class="description-action">
+                        <h4>Activity</h4>
+                        <button class="editProject" onclick="abrirEditorProject()">
+                            <svg xmlns='http://www.w3.org/2000/svg' fill='none' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
+                                <path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="descriptionInfo">
+                        <h1><?php echo $titulo; ?></h1>
+                        <p><?php echo $descripcion; ?></p>
+                        <p>Last date: <span><?php echo $dueDate; ?></span> </p>
+                    </div>
                 </div>
                 
             </div>
@@ -150,60 +223,49 @@
                 <h2>Listado de alumnos</h2>
                 <div id="tablaNotas">
                     <table>
-                      <thead>
-                        <tr>
-                          <th>Nom</th>
-                          <th>File</th>
-                          <th>Activity status</th>
-                          <th>Evaluar</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <form action="../notas/notas.php">
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button>Evaluar</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button>Evaluado</button></td>
-                        </tr>
-                        <tr>
-                          <td>Ferran Bravo</td>
-                          <td>Descargar</td>
-                          <td>Entregado</td>
-                          <td><button>Evaluado</button></td>
-                        </tr>
-                        </form>
-                      </tbody>
+                        <thead>
+                            <tr>
+                                <th id='borderLeft'>Nom</th>
+                                <th>File</th>
+                                <th>Activity status</th>
+                                <th id='borderRight'>Evaluar</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                                $queryStudents = " SELECT alumnos.name AS alumno_name, alumnos.last_name, alumnos_actividades.id_alumno, alumnos_actividades.id_actividad, alumnos_actividades.evaluado, alumnos_actividades.entregado FROM alumnos_actividades JOIN alumnos ON alumnos_actividades.id_alumno = alumnos.id WHERE alumnos_actividades.id_actividad = $idActivity ";
+
+                                $resultStudents = mysqli_query($conn, $queryStudents);
+
+                                while ($fila = mysqli_fetch_assoc($resultStudents)) {
+                            ?>
+                                <form action="" method="POST">
+                                    <tr>
+                                        <td><?php echo $fila['alumno_name'] . ' ' . $fila['last_name']; ?></td>
+                                        <td><button class="descargarBtn">Descargar</button></td>
+
+                                    <?php
+                                        $entregado = $fila['entregado'];
+                                        if ($entregado == 1) {
+                                            echo "<td>Entregado</td>";
+                                        } else {
+                                            echo "<td>No entregado</td>";
+                                        }
+
+                                        // Botón para evaluar o mostrar como ya evaluado
+                                        $evaluado = $fila['evaluado'];
+                                        if ($evaluado == 1) {
+                                            echo "<td><button type='submit' name='enviarIdAlumno' value='" . $fila['id_alumno'] . "' class='okEva'>Evaluado</button></td>";
+                                        } else {
+                                            echo "<td><button type='submit' name='enviarIdAlumno' value='" . $fila['id_alumno'] . "' class='noEva'>Evaluar</button></td>";
+                                        }
+                                    ?>
+                                    
+                                    </tr>
+                                </form>
+                            <?php } ?>
+                        </tbody>                          
                     </table>
                 </div>
 

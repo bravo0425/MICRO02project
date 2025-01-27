@@ -85,6 +85,14 @@ body {
     font-weight: 400;
 }
 
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
 /* opciones del navBar*/
 
 .navbar {
@@ -234,12 +242,16 @@ body {
 /*Fin de menu lateral*/
 
 
-/*CONTENIDO*/
 
+
+/*CONTENIDO*/
 
 .contenido {
     width: 960px;
     height: 690px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .card{
@@ -247,19 +259,29 @@ body {
     border-radius: 15px;
 }
 
+#left{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    overflow: hidden;
+}
+
+
 
 /*--------Container para mobil--------*/
 
 
 #mobileApp{
-    width: 300px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background-color: #E2FF32;
     align-items: flex-start;
     padding: 10px 10px 10px 15px !important;
-    height: 130px;
+    height: 250px;
 }
 
 .titulosMobile h2{
@@ -322,18 +344,47 @@ a svg{
     width: 20px;
 }
 
+#fastlinks{
+    width: 100%;
+    padding: 0.5rem;
+    height: 100%;
+}
+
+#fastlinks h1{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #fafafa;
+    
+}
+
+#fastlinks form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+#fastlinks button{
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+#fastlinks button svg{
+    width: 20px;
+}
 
 
 /*--------Container para ultimas actividades--------*/
 
-#arriba {
-    display: flex;
-    gap: 30px;
-}
-
 
 #lastActivities{
-    width: 640px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -360,70 +411,67 @@ a svg{
     color: #ffffff;
     width: 205px;
     height: 90px;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.leftContent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rigthContent{
+    width: 15px;
 }
 
 .lastActivity h2{
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .lastActivity p{
-    font-size: 0.9rem;
-}
-
-.noActivities {
     display: flex;
-    justify-content: center;
+    font-size: 0.8rem;
+    color: #fafafa80;
+    gap: 5px;
+    justify-content: left;
     align-items: center;
-    color: #ffffff;
-    background-color: #fafafa20;
-    border-radius: 15px;
-    height: 90px;
 }
 
-.noActivities h2 {
-    font-size: 1.1rem;
-    font-weight: 400;
+.lastActivity p svg{
+    width: 18px;
+}
+
+
+.statusActive{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: #E2FF32;
+}
+
+.statusInactive{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: #A600FF;
 }
 
 
 /*--------Container para abajo--------*/
 
-#abajo {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-    padding-top: 50px;
-    width: 960px;
-    justify-content: space-around;
-}
 
-#tasks {
-    width: 400px;
-    height: 300px;
+#right{
+    width: 640px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border: 0;
-    background-color: #A600FF;
-    font-size: 1.4rem;
-    font-weight: 600;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+    height: 100%;
 }
-
-#projects {
-    width: 400px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border: 0;
-    background-color: #E2FF32;
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
 
 
 /*--------Container para ultimo proyecto--------*/
@@ -431,6 +479,7 @@ a svg{
 
 #lastProject{
     width: 300px;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,19 +534,18 @@ a svg{
 }
 
 
-.secondtitle button{
-    background-color: #00000000;
-    border: 0px;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #E2FF32;
-    transition: all 0.3s ease;
-    padding: 3px;
+.secondtitle {
+    border-radius: 15px;
+    display: flex;
 }
 
-.secondtitle button:hover{
-    background-color: #00000030;
-    border-radius: 10px;
+.secondtitle h2 {
+    background-color: #00000000;
+    border: 0px;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #E2FF32;
+    padding: 3px;
 }
 
 #tituloProject h1{
@@ -519,13 +567,23 @@ a svg{
 
 /*--------Container para estadisticas alumnos--------*/
 
+
+#abajoRight{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 #estadisticaAlumnos{
-    height: 570px;
-    padding: 10px 15px;
-    color: #ffffff;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem;
 }
 
 #estadisticaAlumnos h1{
    font-size: 1.2rem;
-   font-weight: 500;
+   font-weight: 400;
+   color: #fafafa;
 }

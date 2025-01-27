@@ -13,3 +13,28 @@ function goCursos(){
 function goSettings(){
     window.location.href = '../settings/settings.php';
 }
+
+Highcharts.chart('grafica', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Notas de los Alumnos'
+    },
+    xAxis: {
+        categories: alumnos,
+        title: {
+            text: 'Alumnos'
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Notas'
+        }
+    },
+    series: [{
+        name: 'Nota',
+        data: notas.map(Number) // Asegurarse de que los datos sean numéricos
+    }]
+});

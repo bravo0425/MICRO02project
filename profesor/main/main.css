@@ -85,6 +85,14 @@ body {
     font-weight: 400;
 }
 
+.usuario img{
+    object-fit: cover;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 0;
+}
+
 /* opciones del navBar*/
 
 .navbar {
@@ -236,7 +244,6 @@ body {
 
 /*CONTENIDO*/
 
-
 .contenido {
     width: 960px;
     height: 690px;
@@ -366,16 +373,54 @@ a svg{
     color: #ffffff;
     width: 205px;
     height: 90px;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.leftContent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rigthContent{
+    width: 15px;
 }
 
 .lastActivity h2{
     font-size: 1rem;
+    font-weight: 400;
 }
 
 .lastActivity p{
-    font-size: 0.9rem;
+    display: flex;
+    font-size: 0.8rem;
+    color: #fafafa80;
+    gap: 5px;
+    justify-content: left;
+    align-items: center;
 }
 
+.lastActivity p svg{
+    width: 18px;
+}
+
+
+.statusActive{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: #E2FF32;
+}
+
+.statusInactive{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: #A600FF;
+}
 
 
 /*--------Container para abajo--------*/
@@ -450,17 +495,17 @@ a svg{
     border-radius: 10px;
 }
 
+
 .secondtitle {
-    background-color: #fafafa20;
-    padding: 10px;
     border-radius: 15px;
+    display: flex;
 }
 
 .secondtitle h2 {
     background-color: #00000000;
     border: 0px;
-    font-size: 1.4rem;
-    font-weight: 500;
+    font-size: 1.3rem;
+    font-weight: 400;
     color: #E2FF32;
     padding: 3px;
 }
@@ -507,6 +552,17 @@ a svg{
    font-weight: 500;
 }
 
+.titleCourse{
+    font-size: 1.1rem;
+    font-weight: 400 !important;
+}
+
+.titleCourse span{
+    color: #E2FF32;
+}
+
+
+
 #hardmode{
     height: 150px;
     display: flex;
@@ -520,7 +576,16 @@ a svg{
     width: 200px;
     padding: 10px;
     border-radius: 15px;
-    border: 0px
+    border: 0px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    align-items: center;
+    font-size: 1rem;
+}
+
+#hardmode button svg{
+    width: 20px;
 }
 
 .yellowbtn{
@@ -531,4 +596,132 @@ a svg{
 .lilabtn{
     background-color: #A600FF;
     color: #fafafa;
+}
+
+
+/*----Grafica----*/
+
+#grafica {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    width: 610px;
+    height: 300px;
+    padding: 1rem;
+    color: white;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;/*haze que no se dividan en lineas*/
+}
+
+.divAlumno {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    height: 100%;
+    min-width: 50px;
+    width: 50px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.notaColumna {
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s ease;
+    color: #fafafa;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nombreColumna {
+    font-size: 14px;
+    color: #ffffff;
+    margin-top: 5px;
+}
+
+
+.w0{
+    height: 4%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #A600FF;
+}
+.w10{
+    height: 10%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #A600FF;
+}
+.w20{
+    height: 20%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #A600FF;
+}
+.w30{
+    height: 30%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #A600FF;
+}
+.w40{
+    height: 35%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #A600FF;
+}
+
+.w50{
+    height: 45%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #fafafa30;
+}
+.w60{
+    height: 52%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #fafafa40;
+}
+.w70{
+    height: 60%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #fafafa50;
+}
+.w80{
+    height: 65%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #fafafa70;
+}
+
+.w90{
+    height: 69%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #fafafa90;
+}
+
+.w100{
+    height: 100%;
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    background-color: #E2FF32;
 }

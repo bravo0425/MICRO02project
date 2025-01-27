@@ -18,4 +18,3 @@ function showProject(){
     document.querySelector(".openProject").style = "display: block;";
 }
 
-

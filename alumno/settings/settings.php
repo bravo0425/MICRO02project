@@ -45,8 +45,8 @@
 <!--Container general-->
     <main class="container">     
 
-        <!-- menu--> 
-        <nav class="contenedor-nav">
+        <!-- menu izquierda-->
+        <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
                     <h1>Taskify®</h1>
@@ -65,7 +65,7 @@
                                 <h2>Dashboard</h2>
                             </div>
                         </div>
-                        
+
                     </button>
                     <button onclick="goTasks()" class="menu">
                         <div class="positionButton">
@@ -126,7 +126,8 @@
                     <h2>Log out</h2>
                 </button>
             </form>
-        </nav>
+        </div>
+
 
         <!-- contenido -->
         <section class="contenido">

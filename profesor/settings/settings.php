@@ -73,7 +73,7 @@
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Courses</h2>
                             </div>
                         </div>
                     </button>
@@ -150,7 +150,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to dashboard</p>
+                            <p>Back to dashboard</p>
                         </button>
                     </form>
                 </div>
@@ -179,18 +179,21 @@
                         <button type="submit" name="updateBTN" value="awdawd" id="updateBTN">Confirm</button>
                     </form>
                 </div>
-                <div class="inputGeneral">
-                    <p>Username</p>
-                    <div class="showText">
-                        <p><?php mostrarUsername($conn); ?></p>
+                <div class="container-inputs">
+                    <div class="inputGeneral">
+                        <p>Username</p>
+                        <div class="showText">
+                            <p><?php mostrarUsername($conn); ?></p>
+                        </div>
+                    </div>
+                    <div class="inputGeneral">
+                        <p>Email</p>
+                        <div class="showText">
+                            <p><?php mostrarMail($conn); ?></p>
+                        </div>
                     </div>
                 </div>
-                <div class="inputGeneral">
-                    <p>Email</p>
-                    <div class="showText">
-                        <p><?php mostrarMail($conn); ?></p>
-                    </div>
-                </div>
+                
             </section>
 
             <section class="divSecurity" style="display: none;">
@@ -203,15 +206,15 @@
                 <form action="" method="POST">
                     <div class="inputGeneral">
                         <label for="oldpass">Your Password</label>
-                        <input type="text" name="oldpass" id="oldpass">
+                        <input type="password" name="oldpass" id="oldpass">
                     </div>
                     <div class="inputGeneral">
                         <label for="newpass">New Password</label>
-                        <input type="text" name="newpass" id="newpass">
+                        <input type="password" name="newpass" id="newpass">
                     </div>
                     <div class="inputGeneral">
                         <label for="newpass2">Repeat New Password</label>
-                        <input type="text" name="newpass2" id="newpass2">
+                        <input type="password" name="newpass2" id="newpass2">
                     </div>
                     <input type="submit" name="cambiar" value="Confirm" id="changePass">
                 </form>

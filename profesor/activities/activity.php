@@ -40,16 +40,6 @@ if (isset($_SESSION['idActividad'])) {
         $titulo = "Actividad no encontrada";
         $descripcion = "No hay detalles disponibles para esta actividad.";
     }
-
-    $queryItems = "SELECT * FROM items WHERE activity_id = $idActivity";
-    $resultItems = mysqli_query($conn, $queryItems);
-
-    $itemsAct = [];
-    if (mysqli_num_rows($resultItems) > 0) {
-        while ($item = mysqli_fetch_assoc($resultItems)) {
-            $itemsAct[] = $item;
-        }
-    }
 }
 
 
@@ -81,13 +71,9 @@ if (isset($_POST['añadirItem'])) {
     añadirItem($conn, $idActivity);
 }
 
-if(!empty($_POST['confirmarCambios'])){
-    updateItems($conn, $idActivity);
-}
 
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +86,6 @@ if(!empty($_POST['confirmarCambios'])){
 </head>
 
 <body>
-
     <!--Container general-->
     <div class="container">
         <!-- menu izquierda-->
@@ -131,7 +116,7 @@ if(!empty($_POST['confirmarCambios'])){
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Courses</h2>
                             </div>
                         </div>
                     </button>
@@ -200,7 +185,7 @@ if(!empty($_POST['confirmarCambios'])){
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to projects</p>
+                            <p>Back to projects</p>
                         </button>
                     </form>
                 </div>
@@ -208,11 +193,7 @@ if(!empty($_POST['confirmarCambios'])){
                 <div id="description" class="card">
                     <div class="description-action">
                         <h4>Activity</h4>
-                        <button class="editProject" onclick="abrirEditorProject()">
-                            <svg xmlns='http://www.w3.org/2000/svg' fill='none' width='20' height='20' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='size-6'>
-                                <path stroke-linecap='round' stroke-linejoin='round' d='m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10' />
-                            </svg>
-                        </button>
+
                     </div>
                     <div class="descriptionInfo">
                         <h1><?php echo $titulo; ?></h1>
@@ -222,15 +203,28 @@ if(!empty($_POST['confirmarCambios'])){
                 </div>
 
                 <form action="" method="POST" id="estadoActividad" class="card">
-                    <p>Estado</p>
-                    <input type="submit" class="statusAct" name="estadoAct" value="<?php echo $estado; ?>" id="">
+                    <p>Status</p>
+                    <?php
+                    $selectEstado = "SELECT * FROM actividades WHERE id = $idActivity";
+                    $resultSelectEstado = mysqli_query($conn, $selectEstado);
+                    $row = mysqli_fetch_assoc($resultSelectEstado);
+                    if($row['active'] == 1){
+                        echo '<input type="submit" class="statusActive" name="estadoAct" value="'.$estado.'" id="">';
+                    }else{
+                        echo "<input type='submit' class='statusInactive' name='estadoAct' value='$estado' id=''>";
+                    }
+                    ?>
                 </form>
             </div>
 
 
             <div id="abajo">
-
-                <?php if($modoEdicion){ ?>
+                <?php
+                if (!empty($_POST['confirmarCambios'])) {
+                    updateItems($conn, $idActivity);
+                }
+                if ($modoEdicion) {
+                ?>
                     <div id="itemsEdit" class="card">
                         <div class="titleItems">
                             <h2>Items</h2>
@@ -245,7 +239,7 @@ if(!empty($_POST['confirmarCambios'])){
                             </form>
                         </div>
                     </div>
-                <?php }else{ ?>
+                <?php } else { ?>
                     <div id="items" class="card">
                         <div class="buttonsItems">
                             <h2>Items</h2>
@@ -253,9 +247,11 @@ if(!empty($_POST['confirmarCambios'])){
                                 <?php if ($itemCount < 5): ?>
                                     <button type="button" name="show_popup" class="addbtn" id="addbtn">+ Add Items</button>
                                 <?php endif; ?>
-                                <form action="" method="post" class="formEditItems">
-                                    <button type="submit" name="modo" value="editar" class="editItems">Editar</button>
-                                </form>
+                                <?php if ($itemCount != 0): ?>
+                                    <form action="" method="post" class="formEditItems">
+                                        <button type="submit" name="modo" value="editar" class="editItems">Edit</button>
+                                    </form>
+                                <?php endif; ?>
                             </div>
                             <div id="popUp">
                                 <div class="popup-content">
@@ -307,87 +303,24 @@ if(!empty($_POST['confirmarCambios'])){
 
                     <form method="POST" action="../evaluar/lista/lista.php">
                         <button type="submit" id="evaluarAlumnos">
-                            <p>Evalua a tus alumnos -></p>
+                            <p>Evaluate your students</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                            </svg>
                         </button>
                     </form>
 
                     <div id="tablaNotas" class="card">
-                        <h2>Notas alumnos</h2>
+                        <h2>Students Scores</h2>
                         <div class="tbln">
                             <table>
-                            <?php
-                                if (!empty($itemsAct)) {
-                                    echo "<thead>";
-                                    echo "<tr>";
-                                    echo "<th id='borderLeft'>Nom</th>"; // Encabezado para nombres de alumnos
-                                    foreach ($itemsAct as $item) {
-                                        echo "<th>" . htmlspecialchars($item['titulo']) . "</th>"; // Mostrar nombres reales de los items
-                                    }
-                                    echo "<th id='borderRight'>Nota final</th>"; // Encabezado para nota final
-                                    echo "</tr>";
-                                    echo "</thead>";
-
-                                    // Consulta para obtener datos de alumnos e items
-                                    $queryAlumnos = " SELECT alumnos.id AS alumno_id, alumnos.name AS alumno_name, alumnos_items.notaItem, alumnos_items.id_item, items.valor AS item_valor FROM alumnos_items INNER JOIN alumnos ON alumnos_items.id_alumno = alumnos.id INNER JOIN items ON alumnos_items.id_item = items.id WHERE items.activity_id = $idActivity ";
-
-                                    $resultItems = mysqli_query($conn, $queryAlumnos);
-
-                                    // Crear un array para almacenar los datos por alumno
-                                    $alumnosData = [];
-                                    while ($fila = mysqli_fetch_assoc($resultItems)) {
-                                        $alumnoId = $fila['alumno_id'];
-                                        if (!isset($alumnosData[$alumnoId])) {
-                                            $alumnosData[$alumnoId] = [
-                                                'name' => $fila['alumno_name'],
-                                                'items' => array_fill(0, count($itemsAct), ['nota' => '-', 'valor' => 0]) // Inicializar notas con guiones
-                                            ];
-                                        }
-                                        // Mapear nota del item y su valor a la columna correcta
-                                        foreach ($itemsAct as $index => $item) {
-                                            if ($item['id'] == $fila['id_item']) {
-                                                $alumnosData[$alumnoId]['items'][$index] = [
-                                                    'nota' => $fila['notaItem'],
-                                                    'valor' => $fila['item_valor']
-                                                ];
-                                            }
-                                        }
-                                    }
-
-                                    // Mostrar el cuerpo de la tabla
-                                    echo "<tbody>";
-                                    foreach ($alumnosData as $alumno) {
-                                        echo "<tr>";
-                                        echo "<td>" . htmlspecialchars($alumno['name']) . "</td>";
-
-                                        $notaFinal = 0;
-                                        $totalValor = 0;
-
-                                        foreach ($alumno['items'] as $item) {
-                                            echo "<td>" . htmlspecialchars($item['nota']) . "</td>";
-                                            if ($item['nota'] !== '-') {
-                                                $notaFinal += floatval($item['nota']) * ($item['valor'] / 100); // Calcular el aporte de cada item
-                                                $totalValor += $item['valor']; // Sumar el valor total ponderado
-                                            }
-                                        }
-
-                                        // Normalizar la nota final al 100% si los valores no suman 100
-                                        $notaFinal = ($totalValor > 0) ? $notaFinal * (100 / $totalValor) : 0;
-
-                                        // Mostrar la nota final con 2 decimales
-                                        echo "<td>" . number_format($notaFinal, 2) . "</td>";
-                                        echo "</tr>";
-                                    }
-                                    echo "</tbody>";
-                                } else {
-                                    echo "<p>No hay items en la actividad</p>";
-                                }
+                                <?php
+                                    echo generarTablaAlumnosNotas($conn, $idActivity);
                                 ?>
                             </table>
-
                         </div>
                     </div>
                 <?php } ?>
-
             </div>
 
         </div>
@@ -397,21 +330,3 @@ if(!empty($_POST['confirmarCambios'])){
 </body>
 
 </html>
-
-
-
-<?php
-/*
-    if (isset($_POST['modo']) && $_POST['modo'] === 'editar') {
-        echo '<div id="itemsGroup">';
-        echo '<form action="" method="post" class="fromItemsEdit">';
-            mostrarItemsEditar($conn, $idActivity);
-        echo '</form>';
-        echo '</div>';
-    } else {
-        echo '<div id="itemsGroup">';
-            mostrarItems($conn, $idActivity);
-        echo '</div>';
-    }
-*/
-?>
