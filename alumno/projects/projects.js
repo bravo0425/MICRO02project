@@ -17,3 +17,18 @@ function goChat() {
 function goSettings() {
     window.location.href = '../settings/settings.php';
 }
+
+
+const botonesToggle = document.querySelectorAll('.abrirProyecto');
+
+for (let i = 0; i < botonesToggle.length; i++) {
+    botonesToggle[i].addEventListener('click', function() {
+        const actividades = this.nextElementSibling;
+        if (actividades.classList.contains('hidden')) {
+            actividades.classList.remove('hidden');
+        } else {
+            actividades.classList.add('hidden');
+        }
+    });
+}
+

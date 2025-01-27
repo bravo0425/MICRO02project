@@ -1,42 +1,44 @@
 <?php
-    include "../../conexion.php";
-    include "functions.php";
+include "../../conexion.php";
+include "functions.php";
 
-    session_start();
+session_start();
 
-    if(isset($_SESSION['nombreUser'])){
-        $usuarioLog = $_SESSION['nombreUser'];
-        $nom = $_SESSION['nombre'];
-        $apellido = $_SESSION['apellido'];
-        $idAlumno = $_SESSION['idAlumno'];
-        $idCurso = $_SESSION['idCurso'];
-    }else{
-        header('Location: ../../login/login.php');
-        exit();
-    }
+if (isset($_SESSION['nombreUser'])) {
+    $usuarioLog = $_SESSION['nombreUser'];
+    $nom = $_SESSION['nombre'];
+    $apellido = $_SESSION['apellido'];
+    $idAlumno = $_SESSION['idAlumno'];
+    $idCurso = $_SESSION['idCurso'];
+} else {
+    header('Location: ../../login/login.php');
+    exit();
+}
 
-    if (!empty($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        header('Location: ../../login/login.php');
-        exit();
-    }
+if (!empty($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header('Location: ../../login/login.php');
+    exit();
+}
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['proyectoDiv'])) {
-        $_SESSION['idProyectoSeleccionado'] = $_POST['proyectoDiv'];
-    }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['proyectoDiv'])) {
+    $_SESSION['idProyectoSeleccionado'] = $_POST['proyectoDiv'];
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
     <link rel="stylesheet" href="projects.css">
 </head>
+
 <body>
-    <div class="container">  
+    <div class="container">
 
         <!-- menu izquierda-->
         <div class="contenedor-nav">
@@ -125,28 +127,28 @@
             <div id="arriba">
                 <div id="infoApp" class="card">
                     <h2>Projects</h1>
-                    <form method="POST" action="../main/main.php">
-                        <button type="submit">
-                            <a href="">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-                                </svg>
-                            </a>
-                            <p>Back to dashboard</p>
-                        </button>
-                    </form>
+                        <form method="POST" action="../main/main.php">
+                            <button type="submit">
+                                <a href="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                                    </svg>
+                                </a>
+                                <p>Back to dashboard</p>
+                            </button>
+                        </form>
                 </div>
                 <div id="infoCurso">
                     <div class="tituloCurso">
                         <?php
-                            $selectCurso = "SELECT * FROM cursos WHERE id = $idCurso";
-                            $r = mysqli_query($conn, $selectCurso);
-        
-                            if(mysqli_num_rows($r) > 0){
-                                while($fila = mysqli_fetch_assoc($r)) {
-                                    echo "<h1>". $fila['nombre'] ."</h1>";
-                                }
+                        $selectCurso = "SELECT * FROM cursos WHERE id = $idCurso";
+                        $r = mysqli_query($conn, $selectCurso);
+
+                        if (mysqli_num_rows($r) > 0) {
+                            while ($fila = mysqli_fetch_assoc($r)) {
+                                echo "<h1>" . $fila['nombre'] . "</h1>";
                             }
+                        }
                         ?>
                     </div>
                     <div id="estadisticasCurso">
@@ -159,7 +161,7 @@
                                 <?php
                                 $queryContarProyectos = "SELECT COUNT(*) AS total_proyectos FROM proyectos WHERE curso_id = $idCurso";
                                 $resultadoContarProyectos = mysqli_query($conn, $queryContarProyectos);
-                            
+
                                 // Obtén el número total de proyectos
                                 $totalProyectos = 0;
                                 if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
@@ -169,7 +171,7 @@
                                 <p><?php echo $totalProyectos; ?></p>
                             </div>
                         </div>
-        
+
                         <div class="cardInfo">
                             <h3>Students</h3>
                             <div class="numProjects">
@@ -187,79 +189,60 @@
                     </div>
                 </div>
             </div>
-            <div id="abajo">
-                <form method="POST" class="proyectos card">
-                <?php 
-                    if(!empty($_POST['proyectoDiv'])) {
-                        $proyectoID = $_POST['proyectoDiv'];
-                        ?>
-                        <div id="listaActividades">
-                            <div id="mostrarActivities">
-                                <table border="0" id="tablaActividades">
-                                    <thead>
-                                        <tr>
-                                            <th>Activity</th>
-                                            <th>Created At</th>
-                                            <th>Due Date</th>
-                                            <th>Grade</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                            $selectActividad = "SELECT * FROM actividades WHERE project_id = $proyectoID";
-                                            $resultActividad = mysqli_query($conn, $selectActividad);
-                                            if (mysqli_num_rows($resultActividad) > 0) {
-                                                while ($row = mysqli_fetch_assoc($resultActividad)) {
-                                                    $idActividad = $row['id'];
-                                                    $titulo = $row['titulo'];
-                                                    $createdAt = $row['created_at'];
-                                                    $dueDate = $row['due_date'];
-                                                    $select = "SELECT * FROM alumnos_actividades WHERE id_actividad = $idActividad";
-                                                    $result = mysqli_query($conn, $select);
-                                                    if (mysqli_num_rows($result) > 0) {
-                                                        while ($fila = mysqli_fetch_assoc($result)) {
-                                                            $nota = $fila['notas'];
-                                                            echo "<tr>";
-                                                            echo "<td>" . $titulo . "</td>";
-                                                            echo "<td>" . $createdAt . "</td>";
-                                                            echo "<td>" . $dueDate . "</td>";
-                                                            if ($nota) {
-                                                                echo "<td><p>" . $nota . "</p></td>";
-                                                            } else {
-                                                                echo "<td><p class='evaluado'>No evaluado</p></td>";
-                                                            }
-                                                            echo "</tr>";
-                                                        }
-                                                    }
-                                                }
-                                            } else {
-                                                echo "<tr><td>Actividad no encontrada</td></tr>";
-                                            }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    <?php } else {
-                        $selectProyectos = "SELECT * FROM proyectos WHERE curso_id = $idCurso";
-                        $resultadoProyectos = mysqli_query($conn, $selectProyectos);
-                        if (mysqli_num_rows($resultadoProyectos) > 0){
-                            while($fila = mysqli_fetch_assoc($resultadoProyectos)){
-                                $idProyecto = $fila['id'];
-                                ?>
-                                <button type="submit" name="proyectoDiv" value="<?php echo $fila['id']; ?>" class="cardProyecto">
-                                    <p><?php echo $fila['titulo']; ?></p>
-                                    <p><?php echo mostrarnotaProyecto($conn, $idProyecto, $idAlumno); ?></p>
+            <div id="abajo" class="card">
+                <h1>All Projects</h1>
+                <form method="POST" class="proyectos">
+                    <?php
+                    // Consultar proyectos relacionados con el curso
+                    $selectProyectos = "SELECT * FROM proyectos WHERE curso_id = $idCurso";
+                    $resultadoProyectos = mysqli_query($conn, $selectProyectos);
+
+                    if (mysqli_num_rows($resultadoProyectos) > 0) {
+                        while ($fila = mysqli_fetch_assoc($resultadoProyectos)) {
+                            $idProyecto = $fila['id'];
+                    ?>
+                            <div class="proyecto-container">
+                                <!-- Botón del proyecto -->
+                                <button type="button" class="cardProyecto abrirProyecto">
+                                    <p> <?php echo $fila['titulo']; ?></p>
+                                    <p>Nota: <?php echo mostrarnotaProyecto($conn, $idProyecto, $idAlumno); ?></p>
                                 </button>
-                                <?php
-                            }
+
+                                <!-- Contenedor de actividades del proyecto -->
+                                <div class="actividades hidden">
+                                    <?php
+                                    // Consultar actividades del proyecto
+                                    $selectActividades = "SELECT * FROM actividades WHERE project_id = $idProyecto";
+                                    $resultadoActividades = mysqli_query($conn, $selectActividades);
+
+                                    if (mysqli_num_rows($resultadoActividades) > 0) {
+                                        while ($actividad = mysqli_fetch_assoc($resultadoActividades)) {
+                                            $idActivity = $actividad['id'];
+                                    ?>
+                                            <div class="actividad-item">
+                                                <p><?php echo $actividad['titulo']; ?></p>
+                                                <p><?php echo notaActividad($conn, $idAlumno, $idActivity); ?></p>
+                                            </div>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<p>No activities found</p>";
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                    <?php
                         }
+                    } else {
+                        echo "<p>No projects found</p>";
                     }
-                ?>
-                </div>
+                    ?>
+                </form>
+
             </div>
         </div>
     </div>
-<script src="projects.js"></script>
+    <script src="projects.js"></script>
 </body>
+
 </html>

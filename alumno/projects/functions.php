@@ -62,3 +62,36 @@ function mostrarnotaProyecto($conn, $idProyecto, $idAlumno) {
     // Si no hay actividades o ítems evaluados, retornar 0
     return 0;
 }
+
+function getScoreItem($conn, $idAlumno, $idItem) {
+    $sqlItem = "SELECT * FROM alumnos_items WHERE id_alumno = $idAlumno and id_item = $idItem";
+    $r = mysqli_query($conn, $sqlItem);
+    if (mysqli_num_rows($r) > 0) {
+        $row = mysqli_fetch_assoc($r);
+        return $row['notaItem'];
+    } else {
+        return null;
+    }
+}
+
+function notaActividad($conn, $idAlumno, $idActivity) {
+    $sqlItems = "SELECT * FROM items WHERE activity_id = $idActivity";
+    $result = mysqli_query($conn, $sqlItems);
+    $nota = 0;
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            // Obtener la puntuación del ítem
+            $itemsScore = getScoreItem($conn, $idAlumno, $row['id']);
+            // Verificar si no se obtuvo puntuación
+            if ($itemsScore === null) {
+                return null;  // Si algún ítem no tiene puntuación, retorna null
+            }
+            // Sumar la puntuación ponderada
+            $nota += intval($itemsScore) * (intval($row['valor']) / 100);
+        }
+    } else {
+        return null;  // Si no hay items para la actividad, retornar null
+    }
+    return $nota;
+}

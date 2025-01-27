@@ -144,14 +144,14 @@
                         </svg>
                     </div>
 
-                    <form method="POST" action="../main/index.php">
+                    <form method="POST" action="../main/main.php">
                         <button type="submit">
                             <a href="">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                                 </svg>
                             </a>
-                            <p>back to dashboard</p>
+                            <p>Back to dashboard</p>
                         </button>
                     </form>
                 </div>
