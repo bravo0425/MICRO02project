@@ -26,3 +26,35 @@ show_popup.addEventListener('click', () => {
 close_popup.addEventListener('click', () => {
     popUp.style.display = 'none';
 });
+
+
+const popupOverlay = document.querySelector('.error-pop');
+const popupCloseButton = document.querySelector('.popup-close');
+
+// Mostrar el pop-up
+if (popupOverlay) {
+    popupOverlay.style.display = 'flex';
+}
+
+// Cerrar el pop-up
+if (popupCloseButton) {
+    popupCloseButton.addEventListener('click', function() {
+        popupOverlay.style.display = 'none';
+    });
+}
+
+
+const popupSucces = document.querySelector('.succes-pop');
+const popupCloseSucces = document.querySelector('.close-Succes');
+
+// Mostrar el pop-up
+if (popupSucces) {
+    popupSucces.style.display = 'flex';
+}
+
+// Cerrar el pop-up
+if (popupCloseSucces) {
+    popupCloseSucces.addEventListener('click', function() {
+        popupSucces.style.display = 'none';
+    });
+}

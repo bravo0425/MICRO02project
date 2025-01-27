@@ -25,8 +25,8 @@ function abrirEditorProject(){
     document.querySelector("#verTabla").style = "display: none;";
 }
 
-var popupOverlay = document.querySelector('.error-pop');
-var popupCloseButton = document.querySelector('.popup-close');
+const popupOverlay = document.querySelector('.error-pop');
+const popupCloseButton = document.querySelector('.popup-close');
 
 // Mostrar el pop-up
 if (popupOverlay) {

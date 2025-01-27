@@ -58,11 +58,11 @@ if (isset($_SESSION['idProyecto'])) {
     $actividades = [];
 }
 
-if (!empty($_POST['editar'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['editar'])) {
     editarProyecto($conn);
 }
 
-if (!empty($_POST['anadir'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['anadir'])) {
     crearActividad($conn);
 }
 

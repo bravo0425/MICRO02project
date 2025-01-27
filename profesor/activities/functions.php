@@ -34,6 +34,17 @@ function mostrarIcon($conn, $idItem){
 }
 
 function añadirItem($conn, $idActivity){
+    if (empty($_POST['tituloNewItem']) || empty($_POST['valorNewItem']) || empty($_FILES['imgIcon'])) {
+        echo "
+        <div class='error-pop'>
+            <div class='error-container'>
+                <p>All fields are required</p>
+                <button class='popup-close'>Confirm</button>
+            </div>
+        </div>
+        ";
+        return;
+    }
     $titulo = $_POST['tituloNewItem'];
     $valor = $_POST['valorNewItem'];
     $icono = $_FILES['imgIcon'];
@@ -111,8 +122,8 @@ function mostrarItemsEditar($conn, $idActivity){
             echo '  <label for="titulo-' . $idItem . '" class="itemTitleLabel">Título:</label>';
             echo '  <input type="text" class="itemTitleInput" id="tituloItems" name="titulo[' . $idItem . ']" value="' . $titulo . '">';
 
-            echo '  <label for="valor-' . $idItem . '" class="itemValueLabel">Valor:</label>';
-            echo '  <select name="valor[' . $idItem . ']" id="valorItems" class="itemValueSelect">';
+            echo '  <label for="valor-' . $idItem . '" class="selectEditItemLabel">Valor:</label>';
+            echo '  <select name="valor[' . $idItem . ']" id="valorItems" class="selectEditItem">';
             for ($i = 10; $i <= 100; $i += 10) {
                 $selected = ($valor == $i) ? 'selected' : '';
                 echo '<option value="' . $i . '" ' . $selected . '>' . $i . '%</option>';

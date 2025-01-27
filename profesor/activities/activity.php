@@ -63,11 +63,11 @@ $itemCount = $row['item_count'];
 
 $modoEdicion = isset($_POST['modo']) && $_POST['modo'] === 'editar';
 
-if (isset($_POST['deleteItem'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['deleteItem'])) {
     eliminarItem($conn, $_POST['deleteItem']);
 }
 
-if (isset($_POST['añadirItem'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['añadirItem'])) {
     añadirItem($conn, $idActivity);
 }
 

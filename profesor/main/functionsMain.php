@@ -44,7 +44,7 @@
                 return $notaProyecto / $totalActividades;
             }
         }
-        return '-'; // No evaluado
+        return 0; // No evaluado
     }
 
     function encontrarNotaCurso($conn, $idAlumno, $idCurso) {
