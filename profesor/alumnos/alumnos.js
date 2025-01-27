@@ -11,6 +11,10 @@ function goSettings(){
     window.location.href = '../settings/settings.php';
 }
 
+function goChat(){
+    window.location.href = '../chat/chat.php';
+}
+
 let popUp = document.getElementById('popup');
 let show_popup = document.getElementById('show_popup');
 let close_popup = document.getElementById('close_popup');

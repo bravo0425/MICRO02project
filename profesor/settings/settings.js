@@ -14,6 +14,10 @@ function goSettings(){
     window.location.href = 'settings.php';
 }
 
+function goChat(){
+    window.location.href = '../chat/chat.php';
+}
+
 function showSection(sectionClass, clickedButton) {
     const settingsContainer = document.querySelector('#abajo');
 

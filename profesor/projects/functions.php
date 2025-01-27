@@ -14,11 +14,11 @@
     }
 
     function crearActividad($conn) {
-        if (empty($_POST['tituloActNew']) || empty($_POST['descriptionActNew']) || empty($_POST['dueDateActNew']) || empty($_POST['estadoActNew'])) {
+        if (empty($_POST['tituloActNew']) || empty($_POST['descriptionActNew']) || empty($_POST['dueDateActNew'])) {
             echo "
             <div class='error-pop'>
                 <div class='error-container'>
-                    <p>All fields are required.</p>
+                    <p>All fields are required</p>
                     <button class='popup-close'>Confirm</button>
                 </div>
             </div>
@@ -70,10 +70,15 @@
         $eliminarActividad = "DELETE FROM actividades WHERE id = $idActividad";
 
         if (mysqli_query($conn, $eliminarActividad)) {
-            echo "<script>alert('Proyecto eliminado correctamente');</script>";
-        } else {
-            echo "<script>alert('Error al eliminar el proyecto: " . mysqli_error($conn) . "');</script>";
-        }
+            echo "
+            <div class='error-pop'>
+                <div class='error-container'>
+                    <p>Proyecto eliminado correctamente</p>
+                    <button class='popup-close'>Confirm</button>
+                </div>
+            </div>
+            ";
+        } 
     }
 
     function editarActividad($conn, $idActividad) {

@@ -7,19 +7,13 @@ function goStudents() {
 }
 
 function goCursos(){
-    window.location.href = 'cursos.php';
+    window.location.href = '../cursos/cursos.php';
 }
 
 function goSettings(){
     window.location.href = '../settings/settings.php';
 }
 
-function showProject(){
-    document.querySelector(".openProject").style = "display: block;";
-}
-
 function goChat(){
-    window.location.href = '../chat/chat.php';
+    window.location.href = 'chat.php';
 }
-
-

@@ -61,7 +61,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumnos</title>
+    <title>Courses</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="cursos.css">
 </head>
@@ -99,7 +99,7 @@ session_start();
                                 <img src="../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Subjects</h2>
+                                <h2>Courses</h2>
                             </div>
                         </div>
                     </button>
@@ -161,7 +161,7 @@ session_start();
             <div id="arriba">
 
                 <div id="infoApp" class="card">
-                    <h2>Subjects</h2>
+                    <h2>Courses</h2>
                     <form method="POST" action="../main/index.php">
                         <button type="submit">
                             <a href="">
@@ -256,7 +256,7 @@ session_start();
                                                 </form>";
                                     }
                                 } else {
-                                    echo "<p>No hay proyectos disponibles.</p>";
+                                    echo "<p>There are no projects available.</p>";
                                 }
                                 ?>
                             </div>
@@ -295,7 +295,7 @@ session_start();
                                 <tbody>
                                     <?php
                                     if (empty($_SESSION['idProyectoSeleccionado'])) {
-                                        echo '<td colspan="2">Selecciona un proyecto</td>';
+                                        echo '<td colspan="2">Select a project.</td>';
                                     } else {
                                         $idProyectoSeleccionado = $_SESSION['idProyectoSeleccionado'];
                                         mostrarTablaAlumnos($conn, $idProyectoSeleccionado);

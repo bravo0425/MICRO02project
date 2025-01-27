@@ -14,6 +14,10 @@ function goSettings(){
     window.location.href = '../settings/settings.php';
 }
 
+function goChat(){
+    window.location.href = '../chat/chat.php';
+}
+
 let popUp = document.getElementById('popUp');
 let show_popup = document.getElementById('addbtn');
 let close_popup = document.getElementById('close_popup');

@@ -123,7 +123,7 @@
                                 <img src="../../../imagenes/cursos.png" width="27px">
                             </div>
                             <div class="h2Nav">
-                                <h2>Cursos</h2>
+                                <h2>Courses</h2>
                             </div>
                         </div>
                     </button>

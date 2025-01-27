@@ -14,6 +14,10 @@ function goSettings(){
     window.location.href = '../settings/settings.php';
 }
 
+function goChat(){
+    window.location.href = '../chat/chat.php';
+}
+
 Highcharts.chart('grafica', {
     chart: {
         type: 'column'

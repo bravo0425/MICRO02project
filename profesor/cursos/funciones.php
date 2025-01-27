@@ -46,19 +46,19 @@ function eliminarProyecto($conn){
     }
 }
 
-function mostrarImg($conn){
+function mostrarImg($conn) {
     $idProfe = $_SESSION['idProfe'];
-
     $queryName = 'SELECT img, tipus FROM profesores WHERE id = ' . $idProfe;
-
     $r = mysqli_query($conn, $queryName);
-
-    // Asegúrate de que haya resultados
     if ($r && mysqli_num_rows($r) > 0) {
         $fila = mysqli_fetch_assoc($r);
-
-        // Mostrar la imagen a través de un archivo PHP
-        echo "<img src='data:" . $fila['tipus'] . ";base64," . base64_encode($fila['img']) . "' >";
+        if (!empty($fila['img'])) {
+            echo "<img src='data:" . $fila['tipus'] . ";base64," . base64_encode($fila['img']) . "' >";
+        } else {
+            echo "<img src='../../imagenes/usuario.png' alt='Imagen por defecto'>";
+        }
+    } else {
+        echo "<img src='../../imagenes/usuario.png' alt='Imagen por defecto'>";
     }
 }
 
@@ -131,7 +131,7 @@ function mostrarTablaAlumnos($conn, $idProyecto) {
         }
 
     } else {
-        echo '<tr><td colspan="2">No hay alumnos asignados a este proyecto.</td></tr>';
+        echo '<tr><td colspan="2">There are no students assigned to this project.</td></tr>';
     }
 }
 
