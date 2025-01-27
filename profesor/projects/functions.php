@@ -60,8 +60,6 @@
             mostrarErrorPopup("Error updating project");
         }
 
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
     }
 
     function eliminarActividad($conn, $idActividad){
