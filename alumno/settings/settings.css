@@ -13,6 +13,9 @@ html{
 
 body {
     font-family: 'Poppins';
+}
+
+.container {
     background-image: url(../../imagenes/fondo.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -25,18 +28,8 @@ body {
     gap: 30px;
 }
 
-.container {
-    height: 690px;
-    width: 1250px !important;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-}
 
 /*MENU LATERAL*/
-
 
 .contenedor-nav {
     display: flex;
@@ -97,7 +90,6 @@ body {
     border-radius: 50px;
     border: 0;
 }
-
 
 /* opciones del navBar*/
 
@@ -246,6 +238,7 @@ body {
 
 
 /*Fin de menu lateral*/
+
 
 
 /*CONTENIDO*/

@@ -23,60 +23,76 @@ body {
 
 .container h1 {
     color: aliceblue;
-    font-weight: 600;
-    font-size: 2.5rem;
+    font-weight: 400;
+    font-size: 2.2rem;
 }
 
+
 .form {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #ffffff20;
-    border-radius: 15px;
+    align-items: center;
+    background-color: #ffffff30;
+    border-radius: 13px;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 250px;
+    gap: 35px;
 }
 
 .form h2 {
-    padding-bottom: 30px;
-    padding-left: 50px;
+    padding: 0;
     color: #FFFFFF;
     padding-top: 10px;
     font-weight: 400;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 
 .form form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
 
 form input {
-    width: 200px;
+    width: 100%;
     height: 30px;
     padding: 20px;
-    border-radius: 5px;
-    border: 1px solid #FFFFFF50;
-    margin-bottom: 20px;
+    border-radius: 13px;
+    border: 0.2px solid #FFFFFF50;
     background-color: #ffffff30;
     color: #FFFFFF;
-    font-family: 'Poppins';
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    box-shadow: 0 0 3px #eeff00, 0 0 7px #eeff0050;
+    outline: none;
+    background-color: #ffffff20;
+    transition: all 0.3s ease;
 }
 
 form input::placeholder {
-    color: #FFFFFF;
-    font-family: 'Poppins';
+    color: #FFFFFF90;
 }
 
 form #bottonEntrar {
-    width: 120px;
+    width: 150px;
     height: 40px;
     background-color: #E2FF32;
     color: #000000;
     font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 15px;
+    font-weight: 400;
+    border-radius: 13px;
     border: 0px !important;
-    font-family: 'Poppins';
 }

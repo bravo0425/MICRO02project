@@ -316,7 +316,18 @@ $resultado = mysqli_query($conn, $query);
                                             echo "<td>" . $fila["last_name"] . "</td>";
                                             echo "<td>" . $fila["username"] . "</td>";
                                             echo "<td>" . $fila["created_at"] . "</td>";
-                                            echo "<td>" . $fila["curso_id"] . "</td>";
+
+                                            $idCursoAlumno = $fila["curso_id"];
+                                            if ($idCursoAlumno == 501) {
+                                                echo "<td>DAW</td>";
+                                            } else if ($idCursoAlumno == 502) {
+                                                echo "<td>SMIX</td>";
+                                            } else if ($idCursoAlumno == 503) {
+                                                echo "<td>ASIX</td>";
+                                            } else {
+                                                echo "<td>None</td>";
+                                            }
+                                            
                                             echo "</tr>";
                                         }
                                     } else {

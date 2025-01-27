@@ -4,56 +4,57 @@ include "funciones.php";
 
 session_start();
 
-if (isset($_SESSION['nombreUser'])) {
-    $usuarioLog = $_SESSION['nombreUser'];
-    $idProfe = $_SESSION['idProfe'];
-    $nom = $_SESSION['nombre'];
-    $apellido = $_SESSION['apellido'];
-    $idCurso = $_SESSION['idCurso'];
-} else {
-    header('Location: ../../login/login.php');
-    exit();
-}
+    if (isset($_SESSION['nombreUser'])) {
+        $usuarioLog = $_SESSION['nombreUser'];
+        $idProfe = $_SESSION['idProfe'];
+        $nom = $_SESSION['nombre'];
+        $apellido = $_SESSION['apellido'];
+        $idCurso = $_SESSION['idCurso'];
+    } else {
+        header('Location: ../../login/login.php');
+        exit();
+    }
 
-if (!empty($_POST['logout'])) {
-    session_unset();
-    session_destroy();
-    header('Location: ../../login/login.php');
-    exit();
-}
+    if (!empty($_POST['logout'])) {
+        session_unset();
+        session_destroy();
+        header('Location: ../../login/login.php');
+        exit();
+    }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProyecto'])) {
-    $_SESSION['idProyectoSeleccionado'] = $_POST['idProyecto'];
-}
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idProyecto'])) {
+        $_SESSION['idProyectoSeleccionado'] = $_POST['idProyecto'];
+    }
 
-$mostrarFormulario = false;
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addProject'])) {
-    $mostrarFormulario = true;
-}
-
-// Manejar el caso cuando el usuario cancela agregar un proyecto
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelAddProject'])) {
     $mostrarFormulario = false;
-}
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addProject'])) {
+        $mostrarFormulario = true;
+    }
 
-if (!empty($_POST["safeAddProject"])) {
-    insertarProject($conn);
-}
+    // Manejar el caso cuando el usuario cancela agregar un proyecto
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancelAddProject'])) {
+        $mostrarFormulario = false;
+    }
 
-if (!empty($_POST['deleteProject'])) {
-    eliminarProyecto($conn);
-}
+    if (!empty($_POST["safeAddProject"])) {
+        insertarProject($conn);
+    }
 
-$queryContarProyectos = "SELECT COUNT(*) AS total_proyectos FROM proyectos WHERE curso_id = $idCurso";
-$resultadoContarProyectos = mysqli_query($conn, $queryContarProyectos);
+    if (!empty($_POST['deleteProject'])) {
+        eliminarProyecto($conn);
+    }
 
-// Obtén el número total de proyectos
-$totalProyectos = 0;
-if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
-    $totalProyectos = $fila['total_proyectos'];
-}
+    $queryContarProyectos = "SELECT COUNT(*) AS total_proyectos FROM proyectos WHERE curso_id = $idCurso";
+    $resultadoContarProyectos = mysqli_query($conn, $queryContarProyectos);
+
+    // Obtén el número total de proyectos
+    $totalProyectos = 0;
+    if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
+        $totalProyectos = $fila['total_proyectos'];
+    }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -309,19 +310,19 @@ if ($fila = mysqli_fetch_assoc($resultadoContarProyectos)) {
                         <div id="formularioProyecto">
                             <form method="POST" action="">
                                 <div class="inputsForm">
-                                    <label for="tituloProyecto">Título del Proyecto:</label>
+                                    <label for="tituloProyecto">Title:</label>
                                     <input type="text" id="tituloProyecto" name="tituloProyecto">
                                 </div>
 
                                 <div class="inputsForm">
-                                    <label for="descripcionProyecto">Descripción:</label>
+                                    <label for="descripcionProyecto">Description:</label>
                                     <textarea id="descripcionProyecto" name="descripcionProyecto"></textarea>
                                 </div>
 
                                 <div class="botonesFormulario">
                                     <form method="POST" action="">
-                                        <button type="submit" name="safeAddProject" value="true" class="guardarProyecto">Crear Proyecto</button>
-                                        <button type="submit" name="cancelAddProject" value="true" class="cancelarProyecto">Cancelar</button>
+                                        <button type="submit" name="safeAddProject" value="true" class="guardarProyecto">Add Project</button>
+                                        <button type="submit" name="cancelAddProject" value="true" class="cancelarProyecto">Cancel</button>
                                     </form>
                                 </div>
                             </form>

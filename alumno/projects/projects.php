@@ -1,5 +1,6 @@
 <?php
     include "../../conexion.php";
+    include "functions.php";
 
     session_start();
 
@@ -31,36 +32,69 @@
     <link rel="stylesheet" href="projects.css">
 </head>
 <body>
-    <div class="container">     
+    <div class="container">  
+
+        <!-- menu izquierda-->
         <div class="contenedor-nav">
             <div class="nav">
                 <div class="titulo">
-                    <h1>TASKIFY®</h1>
-                    <div class="usuario">
-                        <img src="../../imagenes/usuario.png" width="23px">
-                        <h3><?php echo $nom . ' ' . $apellido ?></h3>
-                    </div>
+                    <h1>Taskify®</h1>
+                </div>
+                <div class="usuario">
+                    <?php mostrarImg($conn); ?>
+                    <h3><?php echo $nom ?></h3>
                 </div>
                 <div class="navbar">
                     <button onclick="goDasboard()" class="menu">
-                        <img src="../../imagenes/dashboard.png" width="27px">
-                        <h2>Dashboard</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../imagenes/dashboard.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Dashboard</h2>
+                            </div>
+                        </div>
+
                     </button>
                     <button onclick="goTasks()" class="menu">
-                        <img src="../../imagenes/cursos.png" width="27px">
-                        <h2>Tasks</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../imagenes/cursos.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Tasks</h2>
+                            </div>
+                        </div>
                     </button>
                     <button onclick="goProjects()" class="menu active">
-                        <img src="../../imagenes/students.png" width="27px">
-                        <h2>Projects</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../imagenes/students.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Projects</h2>
+                            </div>
+                        </div>
                     </button>
                     <button onclick="goChat()" class="menu">
-                        <img src="../../imagenes/chat.png" width="27px">
-                        <h2>Chat</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../imagenes/chat.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Chat</h2>
+                            </div>
+                        </div>
                     </button>
                     <button onclick="goSettings()" class="menu">
-                        <img src="../../imagenes/settings.png" width="27px">
-                        <h2>Settings</h2>
+                        <div class="positionButton">
+                            <div class="imgNav">
+                                <img src="../../imagenes/settings.png" width="27px">
+                            </div>
+                            <div class="h2Nav">
+                                <h2>Settings</h2>
+                            </div>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -73,12 +107,16 @@
                 </div>
             </div>
             <form action="" method="POST">
-                <button type="submit" name="logout" value="logout" class="log-out">
-                    <img src="../../imagenes/cerrar-sesion.png" width="23px" style="color: #FFFFFF;">
+                <button type="submit" name="logout" value="tonto" class="log-out">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="iconLogout">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                    </svg>
+
                     <h2>Log out</h2>
                 </button>
             </form>
         </div>
+
         <div class="contenido">
             <div id="arriba">
                 <div id="infoApp" class="card">

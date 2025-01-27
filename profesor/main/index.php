@@ -6,6 +6,7 @@ session_start();
 
 if (isset($_SESSION['nombreUser'])) {
     $usuarioLog = $_SESSION['nombreUser'];
+    $idProfe = $_SESSION['idProfe'];
     $nom = $_SESSION['nombre'];
     $apellido = $_SESSION['apellido'];
     $idCurso = $_SESSION['idCurso'];
@@ -153,19 +154,20 @@ if (!empty($_POST['logout'])) {
                                 $selectLastProject = "SELECT * FROM proyectos ORDER BY created_at DESC LIMIT 1";
                                 $result = mysqli_query($conn, $selectLastProject);
                                 $row = mysqli_fetch_assoc($result);
-                                $idCurso = $row['curso_id'];
+                                $idCursok = $row['curso_id'];
                                 ?>
-                                <h2><?php echo $row['titulo']; ?></h2>
-                                <p><?php if($idCurso == 502){
-                                    echo 'SMIX';
-                                }else if($idCurso == 501){
-                                    echo 'DAW';
-                                }else if($idCurso == 503){
-                                    echo 'ASIX';
-                                }else{
-                                    echo 'None';
-                                }
-                                ?></p>
+                                <h2><?php echo $row['titulo']; ?> -
+                                    <?php if ($idCursok == 502) {
+                                        echo 'SMIX';
+                                    } else if ($idCursok == 501) {
+                                        echo 'DAW';
+                                    } else if ($idCursok == 503) {
+                                        echo 'ASIX';
+                                    } else {
+                                        echo 'None';
+                                    }
+                                    ?>
+                                </h2>
                             </div>
                         </div>
                         <img src="../../imagenes/project.jpg" alt="" style="width: 300px;">
@@ -228,20 +230,20 @@ if (!empty($_POST['logout'])) {
 
                 <div id="estadisticaAlumnos" class="card">
                     <h1>Students Scores</h1>
+                    <?php
+                    $selectCurso = 'SELECT * FROM cursos WHERE id = ' . $idCurso;
+                    $r = mysqli_query($conn, $selectCurso);
+
+                    if (mysqli_num_rows($r) > 0) {
+                        while ($fila = mysqli_fetch_assoc($r)) {
+                            echo "<h1 class='titleCourse'>Course: <span>" . $fila['nombre'] . "</span></h1>";
+                        }
+                    }
+                    ?>
                     <div id="grafica">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>name</th>
-                                    <th>Course Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                mostrarTablaAlumnos($conn, $idCurso);
-                                ?>
-                            </tbody>
-                        </table>
+                        <?php
+                        mostrarTablaAlumnos($conn, $idCurso);
+                        ?>
                     </div>
                 </div>
 
