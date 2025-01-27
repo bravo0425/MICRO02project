@@ -169,7 +169,7 @@ $resultado = mysqli_query($conn, $query);
             </div>
             <div class="tabla">
                 <?php
-                if (!empty($_POST['modificarA']) && !empty($_POST['radioSeleccionada'])) {
+                if (!empty($_POST['modificarA'])) {
                     if (!empty($_POST['alumno_id'])) {
                         $radioSeleccionada = $_POST['alumno_id'];
 
@@ -196,59 +196,111 @@ $resultado = mysqli_query($conn, $query);
                             } else {
                                 echo "Error en la consulta: " . mysqli_error($conn);
                             }
-                        } else {
-                            echo "No se ha seleccionado un radio button.";
                         }
+                        ?>
+                        <form action="" method="post" class="formAlumnos">
+                            <h2>Modify student</h2>
+                            <div class="column">
+                                <input type="hidden" name="alumno_id" value="<?php echo $radioSeleccionada; ?>">
+                                <label for="nombreM">Name</label>
+                                <input type="text" name="nombreM" id="nombreM" value="<?php echo $nombre; ?>"><br>
+                            </div>
+                            <div class="column">
+                                <label for="apellidoM">Last Name</label>
+                                <input type="text" name="apellidoM" id="apellidoM" value="<?php echo $cognom; ?>"><br>
+                            </div>
+                            <div class="column">
+                                <label for="usernameM">Username</label>
+                                <input type="text" name="usernameM" id="usernameM" value="<?php echo $username; ?>"><br>
+                            </div>
+                            <div class="column">
+                                <label for="contrasenyaM">Password</label>
+                                <input type="password" name="contrasenyaM" id="contrasenyaM" value="<?php echo $password; ?>"><br>
+                            </div>
+                            <div class="column">
+                                <label for="contrasenya2M">Repeat password</label>
+                                <input type="password" name="contrasenya2M" id="contrasenya2M" value="<?php echo $password; ?>"><br>
+                            </div>
+                            <div class="column-se">
+                                <label for="Curso">Curso</label>
+                                <select name="cursosM" id="cursosM">
+                                    <?php
+                                    $select = "SELECT * FROM cursos";
+                                    $resCurso = mysqli_query($conn, $select);
+                                    while ($fila = mysqli_fetch_assoc($resCurso)) {
+                                        echo "<option required value='" . $fila['id'] . "'>" . $fila['nombre'] . "</option>";
+                                    } ?>
+                                </select>
+                            </div>
+                            <div class="botones-crearA">
+                                <button type="submit" id="BModificarAlumno" name="BModificarAlumno" value="BModificarAlumno">Insert</button>
+                                <button type="submit" id='back' name='back' class="back" value='back'>Back</button>
+                                <?php
+                                if (!empty($_POST['back'])) {
+                                    header('Location: alumnos.php');
+                                    exit;
+                                }
+                                ?>
+                            </div>
+                        </form>
+                        <?php
                     } else {
-                        echo "<script>alert('Selecciona un alumno para poder modificarlo.');</script>";
+                        ?>
+                        <form method="POST" action="" id="listaAlumnos">
+                            <input type="hidden" id="hiddenField" name="selectedRadio" value="">
+                            <div class="tablaMostrarStudents">
+                                <table border="0" id="tableee">
+                                    <thead>
+                                        <tr>
+                                            <th id="borderLeft"></th>
+                                            <th>Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                            <th>Creation Date</th>
+                                            <th id="borderRight">Course ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        if (mysqli_num_rows($resultado) > 0) {
+                                            while ($fila = mysqli_fetch_assoc($resultado)) {
+                                                echo "<tr>";
+                                                echo "<td><input type='radio' name='alumno_id' class='radio' value='" . $fila["id"] . "'></td>";
+                                                echo "<td>" . $fila["name"] . "</td>";
+                                                echo "<td>" . $fila["last_name"] . "</td>";
+                                                echo "<td>" . $fila["username"] . "</td>";
+                                                echo "<td>" . $fila["created_at"] . "</td>";
+
+                                                $idCursoAlumno = $fila["curso_id"];
+                                                if ($idCursoAlumno == 501) {
+                                                    echo "<td>DAW</td>";
+                                                } else if ($idCursoAlumno == 502) {
+                                                    echo "<td>SMIX</td>";
+                                                } else if ($idCursoAlumno == 503) {
+                                                    echo "<td>ASIX</td>";
+                                                } else {
+                                                    echo "<td>None</td>";
+                                                }
+                                                
+                                                echo "</tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='7'>No hay alumnos registrados.</td></tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="botones-alumnos">
+                                <button type="submit" value="crearAlumnos" name="crearAlumnos" id="crearAlumnos">+ Add new Student</button>
+                                <button type="submit" value="modificar" name="modificarA" id="modificarA">Modify Student</button>
+                                <button type="submit" value="eliminarAlumnos" name="eliminarAlumnos" id="eliminarAlumnos">Delete Student</button>
+                            </div>
+                        </form>
+                    <?php
                     }
 
                 ?>
-                    <form action="" method="post" class="formAlumnos">
-                        <h2>Modify student</h2>
-                        <div class="column">
-                            <input type="hidden" name="alumno_id" value="<?php echo $radioSeleccionada; ?>">
-                            <label for="nombreM">Name</label>
-                            <input type="text" name="nombreM" id="nombreM" value="<?php echo $nombre; ?>"><br>
-                        </div>
-                        <div class="column">
-                            <label for="apellidoM">Last Name</label>
-                            <input type="text" name="apellidoM" id="apellidoM" value="<?php echo $cognom; ?>"><br>
-                        </div>
-                        <div class="column">
-                            <label for="usernameM">Username</label>
-                            <input type="text" name="usernameM" id="usernameM" value="<?php echo $username; ?>"><br>
-                        </div>
-                        <div class="column">
-                            <label for="contrasenyaM">Password</label>
-                            <input type="password" name="contrasenyaM" id="contrasenyaM" value="<?php echo $password; ?>"><br>
-                        </div>
-                        <div class="column">
-                            <label for="contrasenya2M">Repeat password</label>
-                            <input type="password" name="contrasenya2M" id="contrasenya2M" value="<?php echo $password; ?>"><br>
-                        </div>
-                        <div class="column-se">
-                            <label for="Curso">Curso</label>
-                            <select name="cursosM" id="cursosM">
-                                <?php
-                                $select = "SELECT * FROM cursos";
-                                $resCurso = mysqli_query($conn, $select);
-                                while ($fila = mysqli_fetch_assoc($resCurso)) {
-                                    echo "<option required value='" . $fila['id'] . "'>" . $fila['nombre'] . "</option>";
-                                } ?>
-                            </select>
-                        </div>
-                        <div class="botones-crearA">
-                            <button type="submit" id="BModificarAlumno" name="BModificarAlumno" value="BModificarAlumno">Insert</button>
-                            <button type="submit" id='back' name='back' class="back" value='back'>Back</button>
-                            <?php
-                            if (!empty($_POST['back'])) {
-                                header('Location: alumnos.php');
-                                exit;
-                            }
-                            ?>
-                        </div>
-                    </form>
                 <?php
                 } else if(!empty($_POST['crearAlumnos'])){
                 ?>
